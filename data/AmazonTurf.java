@@ -3,7 +3,6 @@ import java.util.*;
 
 class PlaceHolder{
 	
-	// LoopsFor Variables ArithmeticOperations ; Methods ; LOOPSDOWHILE ; LoopsFor PrimitiveDataTypes Variables ArithmeticOperations ; ArithmeticOperations ; ArithmeticOperations LoopsFor PrimitiveDataTypes Variables
 	public void placeHolderMethod0(){
 		for(int i = 0; i < 5; i++)
 		{
@@ -13,8 +12,7 @@ class PlaceHolder{
 		}	
 	}
 	
-	// Constants ; ArithmeticOperations Objects
-    public void placeHolderMethod1(){
+	public void placeHolderMethod1(){
         Double d = 4.5;
         Integer i = 2;
 
@@ -23,20 +21,17 @@ class PlaceHolder{
         System.out.println(sum);            
     }
     
-    // PrimitiveDataTypes Variables ; Classes ; Objects BooleanExpressions ARRAYS SWITCH
     public void placeHolderMethod2(){
         int anInt = 7;
         String aStr = "7";
         System.out.println( (anInt + anInt) + aStr );            
     }
     
-    // ArithmeticOperations PrimitiveDataTypes ; Methods ; NESTEDLOOPS; Variables  Methods  ACCESSCONTROL  Objects 
     public double max(double x, double y, double z)
     {
         return Math.max(Math.max(x,y), z);
     }
     
-    // LOOPSDOWHILE ; LoopsFor LoopsWhile PrimitiveDataTypes ; LoopsFor LoopsWhile ; LoopsWhile LoopsFor ; ArithmeticOperations PrimitiveDataTypes TWODIMENSIONALARRAYS
     public void placeHolderMethod3(){
         for(int i = 0; i <= 10; i++)
         {
@@ -52,7 +47,6 @@ class PlaceHolder{
         }
     }
     
-    // Exceptions ; Variables IfElse ; LoopsWhile ; Variables BooleanExpressions IfElse ; BooleanExpressions ; Variables BooleanExpressions
     public void placeHolderMethod4(){
         int x = 1;
         int y = 2;
@@ -64,7 +58,6 @@ class PlaceHolder{
             System.out.println("x = y");
     }
     
-    // LoopsFor ; PrimitiveDataTypes ; LoopsFor ; LoopsFor ; LoopsFor ; Objects LoopsFor ArithmeticOperations
     public void printFactorial(int aNumber){
         int factorial = 1;
 
@@ -75,7 +68,6 @@ class PlaceHolder{
         System.out.println(factorial);
     }
     
-    // LoopsFor ; LoopsFor Arrays ; Interfaces ;for (double e : Arrays); Variables ; ArithmeticOperations ; ArrayList; ArithmeticOperations ; ArrayList ; ArrayList ; ArrayList ; ArrayList
     public void printArrayListSum(){
         
         ArrayList<Double> aList = new ArrayList<Double>();
@@ -90,7 +82,6 @@ class PlaceHolder{
         System.out.println(sum);        
     }
     
-    // Arrays ArrayList ; LoopsFor ArrayList ; ArrayList ; LoopsFor
     public void iterateArrayList(){
         ArrayList<Double> list = new ArrayList<Double>();
         list.add(1.1);
@@ -101,7 +92,6 @@ class PlaceHolder{
             System.out.println(d);
     }
     
-    // IfElse ; ArithmeticOperations IfElse NestedLoops ; Switch ; Strings ArithmeticOperations IfElse Variables ;10; Strings ; Strings  ; AccessControl  ArithmeticOperations  Classes  Variables  Constants  BooleanExpressions  IfElse 
     public void printTextLength(){
     
         int myYear = 2015;
@@ -123,7 +113,6 @@ class PlaceHolder{
         System.out.println(result);
     }
     
-    // Objects Arrays ;a; Objects ; ArrayList
     public void printLetterStack(){
         Stack letterStack = new Stack();
 
@@ -136,7 +125,6 @@ class PlaceHolder{
         System.out.println(letterStack);
     }
     
-    // Arrays ; ArithmeticOperations Constants Variables ; BooleanExpressions Thread ;Variables;ArithmeticOperations;ArithmeticOperations
     public static void main(String[] args) {
         int i = 14;
         int j = 20;

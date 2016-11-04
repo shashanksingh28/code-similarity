@@ -32,8 +32,8 @@ public class ASTEnhanced {
     String returnType;    
     
     Set<String> methods;
-    Set<String> operands;
-    Set<String> operators;
+    HashMap<String, Integer> operands;
+    HashMap<String, Integer> operators;
     Set<String> annotations;
     HashMap<String, Integer> types;
     
@@ -69,10 +69,10 @@ public class ASTEnhanced {
 
         this.methods = new HashSet<String>();
         this.concepts = new HashSet<String>();
-        this.comments = "";
+        this.comments = null;
         this.paramTypes = new ArrayList<String>();
-        this.operators = new HashSet<String>();
-        this.operands = new HashSet<String>();
+        this.operators = new HashMap<String, Integer>();
+        this.operands = new HashMap<String, Integer>();
         this.types = new HashMap<String, Integer>();
         this.exceptions = new HashSet<String>();
         this.annotations = new HashSet<String>();
@@ -109,7 +109,7 @@ public class ASTEnhanced {
 
             for (Parameter param : n.getParameters()) {
                 this.paramTypes.add(param.getType().toString());
-                this.operands.add(param.getName());
+                incrementDictCount(this.operands, param.getName());
             }
             
             // Get Annotations
@@ -180,16 +180,16 @@ public class ASTEnhanced {
         if(expr instanceof UnaryExpr){
             UnaryExpr unaryExpr = (UnaryExpr)expr;
             String key = unaryExpr.getOperator().toString();
-            this.operators.add(key);
+            incrementDictCount(this.operators, key);
         } else if(expr instanceof BinaryExpr){
             BinaryExpr binaryExpr = (BinaryExpr) expr;
             String key = binaryExpr.getOperator().toString();
-            this.operators.add(key);
+            incrementDictCount(this.operators, key);
         } else if(expr instanceof NameExpr){
             // Most likely a variable name
         	String name = ((NameExpr)expr).getName();
             if (name != null){
-            	this.operands.add(((NameExpr)expr).getName());
+            	incrementDictCount(this.operands, ((NameExpr)expr).getName());
             }            	
         } else if(expr instanceof VariableDeclarationExpr){
         	
@@ -213,7 +213,7 @@ public class ASTEnhanced {
         } else if(expr instanceof LiteralExpr){
             // These are primarily integer and string constants
             LiteralExpr literalExpr = (LiteralExpr) expr;
-            this.operands.add(literalExpr.toString());
+            incrementDictCount(this.operands, literalExpr.toString());
         }
 
     }
@@ -258,7 +258,8 @@ public class ASTEnhanced {
         String extracted = "";
         for(String line : lines){
             System.out.println("# " + line);
-            extracted += line.replaceAll("\\s+"," ").replaceAll("(\r\n|\n)"," ") + " ";
+            // extracted += line.replaceAll("\\s+"," ").replaceAll("(\r\n|\n)"," ") + " ";
+            extracted += line + "\n";
         }
 
         return extracted;
@@ -269,6 +270,10 @@ public class ASTEnhanced {
     	
     	for(Comment comment : node.getAllContainedComments()){
     		comments += comment.getContent() + ".";
+    	}
+    	
+    	if(comments.isEmpty()){
+    		return null;
     	}
     	
     	return comments;
