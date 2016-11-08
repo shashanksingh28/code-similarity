@@ -3,6 +3,8 @@ import re
 import json
 import sys
 import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+import math
 
 def getListIntersection(list1, list2):
     """ Returns list of elements in both list1 and list2 (duplicates will have multiple entries) """
@@ -31,6 +33,13 @@ def getCountIntersection(dict1, dict2):
         matchList += [key] * num
 
     return matchList
+
+def getListFromCounts(dict1):
+    """ Given a dictionary with key as elements and their counts, return a flat list with duplicates """
+    elements = []
+    for key in dict1:
+        elements += [key] * dict1[key]
+    return elements
     
 def getVectors(inputFile):
     # pdb.set_trace()
@@ -41,6 +50,23 @@ def getVectors(inputFile):
                 docVectors.append(json.loads(line.strip()))
     return docVectors
 
+def getBagOfWords(vectors):
+    excludeKeys = ['concepts','className','text','isEmpty','size','methods']
+    bagOfWords = []
+    for vector in vectors:
+        docWords = []
+        for key in vector:
+            if key in excludeKeys:
+                continue
+            if type(vector[key]) is dict:
+                docElements = getListFromCounts(vector[key])
+                docWords += docElements
+            elif type(vector[key]) is list:
+                docWords += vector[key]
+            else:
+                docWords += [str(vector[key])]
+        bagOfWords.append(' '.join(docWords))
+    return bagOfWords
 
 def textMatchList(dict1, dict2):
     """ Return the pure text similarity; not unique matches but total matches """
@@ -72,7 +98,7 @@ def tokenMatchList(dict1, dict2):
             matchList += getListIntersection(dict1[key], dict2[key])
         else:
             if dict1[key] == dict2[key]:
-                matchList += [dict1[key]]
+                matchList += [str(dict1[key])]
     
     # print("Tokens :", matchList)
     # print(len(matchList))
@@ -84,8 +110,13 @@ def runPipe(inputFile):
     """ Run whole pipeline """
     allVectors = getVectors(inputFile)
     vectors = list(filter((lambda x : not x['isEmpty']),allVectors))
+    bagOfWords = getBagOfWords(vectors)
+    vectorizer = TfidfVectorizer(min_df=1)
+    tfIdfWeights = vectorizer.fit_transform(bagOfWords).toarray()
+    
     textSimGrid = np.zeros([len(vectors), len(vectors)])
     tokenSimGrid = np.copy(textSimGrid)
+    tfIdfSimGrid = np.copy(textSimGrid)
 
     for i, _ in enumerate(vectors):
         # print()
@@ -97,24 +128,30 @@ def runPipe(inputFile):
             # print(vectors[j]['text'])
             textSimGrid[i][j] = textSimGrid[j][i] = len(textMatchList(vectors[i], vectors[j]))
             tokenSimGrid[i][j] = tokenSimGrid[j][i] = len(tokenMatchList(vectors[i], vectors[j]))
+            tfIdfSimGrid[i][j] = tfIdfSimGrid[j][i] = np.dot(tfIdfWeights[i],tfIdfWeights[j]) / (math.sqrt(sum(np.square(tfIdfWeights[i]))) * math.sqrt(sum(np.square(tfIdfWeights[j]))))
             
     # print(textSimGrid)
     # print(tokenSimGrid)
 
     textClosest = np.argmax(textSimGrid, axis = 1)
     tokenClosest = np.argmax(tokenSimGrid, axis = 1)
+    tfIdfClosest = np.argmax(tfIdfSimGrid, axis = 1)
 
     for i, _ in enumerate(vectors):
         print("######## Sample :",i)
-        print(vectors[i]['text'])
-        print("----- Text Closest :", textClosest[i]," Score:", textSimGrid[i][textClosest[i]])
-        print(vectors[textClosest[i]]['text'])
-        print(textMatchList(vectors[i], vectors[textClosest[i]]))
-        print()
-        print("----- Token Closest :", tokenClosest[i], "Score:", tokenSimGrid[i][tokenClosest[i]])
-        print(vectors[tokenClosest[i]]['text'])
-        print(tokenMatchList(vectors[i], vectors[textClosest[i]]))
-        print()
+        if textClosest[i] != tokenClosest[i] or tokenClosest[i] != tfIdfClosest[i]:
+            print(vectors[i]['text'])
+            print("----- Text Closest :", textClosest[i]," Score:", textSimGrid[i][textClosest[i]])
+            print(vectors[textClosest[i]]['text'])
+            print(textMatchList(vectors[i], vectors[textClosest[i]]))
+            print()
+            print("----- Token Closest :", tokenClosest[i], "Score:", tokenSimGrid[i][tokenClosest[i]])
+            print(vectors[tokenClosest[i]]['text'])
+            print(tokenMatchList(vectors[i], vectors[textClosest[i]]))
+            print()
+            print("----- Token Tf-IDF Closest :", tfIdfClosest[i], "Score:", tfIdfSimGrid[i][tfIdfClosest[i]])
+            print(vectors[tfIdfClosest[i]]['text'])
+            print()
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
