@@ -63,7 +63,7 @@ public class ASTEnhanced {
     int size;
     // This helps determine if the modifier is static
     // If it is static, the scope of a method does not contain class name
-    int modifiers;
+    int modifier;
 
     ASTEnhanced() {
 
@@ -104,7 +104,7 @@ public class ASTEnhanced {
             if (parent instanceof ClassOrInterfaceDeclaration){
                 this.className = ((ClassOrInterfaceDeclaration) parent).getName();
             }
-            this.modifiers = n.getModifiers();
+            this.modifier = n.getModifiers();
             this.returnType = n.getType().toString();
 
             for (Parameter param : n.getParameters()) {
@@ -220,9 +220,14 @@ public class ASTEnhanced {
 
     private void parseMethodCall(MethodCallExpr expr){
         String currentMethod, parsedMethod;
-        if(this.modifiers != 9){
+        if(this.modifier != 9){
             // This is not a static method so normal scope
-            currentMethod = expr.getScope() + "." + expr.getName();
+            if (expr.getScope() != null){
+        	currentMethod = expr.getScope() + "." + expr.getName();
+            }
+            else{
+            	currentMethod = this.className + "." + expr.getName();
+            }
             parsedMethod = this.className + "." + this.name;
         }
         else{
