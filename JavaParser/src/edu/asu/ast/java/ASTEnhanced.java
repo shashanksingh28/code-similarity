@@ -31,12 +31,13 @@ public class ASTEnhanced {
     ArrayList<String> paramTypes;   
     String returnType;    
     
-    Set<String> methods;
-    HashMap<String, Integer> operands;
+    HashMap<String, Integer> methodCalls;
+    
+    HashMap<String, Integer> constants;
+    
     HashMap<String, Integer> operators;
     Set<String> annotations;
-    HashMap<String, Integer> types;
-    
+    HashMap<String, Integer> types;    
     
     // High level concepts we can extract
     Set<String> concepts;
@@ -51,7 +52,8 @@ public class ASTEnhanced {
     
     String name;
     String className;
-    	
+    HashMap<String, Integer> variables;
+    
     // JavaDoc documentation string for the method
     String javaDoc;
 
@@ -60,26 +62,30 @@ public class ASTEnhanced {
     
     // ---------- Numeric Features --------- //
     boolean isEmpty;
-    int size;
+    int lineCount;
     // This helps determine if the modifier is static
     // If it is static, the scope of a method does not contain class name
     int modifier;
 
     ASTEnhanced() {
 
-        this.methods = new HashSet<String>();
+        this.methodCalls = new HashMap<String, Integer>();
         this.concepts = new HashSet<String>();
         this.comments = null;
         this.paramTypes = new ArrayList<String>();
         this.operators = new HashMap<String, Integer>();
-        this.operands = new HashMap<String, Integer>();
+        this.variables = new HashMap<String, Integer>();
+        this.constants = new HashMap<String, Integer>();
         this.types = new HashMap<String, Integer>();
         this.exceptions = new HashSet<String>();
         this.annotations = new HashSet<String>();
     }
 
     public static String cleanDocumentation(String documentation){
-        return documentation.replaceAll("\\s+"," ").replaceAll("(\r\n|\n)"," ").trim();
+        String processed = documentation.replaceAll("(\r\n|\n)"," ");
+        // Remove @param and @return because they are common accross
+        processed = processed.replaceAll("(@param|@return)", "").replaceAll("[,.]", " ").replaceAll("\\s+", " "); 
+        return processed.trim();
     }
     
     /**
@@ -109,7 +115,7 @@ public class ASTEnhanced {
 
             for (Parameter param : n.getParameters()) {
                 this.paramTypes.add(param.getType().toString());
-                incrementDictCount(this.operands, param.getName());
+                incrementDictCount(this.variables, param.getName());
             }
             
             // Get Annotations
@@ -139,7 +145,7 @@ public class ASTEnhanced {
         	this.isEmpty = true;
         	return;
         }
-        this.size = block.getChildrenNodes().size();
+        this.lineCount = block.getChildrenNodes().size();
         for (Node childNode : block.getChildrenNodes()){
             parseNode(childNode);
         }
@@ -167,7 +173,12 @@ public class ASTEnhanced {
     }
 
     private static void incrementDictCount(HashMap<String, Integer> hashMap, String key){
-        if (hashMap.containsKey(key)){
+        if (key.length() < 2){
+        	// Anything of length 1 is considered trivial.
+        	// Most probably variable names like x, i and numbers less than 10
+        	return;
+        }
+    	if (hashMap.containsKey(key)){
             int count = hashMap.get(key);
             hashMap.put(key, count + 1);
         }
@@ -189,10 +200,12 @@ public class ASTEnhanced {
             // Most likely a variable name
         	String name = ((NameExpr)expr).getName();
             if (name != null){
-            	incrementDictCount(this.operands, ((NameExpr)expr).getName());
+            	String operandName = ((NameExpr)expr).getName();
+            	if (!operandName.startsWith("//") ){
+            		incrementDictCount(this.variables, ((NameExpr)expr).getName());
+            	}            	
             }            	
-        } else if(expr instanceof VariableDeclarationExpr){
-        	
+        } else if(expr instanceof VariableDeclarationExpr){        	
             VariableDeclarationExpr varDecExpr = (VariableDeclarationExpr) expr;
             String leftType = varDecExpr.getType().toString();
             for(Node child : varDecExpr.getChildrenNodes()){
@@ -212,10 +225,11 @@ public class ASTEnhanced {
             incrementDictCount(this.types, varDecExpr.getType().toString());
         } else if(expr instanceof LiteralExpr){
             // These are primarily integer and string constants
-            LiteralExpr literalExpr = (LiteralExpr) expr;
-            incrementDictCount(this.operands, literalExpr.toString());
+            String stringExpr = ((LiteralExpr) expr).toString().trim();
+            if (!stringExpr.startsWith("//")){
+            	incrementDictCount(this.constants, stringExpr);
+        	}            
         }
-
     }
 
     private void parseMethodCall(MethodCallExpr expr){
@@ -240,7 +254,7 @@ public class ASTEnhanced {
             this.concepts.add("Recursion");
         }
 
-        this.methods.add(currentMethod);
+        incrementDictCount(this.methodCalls, currentMethod);
     }
     
     /**
@@ -274,7 +288,7 @@ public class ASTEnhanced {
     	String comments = "";
     	
     	for(Comment comment : node.getAllContainedComments()){
-    		comments += comment.getContent() + ".";
+    		comments += cleanDocumentation(comment.getContent()) + " ";
     	}
     	
     	if(comments.isEmpty()){
