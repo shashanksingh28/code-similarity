@@ -4,6 +4,8 @@ from collections import Counter
 from nltk.corpus import stopwords
 import pdb
 
+DEBUG = True
+
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar """
     textTokenizationPattern = re.compile(r"(\r\n|\n|\.(?!\d)|[,;#?!$]|\s\s+)")
@@ -28,18 +30,18 @@ class MethodFeatureVector:
         self.features['modifier'] = int(jsonObj['modifier'])
         self.features['lineCount'] = int(jsonObj['lineCount']) 
         if 'javaDoc' in jsonObj:
-            self.features['javaDoc'] = str(jsonObj['javaDoc'])
+            self.features['javaDoc'] = str(jsonObj['javaDoc']).lower()
         if 'comments' in jsonObj:
-            self.features['comments'] = str(jsonObj['comments'])
+            self.features['comments'] = str(jsonObj['comments']).lower()
         
         # List or set features
         self.features['paramTypes'] = list(jsonObj['paramTypes'])
-        self.features['methodCalls'] = set(jsonObj['methodCalls'])
         self.features['exceptions'] = set(jsonObj['exceptions'])
         self.features['annotations'] = set(jsonObj['annotations'])
         self.features['concepts'] = set(jsonObj['concepts'])
 
         # Counter Dictionaries
+        self.features['methodCalls'] = dict(jsonObj['methodCalls'])
         self.features['variables'] = dict(jsonObj['variables'])
         self.features['constants'] = dict(jsonObj['constants'])
         self.features['types'] = dict(jsonObj['types'])
@@ -47,10 +49,76 @@ class MethodFeatureVector:
         self.langTokens = self.__getLanguageTokens()
 
     
+    def getJaccardSimilarity(self, otherMethod):
+        # pdb.set_trace()
+        if DEBUG:
+            print("Jaccard:",self.rawText,"------- with -------", otherMethod.rawText, sep="\n")
+        totalSim = 0
+        for feature in self.features:
+            if DEBUG:
+                print(feature)
+            if feature not in otherMethod.features:
+                continue
+            typeOf = type(self.features[feature])
+            if typeOf is dict:
+                # this would be the case when it is a dict of counters
+                totalSim += MethodFeatureVector.__getDictJaccardSim(self.features[feature], otherMethod.features[feature])
+            elif typeOf is set:
+                if len(self.features[feature]) == 0 or len(otherMethod.features[feature]) == 0:
+                    continue
+                # textbook definition of Jaccard similarity - intersection / union of sets
+                totalCount = len(self.features[feature]) + len(otherMethod.features[feature])
+                if DEBUG:
+                    print(feature,":",self.features[feature] & otherMethod.features[feature])
+                intCount = len(self.features[feature] & otherMethod.features[feature])
+                totalSim += (intCount / totalCount)
+            elif typeOf is list:
+                # this is an intersection of lists
+                totalSim += MethodFeatureVector.__getListJaccardSim(self.features[feature], otherMethod.features[feature])
+            else:
+                # this should be just element comparison
+                if self.features[feature] == otherMethod.features[feature]:
+                    if DEBUG:
+                        print("Match:",self.features[feature])
+                    totalSim += 1
+        if DEBUG:
+            print(totalSim)
+        return totalSim
+
+    @staticmethod
+    def __getDictJaccardSim(dict1, dict2):
+        """ Given two Counters, find the Jaccard similarities """
+        commonKeys = dict1.keys() & dict2.keys()
+        if len(commonKeys) == 0: return 0
+        if DEBUG:
+            print(commonKeys)
+        totalCount = sum(dict1.values()) + sum(dict2.values())
+        if totalCount == 0:
+            return 0
+
+        intCount = 0
+        for key in commonKeys:
+            intCount += min(dict1[key], dict2[key])
+        
+        return intCount / totalCount
+
+    @staticmethod
+    def __getListJaccardSim(list1, list2):
+        """ Given two lists, give the Jaccard similarities """
+        countList1 = Counter(list1)
+        countList2 = Counter(list2)
+        return MethodFeatureVector.__getDictJaccardSim(countList1, countList1)
+        
     @staticmethod
     def __getTextTokens(text):
         """ If we consider this to be simply a text file, what would we get"""
-        return re.sub(MethodFeatureVector.textTokenizationPattern, " ", text).split()
+        # print("Text before:", text)
+        tokens = re.sub(MethodFeatureVector.textTokenizationPattern, " ", text).split()
+        # had we treated this as pure text, we would filter it the same way as language
+        filtered_words = [word.strip() for word in tokens if word.strip() not in stopwords.words('english') and len(word.strip()) > 1]
+        # print("Text after:", filtered_words)
+
+        return filtered_words
     
     @staticmethod
     def __getListFromCounts(dict1):
@@ -65,9 +133,9 @@ class MethodFeatureVector:
         """ Given a word, parse it(camelCase) and return a list of language tokens.
             Skip stopwords and if possible add lemma and synonym features them"""
         # ToDo: can add multiple features here
-        # print("Input:",token)
-        # literals are quoted, so remove quotes first
-        token = re.sub('"',' ', token)
+        # print("Lang before:",token)
+        # literals are quoted and there may be . operators, remove them first
+        token = re.sub('[".]',' ', token)
 
         # Camel Case Split
         token = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', token).lower()
@@ -76,7 +144,7 @@ class MethodFeatureVector:
         # filter stop words and single chars assuming they don't have any information
         # note that this will also remove single digit numbers
         filtered_words = [word.strip() for word in tokens if word.strip() not in stopwords.words('english')]
-        # print(filtered_words)
+        # print("Lang after:",filtered_words)
 
         return filtered_words
 
@@ -105,50 +173,3 @@ class MethodFeatureVector:
         
         return languageTokens    
     
-    
-    ### Not sure if I would need functions below later ###
-    
-    
-
-    def __getParsedTokens(self):
-        """ If we consider this as using the parser for tokenization, what would we get?"""
-        tokens = [self.features['modifier'] , self.features['returnType'], self.name]
-        
-        if 'javaDoc' in self.features:
-            tokens += self.__getTextTokens(self.features['javaDoc'])
-        if 'comments' in self.features:
-            tokens += self.__getTextTokens(self.features['comments'])
-        tokens += self.features['paramTypes'] + list(self.features['exceptions']) + list(self.features['annotations'])
-        
-        tokens += self.__getListFromCounts(self.features['operands'])
-        tokens += self.__getListFromCounts(self.features['operators'])
-        tokens += self.__getListFromCounts(self.features['types'])
-        
-        return tokens
-
-    def getTextMatch(self, otherMethod):
-        """ Return a list of matches based on pure text tokenization """
-        myWords = self.textTokensCounter
-        hisWords = otherMethod.textTokensCounter
-        
-        commonWords = myWords.keys() & hisWords.keys()   
-        
-        matches = []
-        for word in commonWords:
-            matches += [word] * min(myWords[word],hisWords[word])
-        
-        return matches
-    
-    def getTokenMatch(self, otherMethod):
-        """ Return a list of matches based on parser tokenization """
-        myWords = self.parsedTokensCounter
-        hisWords = otherMethod.parsedTokensCounter
-        
-        commonWords = myWords.keys() & hisWords.keys()   
-        
-        matches = []
-        for word in commonWords:
-            matches += [word] * min(myWords[word],hisWords[word])
-        
-        return matches
-

@@ -130,6 +130,11 @@ public class ASTEnhanced {
             
             this.comments = extractContainedComments(n);
             
+            // These are in-line comments just before the method definitition
+            if (n.getComment() != null){
+            	this.comments += n.getComment().getContent(); 
+            }
+            
             // Recursively loop through child nodes and make a dictionary
             this.parseBody(n.getBody());
 
