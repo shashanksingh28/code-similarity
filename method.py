@@ -4,7 +4,7 @@ from collections import Counter
 from nltk.corpus import stopwords
 import pdb
 
-DEBUG = True
+DEBUG = False
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar """
@@ -51,10 +51,14 @@ class MethodFeatureVector:
     
     def getJaccardSimilarity(self, otherMethod):
         # pdb.set_trace()
+        intersections = []
         if DEBUG:
             print("Jaccard:",self.rawText,"------- with -------", otherMethod.rawText, sep="\n")
         totalSim = 0
         for feature in self.features:
+            # Skip line counts because they are not one-hot encoded set features
+            if feature == 'lineCount':
+                continue
             if DEBUG:
                 print(feature)
             if feature not in otherMethod.features:
@@ -62,7 +66,9 @@ class MethodFeatureVector:
             typeOf = type(self.features[feature])
             if typeOf is dict:
                 # this would be the case when it is a dict of counters
-                totalSim += MethodFeatureVector.__getDictJaccardSim(self.features[feature], otherMethod.features[feature])
+                sim, commonKeys = MethodFeatureVector.__getDictJaccardSim(self.features[feature], otherMethod.features[feature])
+                totalSim += sim
+                intersections += list(commonKeys)
             elif typeOf is set:
                 if len(self.features[feature]) == 0 or len(otherMethod.features[feature]) == 0:
                     continue
@@ -71,25 +77,29 @@ class MethodFeatureVector:
                 if DEBUG:
                     print(feature,":",self.features[feature] & otherMethod.features[feature])
                 intCount = len(self.features[feature] & otherMethod.features[feature])
+                intersections += self.features[feature] & otherMethod.features[feature]
                 totalSim += (intCount / totalCount)
             elif typeOf is list:
                 # this is an intersection of lists
-                totalSim += MethodFeatureVector.__getListJaccardSim(self.features[feature], otherMethod.features[feature])
+                sim, commonKeys = MethodFeatureVector.__getListJaccardSim(self.features[feature], otherMethod.features[feature])
+                totalSim += sim
+                intersections += list(commonKeys)
             else:
                 # this should be just element comparison
                 if self.features[feature] == otherMethod.features[feature]:
                     if DEBUG:
                         print("Match:",self.features[feature])
                     totalSim += 1
+                    intersections += [self.features[feature]]
         if DEBUG:
-            print(totalSim)
-        return totalSim
+            print(totalSim, intersections)
+        return totalSim, intersections
 
     @staticmethod
     def __getDictJaccardSim(dict1, dict2):
         """ Given two Counters, find the Jaccard similarities """
         commonKeys = dict1.keys() & dict2.keys()
-        if len(commonKeys) == 0: return 0
+        if len(commonKeys) == 0: return 0, commonKeys
         if DEBUG:
             print(commonKeys)
         totalCount = sum(dict1.values()) + sum(dict2.values())
@@ -100,14 +110,14 @@ class MethodFeatureVector:
         for key in commonKeys:
             intCount += min(dict1[key], dict2[key])
         
-        return intCount / totalCount
+        return ((intCount / totalCount) , commonKeys)
 
     @staticmethod
     def __getListJaccardSim(list1, list2):
         """ Given two lists, give the Jaccard similarities """
         countList1 = Counter(list1)
         countList2 = Counter(list2)
-        return MethodFeatureVector.__getDictJaccardSim(countList1, countList1)
+        return MethodFeatureVector.__getDictJaccardSim(countList1, countList2)
         
     @staticmethod
     def __getTextTokens(text):

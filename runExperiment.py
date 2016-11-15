@@ -76,21 +76,31 @@ def getClosestJaccard(method, allMethods):
     # pdb.set_trace()
     closestVectorIndex = 0
     highestScore = float('-inf')
+    highestIntersections = []
     for i, solutionMethod in enumerate(allMethods):
         if solutionMethod == method:
             continue
-        thisJaccardScore = method.getJaccardSimilarity(solutionMethod)
+        thisJaccardScore, intersections = method.getJaccardSimilarity(solutionMethod)
         if thisJaccardScore > highestScore:
             closestVectorIndex = i
             highestScore = thisJaccardScore
-    return closestVectorIndex
+            highestIntersections = intersections
+    return closestVectorIndex, highestIntersections
 
 
-def getClosestCosine(vector, solutionVectors):
+def getClosestCosine(vector, solutionVectors, features):
     """ Provided a single vector and a list of vectors with the same dimensions, finds closest
-        based on cosine similarity"""
+        based on cosine similarity. Features is just a list of features, so it also provides
+        a list of which features contributed to the cosine """
+    # pdb.set_trace()
     similarities = cosine_similarity(vector,solutionVectors)
-    return np.argmax(similarities)
+    closest = np.argmax(similarities)
+    intersectingFeatures = []
+    for i, feature in enumerate(features):
+        if vector[0,i] > 0 and solutionVectors[closest,i] > 0:
+            intersectingFeatures.append(feature)
+
+    return closest, intersectingFeatures
 
 def runExperiment():
     # Load the models 
@@ -112,13 +122,15 @@ def runExperiment():
     for i, vector in enumerate(studentVectors):
         textVector = textModel.transform([' '.join(vector.textTokens)])
         tokenVector = tokenModel.transform([' '.join(vector.langTokens)])
-        textClosestIndex = getClosestCosine(textVector, textMatrix)
-        tokenClosestIndex = getClosestCosine(tokenVector, tokenMatrix)
-        jaccardClosestIndex = getClosestJaccard(vector, solutionVectors)
-        outList.append([i+1,vector.rawText,solutionVectors[textClosestIndex].rawText, solutionVectors[tokenClosestIndex].rawText,\
-                solutionVectors[jaccardClosestIndex].rawText])
+        textClosestIndex, textIntersections = getClosestCosine(textVector, textMatrix, textModel.get_feature_names())
+        tokenClosestIndex, tokenIntersections = getClosestCosine(tokenVector, tokenMatrix, tokenModel.get_feature_names())
+        jaccardClosestIndex, jaccardIntersections = getClosestJaccard(vector, solutionVectors)
+        closest = set([textClosestIndex, tokenClosestIndex, jaccardClosestIndex])        
+        outList.append([i+1,vector.rawText,solutionVectors[textClosestIndex].rawText + "\n\n---------\n" + str(textIntersections),\
+                solutionVectors[tokenClosestIndex].rawText + "\n\n----------\n" + str(tokenIntersections),\
+                solutionVectors[jaccardClosestIndex].rawText + "\n\n----------\n" + str(jaccardIntersections), len(closest) != 1 ])
         print(i)
-    output = pd.DataFrame(outList, columns=['#', 'Sample','Text-TfIdf', 'Token-Tf-Idf', 'Jaccard'])
+    output = pd.DataFrame(outList, columns=['#', 'Sample','Text-TfIdf', 'Token-Tf-Idf', 'Jaccard', 'Different Recommendations'])
     output.to_csv("output.csv")
 
 if __name__ == "__main__":

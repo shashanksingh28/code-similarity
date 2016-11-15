@@ -132,6 +132,9 @@ public class ASTEnhanced {
             
             // These are in-line comments just before the method definitition
             if (n.getComment() != null){
+            	if (this.comments == null){
+            		this.comments = "";
+            	}
             	this.comments += n.getComment().getContent(); 
             }
             
