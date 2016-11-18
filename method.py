@@ -4,7 +4,7 @@ from collections import Counter
 from nltk.corpus import stopwords
 import pdb
 
-DEBUG = False
+DEBUG = True
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar """
@@ -122,11 +122,13 @@ class MethodFeatureVector:
     @staticmethod
     def __getTextTokens(text):
         """ If we consider this to be simply a text file, what would we get"""
-        # print("Text before:", text)
+        if DEBUG:
+            print("Text before:", text)
         tokens = re.sub(MethodFeatureVector.textTokenizationPattern, " ", text).split()
         # had we treated this as pure text, we would filter it the same way as language
         filtered_words = [word.strip() for word in tokens if word.strip() not in stopwords.words('english') and len(word.strip()) > 1]
-        # print("Text after:", filtered_words)
+        if DEBUG:
+            print("Text after:", filtered_words)
 
         return filtered_words
     
