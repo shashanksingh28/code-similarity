@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.InitializerDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.body.VariableDeclaratorId;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
@@ -160,7 +161,9 @@ public class ASTEnhanced {
     }
 
     private void parseNode(Node node) {
-    	if (node instanceof MethodCallExpr) {
+    	if (node instanceof VariableDeclaratorId){
+    		incrementDictCount(this.variables, ((VariableDeclaratorId) node).getName());
+    	} else if (node instanceof MethodCallExpr) {
             this.parseMethodCall((MethodCallExpr) node);
         } else if (node instanceof Expression) {
             this.parseExpr((Expression) node);
@@ -214,7 +217,11 @@ public class ASTEnhanced {
             	}            	
             }            	
         } else if(expr instanceof VariableDeclarationExpr){        	
-            VariableDeclarationExpr varDecExpr = (VariableDeclarationExpr) expr;
+            int modifiers = ((VariableDeclarationExpr) expr).getModifiers();
+            if (modifiers == 16){
+            	this.concepts.add("FinalVariables");
+            }
+        	VariableDeclarationExpr varDecExpr = (VariableDeclarationExpr) expr;
             String leftType = varDecExpr.getType().toString();
             for(Node child : varDecExpr.getChildrenNodes()){
             	if (child instanceof VariableDeclarator){
@@ -240,29 +247,28 @@ public class ASTEnhanced {
         }
     }
 
-    private void parseMethodCall(MethodCallExpr expr){
-        String currentMethod, parsedMethod;
-        if(this.modifier != 9){
-            // This is not a static method so normal scope
-            if (expr.getScope() != null){
-        	currentMethod = expr.getScope() + "." + expr.getName();
-            }
-            else{
-            	currentMethod = this.className + "." + expr.getName();
-            }
-            parsedMethod = this.className + "." + this.name;
+    private void parseMethodCall(MethodCallExpr methodCall){
+        if (methodCall.getScope() != null){
+        	Expression scope = methodCall.getScope();
+        	// Sometimes the scope could be System.out but sometimes it could be a variablename
+        	// We try to fetch classnames
+        	if(scope instanceof FieldAccessExpr){
+        		// System.out case
+        		incrementDictCount(this.methodCalls, methodCall.getScope() + "." + methodCall.getName());
+        	}
+        	else{
+        		// TODO : check if we can reach to the class here...
+        		incrementDictCount(this.methodCalls, methodCall.getScope() + "." + methodCall.getName());
+        	}
+        	
         }
         else{
-            // if static, do not use scope
-            currentMethod = expr.getName();
-            parsedMethod = this.name;
-        }
-
-        if(currentMethod.equals(parsedMethod)){
+        	incrementDictCount(this.methodCalls, methodCall.getName());
+        }        
+        
+        if(this.name.equals(methodCall.getName())){
             this.concepts.add("Recursion");
         }
-
-        incrementDictCount(this.methodCalls, currentMethod);
     }
     
     /**
