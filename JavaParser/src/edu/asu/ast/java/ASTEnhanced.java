@@ -36,9 +36,11 @@ public class ASTEnhanced {
     
     HashMap<String, Integer> constants;
     
-    HashMap<String, Integer> operators;
     Set<String> annotations;
-    HashMap<String, Integer> types;    
+    
+    HashMap<String, Integer> types;
+    Set<String> expressions;
+    Set<String> statements;
     
     // High level concepts we can extract
     Set<String> concepts;
@@ -74,12 +76,13 @@ public class ASTEnhanced {
         this.concepts = new HashSet<String>();
         this.comments = null;
         this.paramTypes = new ArrayList<String>();
-        this.operators = new HashMap<String, Integer>();
         this.variables = new HashMap<String, Integer>();
         this.constants = new HashMap<String, Integer>();
         this.types = new HashMap<String, Integer>();
         this.exceptions = new HashSet<String>();
         this.annotations = new HashSet<String>();
+        this.expressions = new HashSet<String>();
+        this.statements = new HashSet<String>();
     }
 
     public static String cleanDocumentation(String documentation){
@@ -161,6 +164,13 @@ public class ASTEnhanced {
     }
 
     private void parseNode(Node node) {
+    	// Capture all types of Expressions and Statements
+    	if(node instanceof Expression){
+    		this.expressions.add(node.getClass().getSimpleName());
+    	} else if(node instanceof Statement){
+    		this.statements.add(node.getClass().getSimpleName());
+    	}
+    	
     	if (node instanceof VariableDeclaratorId){
     		incrementDictCount(this.variables, ((VariableDeclaratorId) node).getName());
     	} else if (node instanceof MethodCallExpr) {
@@ -199,15 +209,7 @@ public class ASTEnhanced {
     }
 
     private void parseExpr(Expression expr){
-        if(expr instanceof UnaryExpr){
-            UnaryExpr unaryExpr = (UnaryExpr)expr;
-            String key = unaryExpr.getOperator().toString();
-            incrementDictCount(this.operators, key);
-        } else if(expr instanceof BinaryExpr){
-            BinaryExpr binaryExpr = (BinaryExpr) expr;
-            String key = binaryExpr.getOperator().toString();
-            incrementDictCount(this.operators, key);
-        } else if(expr instanceof NameExpr){
+        if(expr instanceof NameExpr){
             // Most likely a variable name
         	String name = ((NameExpr)expr).getName();
             if (name != null){
@@ -251,14 +253,14 @@ public class ASTEnhanced {
         if (methodCall.getScope() != null){
         	Expression scope = methodCall.getScope();
         	// Sometimes the scope could be System.out but sometimes it could be a variablename
-        	// We try to fetch classnames
+        	// We try to fetch class names
         	if(scope instanceof FieldAccessExpr){
         		// System.out case
         		incrementDictCount(this.methodCalls, methodCall.getScope() + "." + methodCall.getName());
         	}
         	else{
         		// TODO : check if we can reach to the class here...
-        		incrementDictCount(this.methodCalls, methodCall.getScope() + "." + methodCall.getName());
+        		incrementDictCount(this.methodCalls, methodCall.getName());
         	}
         	
         }
