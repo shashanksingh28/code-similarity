@@ -95,7 +95,7 @@ class MethodFeatureVector:
         """ Language tokens are all possible natural language components in the function.
             Primarily variable and class names, method names, comments and documentation, etc"""
         
-        nonLanguageFeatures = ['modifier', 'lineCount', 'concepts','expressions','statements']
+        nonLanguageFeatures = ['modifier', 'lineCount', 'concepts', 'expressions', 'statements']
         
         languageTokens = []
         words = []

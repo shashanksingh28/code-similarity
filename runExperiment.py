@@ -25,7 +25,7 @@ tokenMatrixFile = "models/tokenTf-Idf.dat"
 
 solutionListFile = "models/solutionVectors.pck"
 
-kNearest = 3
+kNearest = 4
 
 def getUniqueNonEmptyMethodVectors(inputFile):
     # pdb.set_trace()
@@ -126,14 +126,16 @@ def runExperiment():
         tokenModel = pickle.load(open(tokenModelFile, "rb"))
         tokenMatrix = pickle.load(open(tokenMatrixFile, "rb"))
     
+    print(len(solutionVectors),"solution samples")
     # For every sample in student set, product predictions
-    print("Reading samples...")
+    print("Reading student samples...")
 
-    boostLanguage = {'variables': 2, 'javaDoc' : 3, 'comments' : 3}
-    boostStructure = {'concepts': 3, 'methodCalls' : 2, 'expressions': 2, 'statements' : 2}
+    boostLanguage = {'variables': 2, 'javaDoc' : 2, 'comments' : 2, 'constants' : 2}
+    boostStructure = {'concepts': 2, 'expressions': 2, 'statements' : 2, 'methodCalls' : 2, 'types' : 2, 'annotations': 2, 'exceptions' : 2, 'paramTypes' : 2, 'returnType' : 2}
 
     studentVectors = getUniqueNonEmptyMethodVectors(studentInputFile)
-    outList = []
+    outListVerbose = []
+    outListLess = []
     for i, vector in enumerate(studentVectors):
         textVector = textModel.transform([' '.join(vector.textTokens)])
         tokenVector = tokenModel.transform([' '.join(vector.langTokens)])
@@ -143,33 +145,41 @@ def runExperiment():
         langJaccardKnearest = jaccardKnearest(vector, solutionVectors, kNearest, boostLanguage)
         structJaccardKnearest = jaccardKnearest(vector, solutionVectors, kNearest, boostStructure)
 
-        print(i)
-        # pdb.set_trace()
+        print(i + 1)
         for j in range(kNearest):
             if j == 0:
-                outList.append([i + 1,\
-                        len(set([textCosineKnearest[j][1],tokenCosineKnearest[j][1], equalJaccardKnearest[j][1], langJaccardKnearest[j][1], structJaccardKnearest[j][1]])) > 1, 
-                        vector.rawText,\
-                        solutionVectors[textCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(textCosineKnearest[j][0]) + "\n" + str(textCosineKnearest[j][2]),\
-                        solutionVectors[tokenCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(tokenCosineKnearest[j][0]) + "\n" + str(tokenCosineKnearest[j][2]),\
-                        solutionVectors[equalJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(equalJaccardKnearest[j][0]) + "\n" + str(equalJaccardKnearest[j][2]),\
-                        solutionVectors[langJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(langJaccardKnearest[j][0]) + "\n" + str(langJaccardKnearest[j][2]),\
-                        solutionVectors[structJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(structJaccardKnearest[j][0]) + "\n" + str(structJaccardKnearest[j][2])
-                        ])
+                recordVerbose = [i + 1]
+                recordLess = [i + 1]
             else:
-                outList.append([None,\
-                        None,
-                        "",\
-                        solutionVectors[textCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(textCosineKnearest[j][0]) + "\n" + str(textCosineKnearest[j][2]),\
-                        solutionVectors[tokenCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(tokenCosineKnearest[j][0]) + "\n" + str(tokenCosineKnearest[j][2]),\
-                        solutionVectors[equalJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(equalJaccardKnearest[j][0]) + "\n" + str(equalJaccardKnearest[j][2]),\
-                        solutionVectors[langJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(langJaccardKnearest[j][0]) + "\n" + str(langJaccardKnearest[j][2]),\
-                        solutionVectors[structJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(structJaccardKnearest[j][0]) + "\n" + str(structJaccardKnearest[j][2]) 
-                        ])
+                recordVerbose = [None]
+                recordLess = [None]
 
+            recordVerbose.extend([j + 1, len(set([textCosineKnearest[j][1], tokenCosineKnearest[j][1], equalJaccardKnearest[j][1], langJaccardKnearest[j][1], structJaccardKnearest[j][1]])) > 1,\
+                vector.rawText,\
+                solutionVectors[equalJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(equalJaccardKnearest[j][0]) + "\n" + str(equalJaccardKnearest[j][2]),\
+                solutionVectors[langJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(langJaccardKnearest[j][0]) + "\n" + str(langJaccardKnearest[j][2]),\
+                solutionVectors[structJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(structJaccardKnearest[j][0]) + "\n" + str(structJaccardKnearest[j][2]),\
+                solutionVectors[textCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(textCosineKnearest[j][0]) + "\n" + str(textCosineKnearest[j][2]),\
+                solutionVectors[tokenCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(tokenCosineKnearest[j][0]) + "\n" + str(tokenCosineKnearest[j][2])
+            ])
+            recordLess.extend([j + 1, len(set([textCosineKnearest[j][1], tokenCosineKnearest[j][1], equalJaccardKnearest[j][1], langJaccardKnearest[j][1], structJaccardKnearest[j][1]])) > 1,\
+                vector.rawText,\
+                solutionVectors[equalJaccardKnearest[j][1]].rawText,
+                solutionVectors[langJaccardKnearest[j][1]].rawText,
+                solutionVectors[structJaccardKnearest[j][1]].rawText,
+                solutionVectors[textCosineKnearest[j][1]].rawText,
+                solutionVectors[tokenCosineKnearest[j][1]].rawText
+            ])
+            
+            outListVerbose.append(recordVerbose)
+            outListLess.append(recordLess)
     
-    output = pd.DataFrame(outList, columns=['#', 'Difference', 'Sample','Text-TfIdf', 'Token-Tf-Idf', 'EqualJaccard','Language boosted', 'Syntax boosted'])
-    output.to_csv("output.csv")
+    cols = ['#','Rank', 'Diff','Sample','EqualJaccard','Language boosted', 'Syntax boosted','Text-TfIdf', 'Token-Tf-Idf']
+    outputLess = pd.DataFrame(outListLess, columns = cols)
+    outputLess.to_csv("outputLess.csv", index = False)
+    outputVerbose = pd.DataFrame(outListVerbose, columns = cols)
+    outputVerbose.to_csv("outputVerbose.csv", index = False)
+
 
 if __name__ == "__main__":
     start_time = time.time()

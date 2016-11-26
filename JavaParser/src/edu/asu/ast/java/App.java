@@ -3,6 +3,7 @@ package edu.asu.ast.java;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -28,6 +29,20 @@ public class App
             System.out.println();
             System.out.println();
         }
+        
+        @Override
+        public void visit(ConstructorDeclaration n, Object arg) {
+            // here you can access the attributes of the method.
+            // this method will be called for all methods in this
+            // CompilationUnit, including inner class method
+            super.visit(n, arg);
+            ASTEnhanced ast = new ASTEnhanced();
+            ast.buildConstructorAST(n);
+            System.out.println(ast.toJSON());
+            System.out.println();
+            System.out.println();
+        }
+        
     }
 
     private static ArrayList<File> getJavaFilesFromDir(File path){
@@ -50,6 +65,7 @@ public class App
     {
         CompilationUnit cu;
         MethodVisitor mv = new MethodVisitor();
+        
         try{
             if (args.length == 0){
                 System.out.println("Provide a directory with java files");
