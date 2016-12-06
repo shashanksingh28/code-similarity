@@ -130,7 +130,7 @@ def runExperiment():
     # For every sample in student set, product predictions
     print("Reading student samples...")
 
-    boostLanguage = {'variables': 2, 'javaDoc' : 2, 'comments' : 2, 'constants' : 2}
+    boostLanguage = {'variables': 2, 'javaDoc' : 2, 'comments' : 2, 'constants' : 2, 'name' : 2}
     boostStructure = {'concepts': 2, 'expressions': 2, 'statements' : 2, 'methodCalls' : 2, 'types' : 2, 'annotations': 2, 'exceptions' : 2, 'paramTypes' : 2, 'returnType' : 2}
 
     studentVectors = getUniqueNonEmptyMethodVectors(studentInputFile)

@@ -26,6 +26,12 @@ def setJaccardSimilarity(s1, s2):
         return 0.0, set()
     return (len(intersect) / lengthUnion) , intersect 
 
+def stringJaccardSimilarity(string1, string2):
+    wordSet1 = set(string1.split())
+    wordSet2 = set(string2.split())
+    return setJaccardSimilarity(wordSet1, wordSet2)
+
+
 def jaccardSimilarity(method1, method2, featureWeights = dict()):
     """ Given a two methods (class MethodFeatureVector), 
         return the Jaccard Similarity between them and a dictionary of intersections."""
@@ -52,7 +58,9 @@ def jaccardSimilarity(method1, method2, featureWeights = dict()):
         elif fType is set:
             # textbook definition of jaccard similarity
             sim, intersections = setJaccardSimilarity(f1[key], f2[key])
-        elif fType is int or fType is float or fType is str or fType is bool:
+        elif fType is str:
+            sim, intersections = stringJaccardSimilarity(f1[key], f2[key])
+        elif fType is int or fType is float or fType is bool:
             sim = 1 if f1[key] == f2[key] else 0
             intersections = set([f1[key]])
         else:
