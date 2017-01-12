@@ -1,10 +1,12 @@
-package edu.asu.ast.java;
+package edu.asu.ast.javaFileParser;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
+import edu.asu.ast.ASTEnhanced;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -70,14 +72,6 @@ public class App
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void printFileContents(File file) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            System.out.println("# " + line);
         }
     }
 }

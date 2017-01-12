@@ -1,4 +1,4 @@
-package edu.asu.ast.java;
+package edu.asu.ast;
 
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -68,7 +68,7 @@ public class ASTEnhanced {
     // If it is static, the scope of a method does not contain class name
     int modifier;
 
-    ASTEnhanced() {
+    public ASTEnhanced() {
 
         this.methodCalls = new HashMap<String, Integer>();
         this.concepts = new HashSet<String>();
