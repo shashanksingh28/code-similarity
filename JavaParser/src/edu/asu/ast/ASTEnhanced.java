@@ -1,7 +1,10 @@
 package edu.asu.ast;
 
+import com.github.javaparser.ast.DocumentableNode;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.InitializerDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
@@ -30,15 +33,17 @@ public class ASTEnhanced {
 
     // [return type, arg1 type, arg2 type, ..]
     ArrayList<String> paramTypes;   
-    String returnType;    
+    String returnType;
     
     HashMap<String, Integer> methodCalls;
     
     HashMap<String, Integer> constants;
     
-    HashMap<String, Integer> operators;
     Set<String> annotations;
-    HashMap<String, Integer> types;    
+    
+    HashMap<String, Integer> types;
+    Set<String> expressions;
+    Set<String> statements;
     
     // High level concepts we can extract
     Set<String> concepts;
@@ -74,73 +79,73 @@ public class ASTEnhanced {
         this.concepts = new HashSet<String>();
         this.comments = null;
         this.paramTypes = new ArrayList<String>();
-        this.operators = new HashMap<String, Integer>();
         this.variables = new HashMap<String, Integer>();
         this.constants = new HashMap<String, Integer>();
         this.types = new HashMap<String, Integer>();
         this.exceptions = new HashSet<String>();
         this.annotations = new HashSet<String>();
+        this.expressions = new HashSet<String>();
+        this.statements = new HashSet<String>();
     }
 
     public static String cleanDocumentation(String documentation){
         String processed = documentation.replaceAll("(\r\n|\n)"," ");
+        
         // Remove @param and @return because they are common accross
-        processed = processed.replaceAll("(@param|@return)", "").replaceAll("[,.]", " ").replaceAll("\\s+", " "); 
+        processed = processed.replaceAll("(@param|@return)", "").replaceAll("[,.*]", " ").replaceAll("\\s+", " "); 
         return processed.trim();
     }
     
     /**
      * The standard factory method to get an enhanced AST from a method
-     * @param n Method declaration object as per javaparser
+     * @param methodDec Method declaration object as per javaparser
      * @return An enhanced AST, which can be converted to a JSON
      */
-    public void buildMethodAST(MethodDeclaration n){
-        
+    public void buildMethodAST(MethodDeclaration methodDec){
     	try{
                                     
-            this.text = printAndExtractText(n);
+            this.text = printAndExtractText(methodDec);
             
             // Get all thrown Exceptions
-            for(ReferenceType type: n.getThrows()){
+            for(ReferenceType type: methodDec.getThrows()){
             	this.exceptions.add(type.toString());
-            	this.concepts.add("ThrowExceptions");
             }
             
-            this.name = n.getName();
-            Node parent = n.getParentNode();
+            this.name = methodDec.getName();
+            Node parent = methodDec.getParentNode();
             if (parent instanceof ClassOrInterfaceDeclaration){
                 this.className = ((ClassOrInterfaceDeclaration) parent).getName();
             }
-            this.modifier = n.getModifiers();
-            this.returnType = n.getType().toString();
+            this.modifier = methodDec.getModifiers();
+            this.returnType = methodDec.getType().toString();
 
-            for (Parameter param : n.getParameters()) {
+            for (Parameter param : methodDec.getParameters()) {
                 this.paramTypes.add(param.getType().toString());
                 incrementDictCount(this.variables, param.getName());
             }
             
             // Get Annotations
-            for(AnnotationExpr annotExpr: n.getAnnotations()){
+            for(AnnotationExpr annotExpr: methodDec.getAnnotations()){
             	this.annotations.add(annotExpr.getName().toString());
             }
             
             // If JavaDocs present, extract them
-            if (n.getJavaDoc() != null){
-                this.javaDoc = cleanDocumentation(n.getJavaDoc().getContent());
+            if (methodDec.getJavaDoc() != null){
+                this.javaDoc = cleanDocumentation(methodDec.getJavaDoc().getContent());
             }
             
-            this.comments = extractContainedComments(n);
+            this.comments = extractContainedComments(methodDec);
             
             // These are in-line comments just before the method definitition
-            if (n.getComment() != null){
+            if (methodDec.getComment() != null){
             	if (this.comments == null){
             		this.comments = "";
             	}
-            	this.comments += n.getComment().getContent(); 
+            	this.comments += methodDec.getComment().getContent(); 
             }
             
             // Recursively loop through child nodes and make a dictionary
-            this.parseBody(n.getBody());
+            this.parseBody(methodDec.getBody());
 
         } catch (Exception ex){
             ex.printStackTrace();
@@ -148,6 +153,58 @@ public class ASTEnhanced {
 
     }
 
+    public void buildConstructorAST(ConstructorDeclaration constDec){
+    	try{
+            
+            this.text = printAndExtractText(constDec);
+            
+            // Get all thrown Exceptions
+            for(ReferenceType type: constDec.getThrows()){
+            	this.exceptions.add(type.toString());
+            }
+            
+            this.name = constDec.getName();
+            Node parent = constDec.getParentNode();
+            if (parent instanceof ClassOrInterfaceDeclaration){
+                this.className = ((ClassOrInterfaceDeclaration) parent).getName();
+            }
+            this.modifier = constDec.getModifiers();
+            this.returnType = this.className;
+
+            for (Parameter param : constDec.getParameters()) {
+                this.paramTypes.add(param.getType().toString());
+                incrementDictCount(this.variables, param.getName());
+            }
+            
+            // Get Annotations
+            for(AnnotationExpr annotExpr: constDec.getAnnotations()){
+            	this.annotations.add(annotExpr.getName().toString());
+            }
+            
+            // If JavaDocs present, extract them
+            if (constDec.getJavaDoc() != null){
+                this.javaDoc = cleanDocumentation(constDec.getJavaDoc().getContent());
+            }
+            
+            this.comments = extractContainedComments(constDec);
+            
+            // These are in-line comments just before the method definitition
+            if (constDec.getComment() != null){
+            	if (this.comments == null){
+            		this.comments = "";
+            	}
+            	this.comments += constDec.getComment().getContent(); 
+            }
+            
+            // Recursively loop through child nodes and make a dictionary
+            this.parseBody(constDec.getBlock());
+
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+    
     private void parseBody(BlockStmt block){
         // System.out.println(block);
         if (block == null || block.getChildrenNodes().size() == 0){
@@ -161,18 +218,27 @@ public class ASTEnhanced {
     }
 
     private void parseNode(Node node) {
+    	// Capture all types of Expressions and Statements
+    	if(node instanceof Expression){
+    		this.expressions.add(node.getClass().getSimpleName());
+    	} else if(node instanceof Statement){
+    		this.statements.add(node.getClass().getSimpleName());
+    	} 
+    	
+    	if(node instanceof ClassOrInterfaceDeclaration){
+    		this.concepts.add("InnerClass");
+    	}
+    	else if(node instanceof MethodDeclaration){
+    		this.concepts.add("InnerMethod");
+    	}
+    	
     	if (node instanceof VariableDeclaratorId){
     		incrementDictCount(this.variables, ((VariableDeclaratorId) node).getName());
     	} else if (node instanceof MethodCallExpr) {
             this.parseMethodCall((MethodCallExpr) node);
         } else if (node instanceof Expression) {
             this.parseExpr((Expression) node);
-        } else if (node instanceof WhileStmt || node instanceof ForeachStmt || node instanceof ForStmt){
-            this.concepts.add("Loop");
-        } else if (node instanceof IfStmt) {
-            this.concepts.add("Decision");
         } else if(node instanceof CatchClause){
-        	this.concepts.add("ExceptionHandling");
         	CatchClause catchClause = (CatchClause) node;
         	this.exceptions.add(catchClause.getParam().getType().toString());
         }
@@ -199,22 +265,17 @@ public class ASTEnhanced {
     }
 
     private void parseExpr(Expression expr){
-        if(expr instanceof UnaryExpr){
-            UnaryExpr unaryExpr = (UnaryExpr)expr;
-            String key = unaryExpr.getOperator().toString();
-            incrementDictCount(this.operators, key);
-        } else if(expr instanceof BinaryExpr){
-            BinaryExpr binaryExpr = (BinaryExpr) expr;
-            String key = binaryExpr.getOperator().toString();
-            incrementDictCount(this.operators, key);
-        } else if(expr instanceof NameExpr){
+        if(expr instanceof NameExpr){
             // Most likely a variable name
         	String name = ((NameExpr)expr).getName();
             if (name != null){
-            	String operandName = ((NameExpr)expr).getName();
-            	if (!operandName.startsWith("//") ){
+            	// null occurs often when it involves methodCalls
+            	Node parent = expr.getParentNode();
+            	if(!(parent instanceof MethodCallExpr) && !(parent instanceof FieldAccessExpr)){
+            		// methodCall like getPerson().getName() would also have getName and getPerson as name expressions
+            		// So do fieldAccess expressions like System.out.println
             		incrementDictCount(this.variables, ((NameExpr)expr).getName());
-            	}            	
+            	}          	
             }            	
         } else if(expr instanceof VariableDeclarationExpr){        	
             int modifiers = ((VariableDeclarationExpr) expr).getModifiers();
@@ -231,6 +292,7 @@ public class ASTEnhanced {
                 		if(!creationExpr.getType().toString().equals(leftType)){
                 			// Left Type is not equal to right, Polymorphism in action
                 			this.concepts.add("PolyMorphism");
+                			incrementDictCount(this.types, creationExpr.getType().getName());
                 		}
             		} else if (varDeclerator.getInit() instanceof CastExpr){
             			this.concepts.add("Casting");
@@ -248,17 +310,25 @@ public class ASTEnhanced {
     }
 
     private void parseMethodCall(MethodCallExpr methodCall){
-        if (methodCall.getScope() != null){
-        	Expression scope = methodCall.getScope();
+        Expression scope = methodCall.getScope();
+    	if (scope != null){
         	// Sometimes the scope could be System.out but sometimes it could be a variablename
-        	// We try to fetch classnames
+        	// We try to fetch class names
         	if(scope instanceof FieldAccessExpr){
         		// System.out case
         		incrementDictCount(this.methodCalls, methodCall.getScope() + "." + methodCall.getName());
         	}
-        	else{
-        		// TODO : check if we can reach to the class here...
-        		incrementDictCount(this.methodCalls, methodCall.getScope() + "." + methodCall.getName());
+        	else if (scope instanceof MethodCallExpr){
+        		// Called via chain of calls like getSomething().somethingElse()
+        		// when we are currently looking at somethingElse
+        		incrementDictCount(this.methodCalls, methodCall.getName());
+        	}
+        	else if (scope instanceof NameExpr){
+        		// This is called via an instance variable
+        		// We assign add the instance variable to the variable dict
+        		incrementDictCount(this.variables, ((NameExpr) scope).getName());
+        		// It would be nice if we got the full type here, like what is the class of the scope
+        		incrementDictCount(this.methodCalls, methodCall.getName());
         	}
         	
         }
@@ -267,7 +337,16 @@ public class ASTEnhanced {
         }        
         
         if(this.name.equals(methodCall.getName())){
-            this.concepts.add("Recursion");
+            if(scope == null){
+            	this.concepts.add("Recursion");
+            }
+            else{
+            	if(scope instanceof NameExpr){
+            		if(scope.toString().equals(this.className)){
+            			this.concepts.add("Recursion");
+            		}            		
+            	}
+            }
         }
     }
     
@@ -279,7 +358,7 @@ public class ASTEnhanced {
         return gson.toJson(this);
     }
 
-    public String printAndExtractText(MethodDeclaration n){
+    public String printAndExtractText(DocumentableNode n){
         String content = n.toString();
     	if (n.getJavaDoc() != null){
         	// JavaDoc is double counted, so ensure
@@ -291,7 +370,6 @@ public class ASTEnhanced {
         String extracted = "";
         for(String line : lines){
             System.out.println("# " + line);
-            // extracted += line.replaceAll("\\s+"," ").replaceAll("(\r\n|\n)"," ") + " ";
             extracted += line + "\n";
         }
 

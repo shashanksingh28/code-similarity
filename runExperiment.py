@@ -12,6 +12,8 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from similarity import jaccardSimilarity
+
 solutionInputFile = "solutionSet.txt"
 studentInputFile = "studentSet.txt"
 
@@ -22,6 +24,8 @@ tokenModelFile = "models/tokenTf-Idf.model"
 tokenMatrixFile = "models/tokenTf-Idf.dat"
 
 solutionListFile = "models/solutionVectors.pck"
+
+kNearest = 4
 
 def getUniqueNonEmptyMethodVectors(inputFile):
     # pdb.set_trace()
@@ -54,8 +58,10 @@ def createModels(solutionsFile):
     # 1. Text tokenized bag of words
     # 2. NLP bag of words
     textBOW, tokenBOW = getBOWs(vectors)
-    # pdb.set_trace()
     
+    if not os.path.exists("models"):
+        os.makedirs("models")
+
     textTfIdfModel = TfidfVectorizer(min_df=1).fit(textBOW)
     textTfIdfData = textTfIdfModel.transform(textBOW)
     pickle.dump(textTfIdfModel, open(textModelFile, "wb")) 
@@ -70,37 +76,42 @@ def createModels(solutionsFile):
 
     return (vectors, textTfIdfModel, textTfIdfData, tokenTfIdfModel, tokenTfIdfData)
 
-def getClosestJaccard(method, allMethods):
-    """ Given a method as a vector, compare feature set intersections.
-        Mathematically, Intersection(A,B)/ Union(A,B) """
-    # pdb.set_trace()
-    closestVectorIndex = 0
-    highestScore = float('-inf')
-    highestIntersections = []
-    for i, solutionMethod in enumerate(allMethods):
-        if solutionMethod == method:
-            continue
-        thisJaccardScore, intersections = method.getJaccardSimilarity(solutionMethod)
-        if thisJaccardScore > highestScore:
-            closestVectorIndex = i
-            highestScore = thisJaccardScore
-            highestIntersections = intersections
-    return closestVectorIndex, highestIntersections
+def jaccardKnearest(method, solutions, k = 1, featureWeights=dict()):
+    """ Return K Nearest methods based on jaccard similarity.
+        Returns a list of tuples containing (score, similarityDictionary)
+    """
+    results = [] 
+    
+    similarities = [ jaccardSimilarity(method, solution, featureWeights) for solution in solutions ]
+    similarityScores = [tup[0] for tup in similarities]
+    sortedIndices = np.argsort(similarityScores)
+
+    kNearestIndices = sortedIndices[-k:]
+
+    for i in kNearestIndices[::-1]:
+        results.append((float(np.round(similarities[i][0], decimals = 3)), i, similarities[i][1]))
+
+    return results
 
 
-def getClosestCosine(vector, solutionVectors, features):
+def cosineKnearest(vector, solutionVectors, featureNames, k = 1):
     """ Provided a single vector and a list of vectors with the same dimensions, finds closest
         based on cosine similarity. Features is just a list of features, so it also provides
         a list of which features contributed to the cosine """
     # pdb.set_trace()
-    similarities = cosine_similarity(vector,solutionVectors)
-    closest = np.argmax(similarities)
-    intersectingFeatures = []
-    for i, feature in enumerate(features):
-        if vector[0,i] > 0 and solutionVectors[closest,i] > 0:
-            intersectingFeatures.append(feature)
-
-    return closest, intersectingFeatures
+    similarities = cosine_similarity(vector,solutionVectors).ravel()
+    
+    # since we need indexes
+    sortedIndices = np.argsort(similarities)
+    kNearestIndices = sortedIndices[-k:]
+    results = []
+    for i in kNearestIndices[::-1]:
+        intersectingTokens = []
+        for j, feature in enumerate(featureNames):
+            if vector[0,j] > 0 and solutionVectors[i,j] > 0:
+                intersectingTokens.append(feature)
+        results.append((float(np.round(similarities[i], decimals = 3)), i, intersectingTokens))
+    return results
 
 def runExperiment():
     # Load the models 
@@ -115,23 +126,60 @@ def runExperiment():
         tokenModel = pickle.load(open(tokenModelFile, "rb"))
         tokenMatrix = pickle.load(open(tokenMatrixFile, "rb"))
     
+    print(len(solutionVectors),"solution samples")
     # For every sample in student set, product predictions
-    print("Reading samples...")
+    print("Reading student samples...")
+
+    boostLanguage = {'variables': 2, 'javaDoc' : 2, 'comments' : 2, 'constants' : 2, 'name' : 2}
+    boostStructure = {'concepts': 2, 'expressions': 2, 'statements' : 2, 'methodCalls' : 2, 'types' : 2, 'annotations': 2, 'exceptions' : 2, 'paramTypes' : 2, 'returnType' : 2}
+
     studentVectors = getUniqueNonEmptyMethodVectors(studentInputFile)
-    outList = []
+    outListVerbose = []
+    outListLess = []
     for i, vector in enumerate(studentVectors):
         textVector = textModel.transform([' '.join(vector.textTokens)])
         tokenVector = tokenModel.transform([' '.join(vector.langTokens)])
-        textClosestIndex, textIntersections = getClosestCosine(textVector, textMatrix, textModel.get_feature_names())
-        tokenClosestIndex, tokenIntersections = getClosestCosine(tokenVector, tokenMatrix, tokenModel.get_feature_names())
-        jaccardClosestIndex, jaccardIntersections = getClosestJaccard(vector, solutionVectors)
-        closest = set([textClosestIndex, tokenClosestIndex, jaccardClosestIndex])        
-        outList.append([i+1,vector.rawText,solutionVectors[textClosestIndex].rawText + "\n\n---------\n" + str(textIntersections),\
-                solutionVectors[tokenClosestIndex].rawText + "\n\n----------\n" + str(tokenIntersections),\
-                solutionVectors[jaccardClosestIndex].rawText + "\n\n----------\n" + str(jaccardIntersections), len(closest) != 1 ])
-        print(i)
-    output = pd.DataFrame(outList, columns=['#', 'Sample','Text-TfIdf', 'Token-Tf-Idf', 'Jaccard', 'Different Recommendations'])
-    output.to_csv("output.csv")
+        textCosineKnearest = cosineKnearest(textVector, textMatrix, textModel.get_feature_names(), kNearest)
+        tokenCosineKnearest = cosineKnearest(tokenVector, tokenMatrix, tokenModel.get_feature_names(), kNearest)
+        equalJaccardKnearest = jaccardKnearest(vector, solutionVectors, kNearest)
+        langJaccardKnearest = jaccardKnearest(vector, solutionVectors, kNearest, boostLanguage)
+        structJaccardKnearest = jaccardKnearest(vector, solutionVectors, kNearest, boostStructure)
+
+        print(i + 1)
+        for j in range(kNearest):
+            if j == 0:
+                recordVerbose = [i + 1]
+                recordLess = [i + 1]
+            else:
+                recordVerbose = [None]
+                recordLess = [None]
+
+            recordVerbose.extend([j + 1, len(set([textCosineKnearest[j][1], tokenCosineKnearest[j][1], equalJaccardKnearest[j][1], langJaccardKnearest[j][1], structJaccardKnearest[j][1]])) > 1,\
+                vector.rawText,\
+                solutionVectors[equalJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(equalJaccardKnearest[j][0]) + "\n" + str(equalJaccardKnearest[j][2]),\
+                solutionVectors[langJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(langJaccardKnearest[j][0]) + "\n" + str(langJaccardKnearest[j][2]),\
+                solutionVectors[structJaccardKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(structJaccardKnearest[j][0]) + "\n" + str(structJaccardKnearest[j][2]),\
+                solutionVectors[textCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(textCosineKnearest[j][0]) + "\n" + str(textCosineKnearest[j][2]),\
+                solutionVectors[tokenCosineKnearest[j][1]].rawText + "\n\n-----\nScore:" + str(tokenCosineKnearest[j][0]) + "\n" + str(tokenCosineKnearest[j][2])
+            ])
+            recordLess.extend([j + 1, len(set([textCosineKnearest[j][1], tokenCosineKnearest[j][1], equalJaccardKnearest[j][1], langJaccardKnearest[j][1], structJaccardKnearest[j][1]])) > 1,\
+                vector.rawText,\
+                solutionVectors[equalJaccardKnearest[j][1]].rawText,
+                solutionVectors[langJaccardKnearest[j][1]].rawText,
+                solutionVectors[structJaccardKnearest[j][1]].rawText,
+                solutionVectors[textCosineKnearest[j][1]].rawText,
+                solutionVectors[tokenCosineKnearest[j][1]].rawText
+            ])
+            
+            outListVerbose.append(recordVerbose)
+            outListLess.append(recordLess)
+    
+    cols = ['#','Rank', 'Diff','Sample','EqualJaccard','Language boosted', 'Syntax boosted','Text-TfIdf', 'Token-Tf-Idf']
+    outputLess = pd.DataFrame(outListLess, columns = cols)
+    outputLess.to_csv("outputLess.csv", index = False)
+    outputVerbose = pd.DataFrame(outListVerbose, columns = cols)
+    outputVerbose.to_csv("outputVerbose.csv", index = False)
+
 
 if __name__ == "__main__":
     start_time = time.time()
