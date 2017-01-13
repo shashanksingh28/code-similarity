@@ -14,6 +14,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from similarity import jaccardSimilarity
 
+# used to call jar files
+from subprocess import Popen
+
+# Web server requirements
+from flask import Flask
+from flask import request
+
 solutionInputFile = "solutionSet.txt"
 studentInputFile = "studentSet.txt"
 
@@ -113,6 +120,20 @@ def cosineKnearest(vector, solutionVectors, featureNames, k = 1):
         results.append((float(np.round(similarities[i], decimals = 3)), i, intersectingTokens))
     return results
 
+
+def loadData():
+     if not os.path.isfile(textModelFile):
+        print("Creating models")
+        solutionVectors, textModel, textMatrix, tokenModel, tokenMatrix = createModels(solutionInputFile)
+     else:
+        print("Loading models")
+        solutionVectors = pickle.load(open(solutionListFile, "rb"))
+        textModel = pickle.load(open(textModelFile, "rb"))
+        textMatrix = pickle.load(open(textMatrixFile, "rb"))
+        tokenModel = pickle.load(open(tokenModelFile, "rb"))
+        tokenMatrix = pickle.load(open(tokenMatrixFile, "rb"))
+
+
 def runExperiment():
     # Load the models 
     if not os.path.isfile(textModelFile):
@@ -180,9 +201,28 @@ def runExperiment():
     outputVerbose = pd.DataFrame(outListVerbose, columns = cols)
     outputVerbose.to_csv("outputVerbose.csv", index = False)
 
+#if __name__ == "__main__":
+#    start_time = time.time()
+#    runExperiment()
+#    print("--- %s seconds ---" % (time.time() - start_time))
 
-if __name__ == "__main__":
-    start_time = time.time()
-    runExperiment()
-    print("--- %s seconds ---" % (time.time() - start_time))
 
+# Web server components
+loadData()
+
+app = Flask(__name__)
+@app.route('/')
+def hello_world():
+    return "Hello World!"
+
+"""@app.before_first_request
+def startup():
+    print("Loading...")
+    loadData()
+    print("Done")
+"""
+
+@app.route('/equalJaccard', methods=['POST'])
+def equalJaccardNearest():
+    print(request)
+    return "Hello"
