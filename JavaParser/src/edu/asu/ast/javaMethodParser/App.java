@@ -7,6 +7,7 @@ import java.io.StringReader;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -28,8 +29,17 @@ public class App
             ASTEnhanced ast = new ASTEnhanced();
             ast.buildMethodAST(n);
             System.out.println(ast.toJSON());
-            System.out.println();
-            System.out.println();
+        }
+        
+        @Override
+        public void visit(ConstructorDeclaration n, Object arg) {
+            // here you can access the attributes of the method.
+            // this method will be called for all methods in this
+            // CompilationUnit, including inner class method
+            super.visit(n, arg);
+            ASTEnhanced ast = new ASTEnhanced();
+            ast.buildConstructorAST(n);
+            System.out.println(ast.toJSON());
         }
     }
 
@@ -47,13 +57,13 @@ public class App
             	input += s + "\n";
             }
             input = input + "\n}";
-
         	cu = JavaParser.parse(new StringReader(input));
         	mv.visit(cu, null);            
         } catch (Exception e) {
-        	e.printStackTrace();
+        	System.err.println(e.getMessage());
         	System.exit(1);
         }
+        
     }
 
 }

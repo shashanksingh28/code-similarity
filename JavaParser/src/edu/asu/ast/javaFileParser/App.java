@@ -28,8 +28,6 @@ public class App
             ASTEnhanced ast = new ASTEnhanced();
             ast.buildMethodAST(n);
             System.out.println(ast.toJSON());
-            System.out.println();
-            System.out.println();
         }
         
         @Override
@@ -41,10 +39,7 @@ public class App
             ASTEnhanced ast = new ASTEnhanced();
             ast.buildConstructorAST(n);
             System.out.println(ast.toJSON());
-            System.out.println();
-            System.out.println();
-        }
-        
+        }        
     }
 
     private static ArrayList<File> getJavaFilesFromDir(File path){
@@ -79,11 +74,13 @@ public class App
 
             for(File file : javaFiles){
             	// System.out.println(file.getAbsolutePath());
-                cu = JavaParser.parse(file);
-                mv.visit(cu, null);
+                try{
+                	cu = JavaParser.parse(file);
+                	mv.visit(cu, null);
+                }catch (ParseException e) {
+                    e.printStackTrace();
+                }                 
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

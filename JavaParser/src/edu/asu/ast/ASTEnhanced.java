@@ -74,7 +74,12 @@ public class ASTEnhanced {
     int modifier;
 
     public ASTEnhanced() {
-
+    	this.name = "";
+    	this.className = "";
+    	this.javaDoc = "";
+    	this.comments = "";
+    	this.text = "";
+    	
         this.methodCalls = new HashMap<String, Integer>();
         this.concepts = new HashSet<String>();
         this.comments = null;
@@ -369,7 +374,7 @@ public class ASTEnhanced {
     	String[] lines = content.split("\n");
         String extracted = "";
         for(String line : lines){
-            System.out.println("# " + line);
+            // System.out.println("# " + line);
             extracted += line + "\n";
         }
 

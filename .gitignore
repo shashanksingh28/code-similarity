@@ -1,3 +1,6 @@
 temp/
 data/*.class
 temp/*.class
+JavaParser/.metadata
+JavaParser/RemoteSystemsTempFiles
+FunRep/__pycache__
