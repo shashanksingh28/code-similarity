@@ -14,7 +14,7 @@ class MethodFeatureVector:
         
         self.name = jsonObj['name']
         if 'className' in jsonObj:
-            self.className = jsonObj['className']
+            self.class_name = jsonObj['className']
         self.is_empty = jsonObj['isEmpty']
 
         # pure text form of the method

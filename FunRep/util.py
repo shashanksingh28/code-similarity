@@ -24,6 +24,8 @@ def vector_from_text(code_text):
     if proc.returncode != 0:
         raise Exception(err.decode("utf-8")) 
     method_text = out.decode("utf-8").strip()
+    print("out:",method_text)
+    method_vector=None
     for line in method_text.split("\n"):
         if re.search(r'^[^#].+$', line):
             method_vector = MethodFeatureVector(line)

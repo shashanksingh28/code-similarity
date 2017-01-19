@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app>
+	<meta charset="UTF-8">
+	<head>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+		<link rel="stylesheet" href="http://localhost:5000/static/style.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js">
+	</head>
+	<body>
+		<script type="text/javascript" src="http://localhost:5000/static/code.js"></script>
+ 		<div class="container">
+			<div class="col-md-4">
+                <h3>Java Method</h3>
+                <form>
+					<div class="form-group">
+						<label for="method_text"> Code </label>
+						<textarea rows="20" class="form-control" id="method_text" required></textarea>
+					</div>
+					<button type="button" onclick="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+			<div class="col-md-4">
+                <h3> Proposed recommender </h3>
+                <div id="proposed_recos">
+                </div>
+			</div>
+			<div class="col-md-4">
+                <h3> Text recommender </h3>
+                <div id="text_recos">
+                </div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,5 +1,7 @@
 from FunRep.util import *
+from FunRep.similarity import *
 import os
+import numpy as np
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -16,16 +18,14 @@ def tfIdf_models(vectors):
     tfidf_transformed_data = tfidf_fitted_model.transform(bow)
     return tfidf_fitted_model, tfidf_transformed_data
    
-def jaccardKnearest(method, solutions, k = 1, featureWeights=dict()):
+def jaccard_kNearest(method, solutions, k = 1, featureWeights=dict()):
     """ Return K Nearest methods based on jaccard similarity.
-        Returns a list of tuples containing (score, similarityDictionary)
+        Returns a list of tuples containing (score, solutions_index, similarityDictionary)
     """
     results = [] 
-    
     similarities = [ jaccardSimilarity(method, solution, featureWeights) for solution in solutions ]
     similarityScores = [tup[0] for tup in similarities]
     sortedIndices = np.argsort(similarityScores)
-
     kNearestIndices = sortedIndices[-k:]
 
     for i in kNearestIndices[::-1]:
@@ -33,22 +33,25 @@ def jaccardKnearest(method, solutions, k = 1, featureWeights=dict()):
 
     return results
 
-def cosineKnearest(vector, solutionVectors, featureNames, k = 1):
+def cosine_kNearest(ndim_num_vector, ndim_num_solutions, dim_names, k = 1):
     """ Provided a single vector and a list of vectors with the same dimensions, finds closest
         based on cosine similarity. Features is just a list of features, so it also provides
-        a list of which features contributed to the cosine """
-    # pdb.set_trace()
-    similarities = cosine_similarity(vector,solutionVectors).ravel()
+        a list of which features contributed to the cosine 
+        Returns a list of tuples containing (score, solutions_index, similarityDictionary)
+    """
+    similarities = cosine_similarity(ndim_num_vector, ndim_num_solutions).ravel()
     
     # since we need indexes
     sortedIndices = np.argsort(similarities)
     kNearestIndices = sortedIndices[-k:]
     results = []
+    
     for i in kNearestIndices[::-1]:
         intersectingTokens = []
-        for j, feature in enumerate(featureNames):
-            if vector[0,j] > 0 and solutionVectors[i,j] > 0:
+        for j, feature in enumerate(dim_names):
+            if ndim_num_vector[0,j] > 0 and ndim_num_solutions[i,j] > 0:
                 intersectingTokens.append(feature)
         results.append((float(np.round(similarities[i], decimals = 3)), i, intersectingTokens))
+    
     return results
 
