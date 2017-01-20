@@ -2,6 +2,7 @@ angular.module('similarityApp', [])
   .controller('AppController', ['$scope', function($scope) {
     $scope.textRecos = null;
     $scope.proposedRecos = null;
+    $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
 
     $scope.updateText = function updateText(results){
         console.log(results);
@@ -18,7 +19,7 @@ angular.module('similarityApp', [])
     $scope.postRequests = function postRequests(){
         var text = document.getElementById("method_text").value;
         $.ajax({
-            url: 'http://localhost:5000/equalJaccard',
+            url: $scope.baseUrl + '/equalJaccard',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -28,7 +29,7 @@ angular.module('similarityApp', [])
         });
         
         $.ajax({
-            url: 'http://localhost:5000/cosine',
+            url: $scope.baseUrl + '/cosine',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',

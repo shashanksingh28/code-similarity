@@ -28,7 +28,7 @@ class MethodFeatureVector:
         self.features['modifier'] = int(jsonObj['modifier'])
         self.features['lineCount'] = int(jsonObj['lineCount']) 
         if 'javaDoc' in jsonObj:
-            self.features['javaDoc'] = str(jsonObj['javaDoc']).lower()
+            self.features['java_doc'] = str(jsonObj['javaDoc']).lower()
         if 'comments' in jsonObj:
             self.features['comments'] = str(jsonObj['comments']).lower()
         
@@ -51,3 +51,7 @@ class MethodFeatureVector:
         camelCaseSplitText = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', self.raw_text)
         self.tokens = meaningful_tokens(camelCaseSplitText)
 
+    def lang_tokens(self):
+        """ Get only those tokens which one would consider to be natural language tokens
+            E.g.: Comments, variable names, tokens, etc """
+        lang_keys = ['variables', 'constants', 'comments', 'java_doc']

@@ -13,14 +13,8 @@ import FunRep.ml as ml
 # Web server requirements
 from flask import Flask, jsonify, request, render_template, url_for
 from flask.json import JSONEncoder
-from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-# CORS(app)
-# app.config['SERVER_NAME'] = 'codesimilarity.com'
-# with app.app_context():
-#    url_for('static', filename='style.css')
-#    url_for('static', filename='code.js')
 
 #### Config section ####
 solutions_input_file = "solutionSet.txt"

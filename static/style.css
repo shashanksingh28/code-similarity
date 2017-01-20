@@ -2,6 +2,7 @@ textarea { height: auto; }
 
 pre {
     overflow: auto;
-    width: 60%; 
+    max-width: 50%;
+    /* width: 50%; */
     /* display: inline-block; */
 }
