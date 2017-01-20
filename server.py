@@ -93,14 +93,17 @@ def index():
 @app.route('/equalJaccard', methods=['POST'])
 def jaccard_kNearest():
     try:
-        print(request.data)
         method_vector = util.vector_from_text(request.data.decode("utf-8"))
         kNearest = ml.jaccard_kNearest(method_vector, solution_vectors, k=4)
         # nearest contains score, solutions_index and intersections
-        print(kNearest)
+        # print(kNearest)
         nearest_vectors = []
         for element in kNearest:
-            nearest_vectors.append(solution_vectors[element[1]])
+            result = {}
+            result['score'] = element[0]
+            result['code'] = solution_vectors[element[1]]
+            result['match'] = element[2]
+            nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
         raise ex
@@ -115,10 +118,14 @@ def cosine_kNearest():
         method_vector_transformed = tfIdf_model.transform([' '.join(method_vector.tokens)])
         kNearest = ml.cosine_kNearest(method_vector_transformed, tfIdf_data, tfIdf_model.get_feature_names(), k=4)
         # nearest contains score, solutions_index and intersections
-        print(kNearest)
+        # print(kNearest)
         nearest_vectors = []
         for element in kNearest:
-            nearest_vectors.append(solution_vectors[element[1]])
+            result = {}
+            result['score'] = element[0]
+            result['code'] = solution_vectors[element[1]]
+            result['match'] = element[2]
+            nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
         raise ex

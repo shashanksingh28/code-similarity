@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="similarityApp">
 	<meta charset="UTF-8">
 	<head>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -11,11 +11,11 @@
 
 		<link rel="stylesheet" href="http://localhost:5000/static/style.css">
         
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	</head>
 	<body>
 		<script type="text/javascript" src="http://localhost:5000/static/code.js"></script>
- 		<div class="container">
+ 		<div ng-controller="AppController as ctrl">
 			<div class="col-md-4">
                 <h3>Java Method</h3>
                 <form>
@@ -23,17 +23,31 @@
 						<label for="method_text"> Code </label>
 						<textarea rows="20" class="form-control" id="method_text" required></textarea>
 					</div>
-					<button type="button" onclick="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
+					<button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
 				</form>
 			</div>
 			<div class="col-md-4">
                 <h3> Proposed recommender </h3>
                 <div id="proposed_recos">
+                    <ol> 
+                        <li ng-repeat="reco in proposedRecos">
+							<div class="container">
+								<pre data-toggle="tooltip" title="{{ '{{reco.match}}' }} ">{{ '{{reco.code.raw_text}}' }}</pre>
+							</div>
+                        </li>
+                    </ol>
                 </div>
 			</div>
 			<div class="col-md-4">
                 <h3> Text recommender </h3>
                 <div id="text_recos">
+                    <ol> 
+                        <li ng-repeat="reco in textRecos">
+							<div class="container">
+								<pre data-toggle="tooltip" title="{{ '{{reco.match}}' }} ">{{ '{{reco.code.raw_text}}' }}</pre>
+							</div>
+                        </li>
+                    </ol>
                 </div>
 			</div>
 		</div>
