@@ -1,7 +1,7 @@
 import json
 import re
 from collections import Counter
-from FunRep.lang import meaningful_tokens
+from FunRep.lang import meaningful_tokens, meaningful_tokens_camelCase
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar 
@@ -26,7 +26,7 @@ class MethodFeatureVector:
         # String or numeric features
         self.features['returnType'] = str(jsonObj['returnType'])
         self.features['modifier'] = int(jsonObj['modifier'])
-        self.features['lineCount'] = int(jsonObj['lineCount']) 
+        self.features['line_count'] = int(jsonObj['lineCount']) 
         if 'javaDoc' in jsonObj:
             self.features['java_doc'] = str(jsonObj['javaDoc']).lower()
         if 'comments' in jsonObj:
@@ -55,3 +55,21 @@ class MethodFeatureVector:
         """ Get only those tokens which one would consider to be natural language tokens
             E.g.: Comments, variable names, tokens, etc """
         lang_keys = ['variables', 'constants', 'comments', 'java_doc']
+        tokens = []
+        for key in lang_keys & self.features.keys():
+            if isinstance(self.features[key], str):
+                if key == 'java_doc':
+                    # javadocs have syntax keywords like param and return
+                    # these are not natural language terms
+                    javadoc = re.sub(r"\b(return | param | see)\b","",self.features[key])
+                    tokens.extend(meaningful_tokens_camelCase(javadoc))
+                elif key == 'variables':
+                    # args is an extremely common variable name that we remove
+                    self.features[key].remove('args')
+                    tokens.extend(meaningful_tokens_camelCase(self.features[key]))
+                else:
+                    tokens.extend(meaningful_tokens_camelCase(self.features[key]))
+            elif isinstance(self.features[key], set):
+                for value in self.features[key]:
+                    tokens.extend(meaningful_tokens_camelCase(value))
+        return list(set(tokens))

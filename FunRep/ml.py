@@ -2,9 +2,11 @@ from FunRep.util import *
 from FunRep.similarity import *
 import os
 import numpy as np
+import FunRep.lang as lang
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from gensim import corpora, models, similarities
 
 def bag_of_words(vectors):
     bag = []
@@ -18,12 +20,12 @@ def tfIdf_models(vectors):
     tfidf_transformed_data = tfidf_fitted_model.transform(bow)
     return tfidf_fitted_model, tfidf_transformed_data
    
-def jaccard_kNearest(method, solutions, k = 1, featureWeights=dict()):
+def jaccard_kNearest(method, solutions, k=3):
     """ Return K Nearest methods based on jaccard similarity.
         Returns a list of tuples containing (score, solutions_index, similarityDictionary)
     """
     results = [] 
-    similarities = [ jaccardSimilarity(method, solution, featureWeights) for solution in solutions ]
+    similarities = [jaccardSimilarity(method, solution) for solution in solutions]
     similarityScores = [tup[0] for tup in similarities]
     sortedIndices = np.argsort(similarityScores)
     kNearestIndices = sortedIndices[-k:]
@@ -55,3 +57,29 @@ def cosine_kNearest(ndim_num_vector, ndim_num_solutions, dim_names, k = 1):
     
     return results
 
+def create_language_model(vectors):
+    """ Given solution vectors, return trained gensim language models for similarity """
+    documents = []
+    for vector in vectors:
+        tokens = lang.text_pre_process(vector.lang_tokens())
+        documents.append(tokens)
+    dictionary = corpora.Dictionary(documents)
+    corpus = [dictionary.doc2bow(text) for text in documents]
+
+    tfidf_model = models.TfidfModel(corpus)
+    corpus_tfidf = tfidf_model[corpus]
+    
+    lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=200)
+    return dictionary, lsi_model
+
+def proposed_kNearest(method, solutions, nl_dict, nl_model, k, nlp_ratio=0.5):
+    """ Our proposed similarity kernel. """
+    results = []
+    similarities = [proposed_similarity(method, solution, nl_dict, nl_model) for solution in solutions]
+    sim_scores = [tup[0] for tup in similarities]
+    sorted_idx = np.argsort(sim_scores)
+    kNearest_idx = sorted_idx[-k:]
+
+    for i in kNearest_idx[::-1]:
+        results.append((float(np.round(similarities[i][0], decimals = 3)), i, similarities[i][1]))
+    return results

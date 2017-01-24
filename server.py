@@ -21,7 +21,9 @@ solutions_input_file = "solutionSet.txt"
 tfIdf_fit_model_file = "models/tokenTf-Idf.model"
 tfIdf_tranformed_data_file = "models/tokenTf-Idf.dat"
 solutions_data_file = "models/solutionVectors.pck"
-kNearest = 4
+nlp_sim_dict_file = "models/dictionary.pck"
+nlp_sim_model_file = "models/sim_model.pck"
+kNearest = 7
 ####
 
 #### Global Variables to be used throughout ####
@@ -31,6 +33,8 @@ solution_vectors = None
 tfIdf_model = None
 # this will be used to calculate similarity
 tfIdf_data = None
+nl_sim_dict = None
+nl_sim_model = None
 #####
 
 @app.before_first_request
@@ -41,13 +45,14 @@ def loadData():
     global solution_vectors
     global tfIdf_model
     global tfIdf_data
-    
+    global nl_sim_dict
+    global nl_sim_model
+
     if not os.path.exists("models"):
         os.makedirs("models")
 
     if not os.path.isfile(solutions_data_file):
         print("Extracting solution vectors...")
-
         solution_vectors = util.vectors_from_file(solutions_input_file)
         pickle.dump(solution_vectors, open(solutions_data_file, "wb"))
     else:
@@ -63,8 +68,17 @@ def loadData():
         print("Loading Tf-Idf models...")
         tfIdf_model = pickle.load(open(tfIdf_fit_model_file, "rb"))
         tfIdf_data = pickle.load(open(tfIdf_tranformed_data_file, "rb"))
-        print("Done")
-   
+  
+    if not os.path.isfile(nlp_sim_model_file):
+        print("Extracting natural language models")
+        nl_sim_dict, nl_sim_model = ml.create_language_model(solution_vectors)
+        pickle.dump(nl_sim_dict, open(nlp_sim_dict_file, "wb"))
+        pickle.dump(nl_sim_model, open(nlp_sim_model_file, "wb"))
+    else:
+        print("Loading natural language models")
+        nl_sim_dict = pickle.load(open(nlp_sim_dict_file, "rb"))
+        nl_sim_model = pickle.load(open(nlp_sim_model_file, "rb"))
+
 # Web server components
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -83,6 +97,25 @@ app.json_encoder = CustomJSONEncoder
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/simcode', methods=['POST'])
+def proposed_similarity():
+    try:
+        method_vector = util.vector_from_text(request.data.decode("utf-8"))
+        nearest = ml.proposed_kNearest(method_vector, solution_vectors, nl_sim_dict, 
+                nl_sim_model, k=kNearest)
+        # nearest contains score, solutions_index and intersections
+        # print(kNearest)
+        nearest_vectors = []
+        for element in nearest:
+            result = {}
+            result['score'] = element[0]
+            result['code'] = solution_vectors[element[1]]
+            result['match'] = element[2]
+            nearest_vectors.append(result)
+        return jsonify(nearest_vectors)
+    except Exception as ex:
+        raise ex
 
 @app.route('/equalJaccard', methods=['POST'])
 def jaccard_kNearest():
@@ -125,4 +158,5 @@ def cosine_kNearest():
         raise ex
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    loadData()
