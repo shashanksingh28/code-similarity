@@ -16,7 +16,7 @@
 	<body>
 		<script type="text/javascript" src="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com/static/code.js"></script>
  		<div ng-controller="AppController as ctrl">
-			<div class="col-md-4">
+			<div class="col-md-3">
                 <h3>Java Method</h3>
                 <form>
 					<div class="form-group">
@@ -26,8 +26,8 @@
 					<button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
 				</form>
 			</div>
-			<div class="col-md-4">
-                <h3> Proposed recommender </h3>
+			<div class="col-md-3">
+                <h3> Proposed </h3>
                 <div id="proposed_recos">
                     <ol> 
                         <li ng-repeat="reco in proposedRecos">
@@ -38,8 +38,20 @@
                     </ol>
                 </div>
 			</div>
-			<div class="col-md-4">
-                <h3> Text recommender </h3>
+			<div class="col-md-3">
+                <h3> Equal jaccard </h3>
+                <div id="proposed_recos">
+                    <ol> 
+                        <li ng-repeat="reco in jaccardRecos">
+							<div class="container">
+								<pre data-toggle="tooltip" title="{{ '{{reco.match}}' }} ">{{ '{{reco.code.raw_text}}' }}</pre>
+							</div>
+                        </li>
+                    </ol>
+                </div>
+			</div>
+			<div class="col-md-3">
+                <h3> Text </h3>
                 <div id="text_recos">
                     <ol> 
                         <li ng-repeat="reco in textRecos">
