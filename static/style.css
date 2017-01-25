@@ -2,7 +2,12 @@ textarea { height: auto; }
 
 pre {
     overflow: auto;
-    max-width: 50%;
+    max-width: 40%;
     /* width: 50%; */
     /* display: inline-block; */
 }
+
+#ratioSlider .slider-selection {
+    background: #BABABA;
+}
+

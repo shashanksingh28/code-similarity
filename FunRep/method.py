@@ -1,7 +1,7 @@
 import json
 import re
 from collections import Counter
-from FunRep.lang import meaningful_tokens, meaningful_tokens_camelCase
+from FunRep.lang import meaningful_tokens, meaningful_tokens_camelCase, text_pre_process
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar 
@@ -50,8 +50,9 @@ class MethodFeatureVector:
         
         camelCaseSplitText = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', self.raw_text)
         self.tokens = meaningful_tokens(camelCaseSplitText)
+        self.lang_tokens = text_pre_process(self.__lang_tokens())
 
-    def lang_tokens(self):
+    def __lang_tokens(self):
         """ Get only those tokens which one would consider to be natural language tokens
             E.g.: Comments, variable names, tokens, etc """
         lang_keys = ['variables', 'constants', 'comments', 'java_doc']

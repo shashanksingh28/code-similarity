@@ -36,7 +36,7 @@ def stringJaccardSimilarity(string1, string2):
 def jaccardSimilarity(method1, method2, featureWeights = dict()):
     """ Given a two methods (class MethodFeatureVector), 
         return the Jaccard Similarity between them and a dictionary of intersections."""
-    featureIntersections = {}
+    info_dict = {}
     
     # Certain features to be skipped, like lineCount
     skipFeatures = set(['line_count','class_name'])
@@ -46,9 +46,10 @@ def jaccardSimilarity(method1, method2, featureWeights = dict()):
     f2 = method2.features
     
     commonFeatures = (f1.keys() & f2.keys()) - skipFeatures
-    jaccardSim = 0.0
-    
+    jaccard_sim_total = 0.0
+    count = 0
     for key in commonFeatures:
+        count += 1
         if isinstance(f1[key], dict):
             # In case of method vectors, dictionaries are usually counters
             sim, intersections = counterJaccardSimilarity(f1[key], f2[key])
@@ -65,19 +66,29 @@ def jaccardSimilarity(method1, method2, featureWeights = dict()):
         else:
             # some type we do not know how to deal with
             print("Unknown type for jaccard similarity :",key)
+            count -= 1
             continue
-        
+        """
+        print("Feature:",key)
+        print(f1[key])
+        print(f2[key])
+        print("Score:",sim)
+        print("Intersections:",intersections)"""
         # additional functionality of boosting certain features
         if key in featureWeights:
             weight = int(featureWeights[key])
         else:
             weight = 1
 
-        jaccardSim += weight * sim
+        jaccard_sim_total += weight * sim 
         if sim > 0:
-            featureIntersections[key] = intersections
-
-    return jaccardSim, featureIntersections
+            info_dict[key] = intersections
+    # print("Total:",jaccard_sim_total)
+    # print("Count:", count)
+    jaccard_sim = jaccard_sim_total / count
+    info_dict['jaccard_sim'] = jaccard_sim
+    
+    return jaccard_sim, info_dict
 
 def stream_to_arr(gensim_stream):
     """ gensim stream consists of a list of tuples """
@@ -87,9 +98,8 @@ def stream_to_arr(gensim_stream):
         arr[0,tup[0]] = tup[1]
     return arr
 
-def proposed_similarity(method1, method2, nl_dict, nl_model, nl_ratio=0.5):
-    featureIntersections = {}
-    
+def proposed_similarity(method1, method2, nl_dict, nl_model, nl_weight=0.5):
+    """ Our proposed similarity metric """
     # Certain features to be skipped, like lineCount
     skip_features = set(['line_count','class_name'])
     nl_features = set(['java_doc','comments','variables','constants']) 
@@ -98,10 +108,14 @@ def proposed_similarity(method1, method2, nl_dict, nl_model, nl_ratio=0.5):
     f1 = method1.features
     f2 = method2.features
     
+    # jaccard_features = (f1.keys() & f2.keys()) - skip_features
     jaccard_features = (f1.keys() & f2.keys()) - skip_features - nl_features
-    jaccard_sim = 0.0
+    jaccard_sim_total = 0.0
+    count = 0
+    info_dict = {}
     
     for key in jaccard_features:
+        count += 1
         if isinstance(f1[key], dict):
             # In case of method vectors, dictionaries are usually counters
             sim, intersections = counterJaccardSimilarity(f1[key], f2[key])
@@ -118,17 +132,28 @@ def proposed_similarity(method1, method2, nl_dict, nl_model, nl_ratio=0.5):
         else:
             # some type we do not know how to deal with
             print("Unknown type for jaccard similarity :",key)
+            count -= 1
             continue
+        if sim > 0:
+            info_dict[key] = intersections
         
-    vec1_bow = nl_dict.doc2bow(lang.text_pre_process(method1.lang_tokens()))
+        jaccard_sim_total += sim 
+    
+    # average of jaccard indexes of sets
+    jaccard_sim = jaccard_sim_total / count
+
+    vec1_bow = nl_dict.doc2bow(method1.lang_tokens)
     vec1 = nl_model[vec1_bow]
     
-    vec2_bow = nl_dict.doc2bow(lang.text_pre_process(method2.lang_tokens()))
+    vec2_bow = nl_dict.doc2bow(method2.lang_tokens)
     vec2 = nl_model[vec2_bow]
 
     vec1_arr = stream_to_arr(vec1)
     vec2_arr = stream_to_arr(vec2)
     nl_sim = cosine_similarity(vec1_arr, vec2_arr).ravel()[0]
-    proposed_sim = (1 - nl_ratio) * jaccard_sim + nl_ratio * nl_sim
+    
+    info_dict['nl_sim'] = nl_sim
+    info_dict['jaccard_sim'] = jaccard_sim
+    proposed_sim = (1 - nl_weight) * jaccard_sim + nl_weight * nl_sim
     # print(proposed_sim)    
-    return proposed_sim, dict()
+    return proposed_sim, info_dict
