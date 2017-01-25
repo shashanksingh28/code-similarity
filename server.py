@@ -37,6 +37,10 @@ nl_sim_dict = None
 nl_sim_model = None
 #####
 
+with app.test_request_context():
+    url_for('static', filename='code.js')
+    url_for('static', filename='codemirror-5.23.0')
+
 @app.before_first_request
 def loadData():
     """ Function to load model solutions in memory.

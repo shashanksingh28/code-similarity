@@ -40,12 +40,13 @@ def jaccardSimilarity(method1, method2, featureWeights = dict()):
     
     # Certain features to be skipped, like lineCount
     skipFeatures = set(['line_count','class_name'])
-
+    nl_features = set(['java_doc','comments','variables','constants'])
+    
     # f1 is a conscise way of representing features dictionary for method1
     f1 = method1.features
     f2 = method2.features
     
-    commonFeatures = (f1.keys() & f2.keys()) - skipFeatures
+    commonFeatures = (f1.keys() & f2.keys()) - skipFeatures - nl_features
     jaccard_sim_total = 0.0
     count = 0
     for key in commonFeatures:

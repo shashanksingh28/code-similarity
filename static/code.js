@@ -1,5 +1,14 @@
-angular.module('similarityApp', [])
+angular.module('similarityApp', ['ui.codemirror'])
   .controller('AppController', ['$scope', function($scope) {
+    
+    $scope.methodText = "";  
+    $scope.editorOptions={
+        mode:"text/x-java",
+        matchBrackets: true,
+		autoCloseBrackets : true,
+        lineNumbers: true
+    };
+
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.ratio = 0.5;
@@ -42,14 +51,13 @@ angular.module('similarityApp', [])
     };
 
     $scope.postRequests = function postRequests(){
-        var text = document.getElementById("method_text").value;
         $.ajax({
             url: $scope.baseUrl + '/equalJaccard',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             crossDomain: true,
-            data: text,		
+            data: $scope.methodText,		
             success: $scope.updateJaccard
         });
         
@@ -59,7 +67,7 @@ angular.module('similarityApp', [])
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             crossDomain: true,
-            data: text,
+            data: $scope.methodText,
             success: $scope.updateText
         });
 		
@@ -71,7 +79,7 @@ angular.module('similarityApp', [])
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             crossDomain: true,
-            data: text,
+            data: $scope.methodText,
             success: $scope.updateProposed
         });
     }
