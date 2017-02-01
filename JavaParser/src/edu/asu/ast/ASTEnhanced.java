@@ -14,6 +14,7 @@ import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.ReferenceType;
+import com.github.javaparser.ast.type.Type;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,36 +30,48 @@ import java.util.regex.Pattern;
  */
 public class ASTEnhanced {
     
+	// Use a counters for most information. It is upto the ML code to use only keys or use keys with counts // 
+	
 	//--------- Syntactic features  ----------//
-
     // [return type, arg1 type, arg2 type, ..]
     ArrayList<String> paramTypes;   
     String returnType;
     
-    HashMap<String, Integer> methodCalls;
+    // What are the methods this function calls?
+    // TODO: The impact of different scope names is not dealt with yet
+    HashMap<String, Integer> methodCalls;    
     
-    HashMap<String, Integer> constants;
-    
+    // What are the Annotations of this method? like @Test
     Set<String> annotations;
     
-    HashMap<String, Integer> types;
-    Set<String> expressions;
-    Set<String> statements;
-    
-    // High level concepts we can extract
-    Set<String> concepts;
-    
-    // Exceptions dealt with in this case, both declared and handled
+    // What exceptions does this method declare or deal with?
     Set<String> exceptions;
-
-    // ---------- Semantic Features --------- //
     
+    // High level concepts we can extract, like recursion, inner-class, casting 
+    Set<String> concepts;   
+        
+    // What are the types of variables used in this method
+    HashMap<String, Integer> types;
+    
+    // What are the different types of expressions used in this method body.
+    // This is aggregated syntactic information
+    HashMap<String, Integer> expressions;
+    
+    // What are the different types of statements in this method body.
+    // Just like expressions, aggregated syntactic information
+    HashMap<String, Integer> statements;
+    
+   
+    // ---------- Semantic Features --------- //
     // source as is
     String text;
-    
     String name;
     String className;
+    
+    // Often, there is a lot of natural language information in variable names
     HashMap<String, Integer> variables;
+    // What are the constants this function uses? Like Math.PI
+    HashMap<String, Integer> constants;
     
     // JavaDoc documentation string for the method
     String javaDoc;
@@ -68,7 +81,9 @@ public class ASTEnhanced {
     
     // ---------- Numeric Features --------- //
     boolean isEmpty;
+    boolean hasInnerClass;
     int lineCount;
+    
     // This helps determine if the modifier is static
     // If it is static, the scope of a method does not contain class name
     int modifier;
@@ -89,8 +104,8 @@ public class ASTEnhanced {
         this.types = new HashMap<String, Integer>();
         this.exceptions = new HashSet<String>();
         this.annotations = new HashSet<String>();
-        this.expressions = new HashSet<String>();
-        this.statements = new HashSet<String>();
+        this.expressions = new HashMap<String, Integer>();
+        this.statements = new HashMap<String, Integer>();
     }
 
     public static String cleanDocumentation(String documentation){
@@ -100,6 +115,42 @@ public class ASTEnhanced {
         processed = processed.replaceAll("(@param|@return)", "").replaceAll("[,.*]", " ").replaceAll("\\s+", " "); 
         return processed.trim();
     }
+    
+    /* I wish MethodDecleration and ConstructorDecleration had some more common interfaces.
+     * Because they don't, have to keep a rather crude (casting) way of avoiding redundant code
+     */
+    private ArrayList<String> getParamTypes(Node n){
+    	ArrayList<String> paramTypes = new ArrayList<String>();
+    	List<Parameter> params = new ArrayList<Parameter>();
+    	
+    	if(n instanceof MethodDeclaration){
+    		params = ((MethodDeclaration) n).getParameters();
+    	}else if(n instanceof ConstructorDeclaration){
+    		params = ((ConstructorDeclaration) n).getParameters();
+    	}
+    	
+    	for (Parameter param : params) {
+      	  boolean isArray = false;
+      	  for(Node node : param.getChildrenNodes()){
+      		  if(node instanceof VariableDeclaratorId){
+      			  VariableDeclaratorId id = (VariableDeclaratorId) node;
+      			  if(id.getArrayCount() > 0){
+      				  // This would be the case when var's are declared like String args[], but we want to extract String [] as parameter
+      				  isArray = true;
+      			  }
+      		  }
+      	  }
+      	  if(isArray){
+      		  paramTypes.add(param.getType().toString() + "[]");
+      	  }
+      	  else{
+      		  paramTypes.add(param.getType().toString());
+      	  }
+      }
+    	
+    	return paramTypes;
+    }
+    
     
     /**
      * The standard factory method to get an enhanced AST from a method
@@ -124,10 +175,7 @@ public class ASTEnhanced {
             this.modifier = methodDec.getModifiers();
             this.returnType = methodDec.getType().toString();
 
-            for (Parameter param : methodDec.getParameters()) {
-                this.paramTypes.add(param.getType().toString());
-                incrementDictCount(this.variables, param.getName());
-            }
+            this.paramTypes = getParamTypes(methodDec);
             
             // Get Annotations
             for(AnnotationExpr annotExpr: methodDec.getAnnotations()){
@@ -176,11 +224,7 @@ public class ASTEnhanced {
             this.modifier = constDec.getModifiers();
             this.returnType = this.className;
 
-            for (Parameter param : constDec.getParameters()) {
-                this.paramTypes.add(param.getType().toString());
-                incrementDictCount(this.variables, param.getName());
-            }
-            
+            this.paramTypes = getParamTypes(constDec);            
             // Get Annotations
             for(AnnotationExpr annotExpr: constDec.getAnnotations()){
             	this.annotations.add(annotExpr.getName().toString());
@@ -225,9 +269,9 @@ public class ASTEnhanced {
     private void parseNode(Node node) {
     	// Capture all types of Expressions and Statements
     	if(node instanceof Expression){
-    		this.expressions.add(node.getClass().getSimpleName());
+    		incrementDictCount(this.expressions, node.getClass().getSimpleName());
     	} else if(node instanceof Statement){
-    		this.statements.add(node.getClass().getSimpleName());
+    		incrementDictCount(this.statements, node.getClass().getSimpleName());
     	} 
     	
     	if(node instanceof ClassOrInterfaceDeclaration){
@@ -255,11 +299,6 @@ public class ASTEnhanced {
     }
 
     private static void incrementDictCount(HashMap<String, Integer> hashMap, String key){
-        if (key.length() < 2){
-        	// Anything of length 1 is considered trivial.
-        	// Most probably variable names like x, i and numbers less than 10
-        	return;
-        }
     	if (hashMap.containsKey(key)){
             int count = hashMap.get(key);
             hashMap.put(key, count + 1);
@@ -317,7 +356,7 @@ public class ASTEnhanced {
     private void parseMethodCall(MethodCallExpr methodCall){
         Expression scope = methodCall.getScope();
     	if (scope != null){
-        	// Sometimes the scope could be System.out but sometimes it could be a variablename
+        	// Sometimes the scope could be System.out but sometimes it could be a variable name
         	// We try to fetch class names
         	if(scope instanceof FieldAccessExpr){
         		// System.out case
@@ -334,8 +373,7 @@ public class ASTEnhanced {
         		incrementDictCount(this.variables, ((NameExpr) scope).getName());
         		// It would be nice if we got the full type here, like what is the class of the scope
         		incrementDictCount(this.methodCalls, methodCall.getName());
-        	}
-        	
+        	}        	
         }
         else{
         	incrementDictCount(this.methodCalls, methodCall.getName());

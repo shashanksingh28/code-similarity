@@ -120,10 +120,10 @@ def proposed_similarity(method1, method2, nl_dict, nl_model, nl_ratio=0.5):
             print("Unknown type for jaccard similarity :",key)
             continue
         
-    vec1_bow = nl_dict.doc2bow(lang.text_pre_process(method1.lang_tokens()))
+    vec1_bow = nl_dict.doc2bow(method1.nl_tokens)
     vec1 = nl_model[vec1_bow]
     
-    vec2_bow = nl_dict.doc2bow(lang.text_pre_process(method2.lang_tokens()))
+    vec2_bow = nl_dict.doc2bow(method2.nl_tokens)
     vec2 = nl_model[vec2_bow]
 
     vec1_arr = stream_to_arr(vec1)

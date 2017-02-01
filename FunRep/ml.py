@@ -61,7 +61,7 @@ def create_language_model(vectors):
     """ Given solution vectors, return trained gensim language models for similarity """
     documents = []
     for vector in vectors:
-        tokens = lang.text_pre_process(vector.lang_tokens())
+        tokens = vector.nl_tokens
         documents.append(tokens)
     dictionary = corpora.Dictionary(documents)
     corpus = [dictionary.doc2bow(text) for text in documents]
