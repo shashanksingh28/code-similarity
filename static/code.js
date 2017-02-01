@@ -6,7 +6,10 @@ angular.module('similarityApp', ['ui.codemirror'])
         mode:"text/x-java",
         matchBrackets: true,
 		autoCloseBrackets : true,
-        lineNumbers: true
+        lineNumbers: true,
+        extraKeys: {
+            "Enter": $scope.postRequests
+        }
     };
 
     $scope.textRecos = null;
@@ -15,39 +18,30 @@ angular.module('similarityApp', ['ui.codemirror'])
     $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
 
     $scope.updateText = function updateText(results){
-    	console.log("Text:");
-        console.log(results);
-        if(!(Object.prototype.toString.call(results) === '[object Array]')) {
-        	$scope.textRecos = [{'code': { 'raw_text': results}}];
-		}
-		else{
+    	// console.log("Text:");
+        // console.log(results);
+        if(Object.prototype.toString.call(results) === '[object Array]') {
         	$scope.textRecos = results;
+			$scope.$apply();
 		}
-        $scope.$apply();
     }
 
     $scope.updateJaccard = function updateJaccard(results){
-        console.log("Jaccard");
-        console.log(results);
-        if(!(Object.prototype.toString.call(results) === '[object Array]')) {
-        	$scope.jaccardRecos = [{'code': { 'raw_text': results}}];
-		}
-		else{
+        // console.log("Jaccard");
+        // console.log(results);
+        if(Object.prototype.toString.call(results) === '[object Array]') {
         	$scope.jaccardRecos = results;
+			$scope.$apply();
 		}
-        $scope.$apply();
     };
 
     $scope.updateProposed = function updateProposed(results){
-        console.log("Proposed:");
-        console.log(results);
-        if(!(Object.prototype.toString.call(results) === '[object Array]')) {
-        	$scope.proposedRecos = [{'code': { 'raw_text': results}}]; 
-		}
-		else{
+        // console.log("Proposed:");
+        // console.log(results);
+        if(Object.prototype.toString.call(results) === '[object Array]') {
         	$scope.proposedRecos = results;
+			$scope.$apply();
 		}
-        $scope.$apply();
     };
 
     $scope.postRequests = function postRequests(){
@@ -71,7 +65,6 @@ angular.module('similarityApp', ['ui.codemirror'])
             success: $scope.updateText
         });
 		
-		console.log($scope.ratio);
         $.ajax({
             url: $scope.baseUrl + '/simcode',
 			headers : {'nl_ratio': $scope.ratio},
@@ -82,5 +75,17 @@ angular.module('similarityApp', ['ui.codemirror'])
             data: $scope.methodText,
             success: $scope.updateProposed
         });
-    }
-  }]);
+    };
+  }])
+  .directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                }); 
+                event.preventDefault();
+            }
+        });
+    };
+  });

@@ -29,10 +29,10 @@
 			<div class="col-md-3">
                 <h3>Java Method</h3>
                 <form>
-					<div class="form-group">
+					<div ng-keypress="keySend($event)" class="form-group">
 						<label for="method_text"> Code </label>
 						<!-- <textarea rows="20" class="form-control" id="method_text" required></textarea> -->
-						<ui-codemirror class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
+						<ui-codemirror ng-enter="postRequests()" class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
 					</div>
 					<div class="form-group">
 						<button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>

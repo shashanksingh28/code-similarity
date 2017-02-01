@@ -69,8 +69,8 @@ def create_language_model(vectors):
     tfidf_model = models.TfidfModel(corpus)
     corpus_tfidf = tfidf_model[corpus]
     
-    lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=200)
-    return dictionary, lsi_model
+    # lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
+    return dictionary, tfidf_model
 
 def proposed_kNearest(method, solutions, nl_dict, nl_model, k, nl_weight=0.5):
     """ Our proposed similarity kernel. """
