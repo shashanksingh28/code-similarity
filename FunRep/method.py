@@ -33,7 +33,7 @@ class MethodFeatureVector:
             self.features['comments'] = str(jsonObj['comments']).lower()
         
         # List features
-        self.features['paramTypes'] = list(jsonObj['paramTypes'])
+        self.features['paramTypes'] = MethodFeatureVector.parse_generics(list(jsonObj['paramTypes']))
         
         # set features, where we consider only if present or absent
         self.features['exceptions'] = set(jsonObj['exceptions'])
@@ -52,7 +52,19 @@ class MethodFeatureVector:
         self.tokens = meaningful_tokens(camelCaseSplitText)
         self.nl_tokens = text_pre_process(self.extract_lang_tokens())
 
-    def parseParams(self)
+    @staticmethod
+    def parse_generics(string_iterable):
+        """This is to deal with generics. If we have 'List<String>', split as List and String"""
+        parsed_set = list()
+        for element in string_iterable:
+            found = re.search(r'(\w+)<(\w+)>',element)
+            if found is not None:
+                # we found use of generics, so let's split
+                parsed_set.append(found.group(1))
+                parsed_set.append(found.group(2))
+            else:
+                parsed_set.append(element)
+        return parsed_set
     
     def extract_lang_tokens(self):
         """ Get only those tokens which one would consider to be natural language tokens

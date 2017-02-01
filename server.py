@@ -37,6 +37,10 @@ nl_sim_dict = None
 nl_sim_model = None
 #####
 
+with app.test_request_context():
+    url_for('static', filename='code.js')
+    url_for('static', filename='codemirror-5.23.0')
+
 @app.before_first_request
 def loadData():
     """ Function to load model solutions in memory.
@@ -101,9 +105,17 @@ def index():
 @app.route('/simcode', methods=['POST'])
 def proposed_similarity():
     try:
-        method_vector = util.vector_from_text(request.data.decode("utf-8"))
+        body_string = request.data.decode("utf-8")
+        if len(body_string) == 0:
+            return jsonify("Empty String")
+        if 'nl_ratio' in request.headers:
+            nl_weight = float(request.headers['nl_ratio'])
+        else:
+            nl_weight = 0.5
+        print("NL_WEIGHT:",nl_weight)
+        method_vector = util.vector_from_text(body_string)
         nearest = ml.proposed_kNearest(method_vector, solution_vectors, nl_sim_dict, 
-                nl_sim_model, k=kNearest)
+                nl_sim_model, k=kNearest, nl_weight=nl_weight)
         # nearest contains score, solutions_index and intersections
         # print(kNearest)
         nearest_vectors = []
@@ -115,17 +127,20 @@ def proposed_similarity():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
-        raise ex
+        return jsonify(str(ex))
 
 @app.route('/equalJaccard', methods=['POST'])
 def jaccard_kNearest():
     try:
-        method_vector = util.vector_from_text(request.data.decode("utf-8"))
-        kNearest = ml.jaccard_kNearest(method_vector, solution_vectors, k=4)
+        body_string = request.data.decode("utf-8")
+        if len(body_string) == 0:
+            return jsonify("Empty String")
+        method_vector = util.vector_from_text(body_string)
+        nearest = ml.jaccard_kNearest(method_vector, solution_vectors, k=kNearest)
         # nearest contains score, solutions_index and intersections
         # print(kNearest)
         nearest_vectors = []
-        for element in kNearest:
+        for element in nearest:
             result = {}
             result['score'] = element[0]
             result['code'] = solution_vectors[element[1]]
@@ -133,21 +148,23 @@ def jaccard_kNearest():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
-        raise ex
+        return jsonify(str(ex))
 
 @app.route('/cosine', methods=['POST'])
 def cosine_kNearest():
     try:
-        method_vector = util.vector_from_text(request.data.decode("utf-8"))
-        if method_vector is None:
-            raise Exception("Couldn't get the method")
+        body_string = request.data.decode("utf-8")
+        if len(body_string) == 0:
+            return jsonify("Empty String")
+        method_vector = util.vector_from_text(body_string)
         # first transform the given method_vector with our model
         method_vector_transformed = tfIdf_model.transform([' '.join(method_vector.tokens)])
-        kNearest = ml.cosine_kNearest(method_vector_transformed, tfIdf_data, tfIdf_model.get_feature_names(), k=4)
+        nearest = ml.cosine_kNearest(method_vector_transformed, tfIdf_data, 
+                tfIdf_model.get_feature_names(), k=kNearest)
         # nearest contains score, solutions_index and intersections
         # print(kNearest)
         nearest_vectors = []
-        for element in kNearest:
+        for element in nearest:
             result = {}
             result['score'] = element[0]
             result['code'] = solution_vectors[element[1]]
@@ -155,8 +172,8 @@ def cosine_kNearest():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
-        raise ex
-    
+        return jsonify(str(ex))
+
 if __name__ == "__main__":
     # app.run(debug=True)
     loadData()

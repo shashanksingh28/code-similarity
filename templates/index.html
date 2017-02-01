@@ -10,20 +10,38 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 		<link rel="stylesheet" href="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com/static/style.css">
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+		
+		<link rel="stylesheet" href="static/codemirror-5.23.0/lib/codemirror.css">
+		<script src="static/codemirror-5.23.0/lib/codemirror.js"></script>
+		<script src="static/codemirror-5.23.0/mode/clike/clike.js"></script>
+		<script src="static/codemirror-5.23.0/addon/edit/matchbrackets.js"></script>
+		<script src="static/codemirror-5.23.0/addon/edit/closebrackets.js"></script>
+		
+		<script src="static/codemirror-5.23.0/ui-codemirror.js"></script>
+
 	</head>
 	<body>
-		<script type="text/javascript" src="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com/static/code.js"></script>
+		<script type="text/javascript" src="static/code.js"></script>
  		<div ng-controller="AppController as ctrl">
 			<div class="col-md-3">
                 <h3>Java Method</h3>
                 <form>
 					<div class="form-group">
 						<label for="method_text"> Code </label>
-						<textarea rows="20" class="form-control" id="method_text" required></textarea>
+						<!-- <textarea rows="20" class="form-control" id="method_text" required></textarea> -->
+						<ui-codemirror class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
 					</div>
-					<button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
+					<div class="form-group">
+						<button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
+					</div>
+					<div class="form-group">
+						<label for="ratio"> Semantic Weight </label><br>
+						<input id="ratio" data-slider-id='ratioSlider' type="text" data-provide="slider" data-slider-min="0" 
+							data-slider-max="1" data-slider-step="0.1" data-slider-value="0.5" ng-model="ratio">
+					</div>
 				</form>
 			</div>
 			<div class="col-md-3">
@@ -39,7 +57,7 @@
                 </div>
 			</div>
 			<div class="col-md-3">
-                <h3> Equal jaccard </h3>
+                <h3> Syntax (Structural) </h3>
                 <div id="proposed_recos">
                     <ol> 
                         <li ng-repeat="reco in jaccardRecos">

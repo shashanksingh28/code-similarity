@@ -72,10 +72,10 @@ def create_language_model(vectors):
     lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=200)
     return dictionary, lsi_model
 
-def proposed_kNearest(method, solutions, nl_dict, nl_model, k, nlp_ratio=0.5):
+def proposed_kNearest(method, solutions, nl_dict, nl_model, k, nl_weight=0.5):
     """ Our proposed similarity kernel. """
     results = []
-    similarities = [proposed_similarity(method, solution, nl_dict, nl_model) for solution in solutions]
+    similarities = [proposed_similarity(method, solution, nl_dict, nl_model, nl_weight) for solution in solutions]
     sim_scores = [tup[0] for tup in similarities]
     sorted_idx = np.argsort(sim_scores)
     kNearest_idx = sorted_idx[-k:]
