@@ -25,7 +25,7 @@ def jaccard_kNearest(method, solutions, k=3):
         Returns a list of tuples containing (score, solutions_index, similarityDictionary)
     """
     results = [] 
-    similarities = [jaccardSimilarity(method, solution) for solution in solutions]
+    similarities = [jaccardSimilarity(method, solution, {'concepts':2}) for solution in solutions]
     similarityScores = [tup[0] for tup in similarities]
     sortedIndices = np.argsort(similarityScores)
     kNearestIndices = sortedIndices[-k:]

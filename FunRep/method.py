@@ -48,8 +48,9 @@ class MethodFeatureVector:
         self.features['statements'] = Counter(jsonObj['statements'])
         self.features['types'] = Counter(jsonObj['types'])
         
-        camelCaseSplitText = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', self.raw_text)
-        self.tokens = meaningful_tokens(camelCaseSplitText)
+        # camelCaseSplitText = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', self.raw_text)
+        # self.tokens = meaningful_tokens(camelCaseSplitText)
+        self.tokens = meaningful_tokens(self.raw_text)
         self.nl_tokens = text_pre_process(self.extract_lang_tokens())
 
     @staticmethod
@@ -71,6 +72,10 @@ class MethodFeatureVector:
             E.g.: Comments, variable names, tokens, etc """
         lang_keys = ['variables', 'constants', 'comments', 'java_doc']
         tokens = []
+
+        # Name and parameters
+        tokens.append(meaningful_tokens_camelCase(self.name))
+
         for key in lang_keys & self.features.keys():
             if isinstance(self.features[key], str):
                 if key == 'java_doc':
@@ -87,4 +92,5 @@ class MethodFeatureVector:
             elif isinstance(self.features[key], set):
                 for value in self.features[key]:
                     tokens.extend(meaningful_tokens_camelCase(value))
+        
         return list(set(tokens))

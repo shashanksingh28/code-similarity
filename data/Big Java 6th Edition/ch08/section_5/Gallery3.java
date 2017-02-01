@@ -8,7 +8,7 @@ public class Gallery3
 
       Picture pic = new Picture("picture1.jpg");
       Picture pic2 = new Picture("picture2.jpg");
-      double x = pic.getBounds().getMaxX() + GAP
+      double x = pic.getBounds().getMaxX() + GAP;
       pic2.move(x, 0);
    }
 }
