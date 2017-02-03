@@ -15,7 +15,8 @@ angular.module('similarityApp', ['ui.codemirror'])
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.ratio = 0.5;
-    $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
+    // $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
+    $scope.baseUrl="http://localhost:5000";
 
     $scope.updateText = function updateText(results){
     	// console.log("Text:");
@@ -24,6 +25,9 @@ angular.module('similarityApp', ['ui.codemirror'])
         	$scope.textRecos = results;
 			$scope.$apply();
 		}
+        else{
+            console.log(results);
+        }
     }
 
     $scope.updateJaccard = function updateJaccard(results){
@@ -33,6 +37,9 @@ angular.module('similarityApp', ['ui.codemirror'])
         	$scope.jaccardRecos = results;
 			$scope.$apply();
 		}
+        else{
+            console.log(results);
+        }
     };
 
     $scope.updateProposed = function updateProposed(results){
@@ -42,6 +49,9 @@ angular.module('similarityApp', ['ui.codemirror'])
         	$scope.proposedRecos = results;
 			$scope.$apply();
 		}
+        else{
+            console.log(results);
+        }
     };
 
     $scope.postRequests = function postRequests(){

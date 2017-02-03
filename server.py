@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import re
 import pdb
 import sys
@@ -113,6 +114,7 @@ def proposed_similarity():
         else:
             nl_weight = 0.5
         print("NL_WEIGHT:",nl_weight)
+        # pdb.set_trace()
         method_vector = util.vector_from_text(body_string)
         nearest = ml.proposed_kNearest(method_vector, solution_vectors, nl_sim_dict, 
                 nl_sim_model, k=kNearest, nl_weight=nl_weight)
@@ -127,6 +129,7 @@ def proposed_similarity():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
+        print(ex)
         return jsonify(str(ex))
 
 @app.route('/equalJaccard', methods=['POST'])
@@ -148,6 +151,7 @@ def jaccard_kNearest():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
+        print(ex)
         return jsonify(str(ex))
 
 @app.route('/cosine', methods=['POST'])
@@ -172,8 +176,9 @@ def cosine_kNearest():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
+        print(sys.exec_info()[0])
         return jsonify(str(ex))
 
 if __name__ == "__main__":
-    # app.run(debug=True)
-    loadData()
+    app.run(debug=True)
+    # loadData()

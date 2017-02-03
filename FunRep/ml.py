@@ -1,8 +1,8 @@
-from FunRep.util import *
-from FunRep.similarity import *
+from .util import *
+from .similarity import *
 import os
 import numpy as np
-import FunRep.lang as lang
+from . import lang
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -68,7 +68,7 @@ def create_language_model(vectors):
 
     tfidf_model = models.TfidfModel(corpus)
     corpus_tfidf = tfidf_model[corpus]
-    
+    import pdb; pdb.set_trace()
     # lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
     return dictionary, tfidf_model
 

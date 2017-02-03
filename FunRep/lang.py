@@ -21,7 +21,9 @@ lemma = WordNetLemmatizer()
 def tokenize(text):
     """ Extract text tokens from a string"""
     # replace all token delimiters with a costmmon delimiter - space and split it
-    tokens = re.findall(r'[\w]+', text.lower())
+    # make all lowerscore and replace underscores with space first
+    text = re.sub('_', ' ', text.lower())
+    tokens = re.findall(r'[\w]+', text)
     return list(tokens)
 
 def meaningful_tokens(text):
@@ -32,7 +34,7 @@ def meaningful_tokens(text):
 
 def meaningful_tokens_camelCase(text):
     """ Same as meaninful tokens, but with camel-case splitting """
-    text = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', text).lower()
+    text = re.sub(r'((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))', r' \1', text)
     return meaningful_tokens(text)
 
 def text_pre_process(word_list):

@@ -1,7 +1,9 @@
 import json
 import re
 from collections import Counter
-from FunRep.lang import *
+from .lang import *
+
+nl_features = set(['variables', 'constants', 'comments', 'java_doc', 'types'])
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar 
@@ -19,14 +21,14 @@ class MethodFeatureVector:
 
         # pure text form of the method
         self.raw_text = jsonObj['text']
-        
+        self.line_count = int(jsonObj['lineCount'])
+
         # extracted features 
         self.features = {}
 
         # String or numeric features
         self.features['returnType'] = str(jsonObj['returnType'])
         self.features['modifier'] = int(jsonObj['modifier'])
-        self.features['line_count'] = int(jsonObj['lineCount']) 
         if 'javaDoc' in jsonObj:
             self.features['java_doc'] = str(jsonObj['javaDoc']).lower()
         if 'comments' in jsonObj:
@@ -69,13 +71,13 @@ class MethodFeatureVector:
         """ Get only those tokens which one would consider to be natural language tokens
             E.g.: Comments, variable names, tokens, etc """
         # while we are using Tf-IDF
-        lang_keys = ['variables', 'constants', 'comments', 'java_doc']
+        # lang_keys = ['variables', 'constants', 'comments', 'java_doc', 'types']
         tokens = []
 
         # Name and parameters
         tokens.extend(meaningful_tokens_camelCase(self.name))
 
-        for key in lang_keys & self.features.keys():
+        for key in nl_features & self.features.keys():
             if isinstance(self.features[key], str):
                 if key == 'java_doc':
                     # javadocs have syntax keywords like param and return
@@ -91,5 +93,10 @@ class MethodFeatureVector:
             elif isinstance(self.features[key], set):
                 for value in self.features[key]:
                     tokens.extend(meaningful_tokens_camelCase(value))
+            elif isinstance(self.features[key], Counter):
+                # case of counters
+                tokens.extend(meaningful_tokens_camelCase(' '.join(self.features[key].elements())))
+            elif isinstance(self.features[key], list):
+                tokens.extend(meaningful_tokens_camelCase(' '.join(self.features[key])))
         
         return list(set(tokens))

@@ -2,7 +2,7 @@ import re
 # used to call jar files
 from subprocess import Popen, PIPE, STDOUT
 
-from FunRep.method import MethodFeatureVector
+from .method import MethodFeatureVector
 
 java_method_extractor = "JavaMethodFeatureExtractor.jar"
 java_file_extractor = "JavaFileFeatureExtractor.jar"
