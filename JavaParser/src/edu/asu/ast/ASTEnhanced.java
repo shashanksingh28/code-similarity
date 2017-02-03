@@ -290,6 +290,12 @@ public class ASTEnhanced {
         } else if(node instanceof CatchClause){
         	CatchClause catchClause = (CatchClause) node;
         	this.exceptions.add(catchClause.getParam().getType().toString());
+        } else if(node instanceof ThrowStmt){
+        	Expression exp = ((ThrowStmt) node).getExpr();
+        	List<Node> childNodes = exp.getChildrenNodes();
+        	if(childNodes.size() > 1){
+        		this.exceptions.add(childNodes.get(0).toString());
+        	}
         }
     	
         for(Node childNode : node.getChildrenNodes()){

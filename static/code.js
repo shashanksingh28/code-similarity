@@ -14,7 +14,7 @@ angular.module('similarityApp', ['ui.codemirror'])
 
     $scope.textRecos = null;
     $scope.proposedRecos = null;
-    $scope.ratio = 0.5;
+    $scope.ratio = 0.3;
     // $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
     $scope.baseUrl="http://localhost:5000";
 
@@ -55,7 +55,7 @@ angular.module('similarityApp', ['ui.codemirror'])
     };
 
     $scope.postRequests = function postRequests(){
-        $.ajax({
+        /*$.ajax({
             url: $scope.baseUrl + '/equalJaccard',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
@@ -63,7 +63,7 @@ angular.module('similarityApp', ['ui.codemirror'])
             crossDomain: true,
             data: $scope.methodText,		
             success: $scope.updateJaccard
-        });
+        });*/
         
         $.ajax({
             url: $scope.baseUrl + '/cosine',

@@ -42,7 +42,7 @@ def stringJaccardSimilarity(string1, string2):
     wordSet2 = set(string2.split())
     return setJaccardSimilarity(wordSet1, wordSet2)
 
-def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifier': 0.1, 'returnType': 0.1}):
+def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifier': 0.1, 'returnType': 0.1, 'annotations': 3, 'exceptions' : 2}):
     """ Given a two methods (class MethodFeatureVector), 
         return the Jaccard Similarity between them and a dictionary of intersections."""
     info_dict = {}
@@ -105,9 +105,10 @@ def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifie
     """
 
     # jaccard_sim = jaccard_sim_total / count
-    # print(abs(method1.line_count - method2.line_count) / 1000)
-    jaccard_sim = (jaccard_sim_total / count) - (abs(method1.line_count - method2.line_count) / 1000)
+    size_diff = abs(sum(f1['statements'].values()) - sum(f2['statements'].values()))
+    jaccard_sim = (jaccard_sim_total / count) - (size_diff / 10000)
     info_dict['jaccard_sim'] = jaccard_sim
+    info_dict['size_diff'] = size_diff
     
     return jaccard_sim, info_dict
 

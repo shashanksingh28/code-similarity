@@ -9,7 +9,7 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-		<link rel="stylesheet" href="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com/static/style.css">
+		<link rel="stylesheet" href="static/style.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
@@ -26,7 +26,7 @@
 	<body>
 		<script type="text/javascript" src="static/code.js"></script>
  		<div ng-controller="AppController as ctrl">
-			<div class="col-md-3">
+			<div class="col-md-4">
                 <h3>Java Method</h3>
                 <form>
 					<div ng-keypress="keySend($event)" class="form-group">
@@ -40,23 +40,23 @@
 					<div class="form-group">
 						<label for="ratio"> Semantic Weight </label><br>
 						<input id="ratio" data-slider-id='ratioSlider' type="text" data-provide="slider" data-slider-min="0" 
-							data-slider-max="1" data-slider-step="0.1" data-slider-value="0.5" ng-model="ratio">
+							data-slider-max="1" data-slider-step="0.05" data-slider-value="0.3" ng-model="ratio">
 					</div>
 				</form>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
                 <h3> Proposed </h3>
                 <div id="proposed_recos">
                     <ol> 
-                        <li ng-repeat="reco in proposedRecos">
-							<div class="container">
+                        <li ng-repeat="reco in proposedRecos" ng-class="dummy">
+							<div >
 								<pre data-toggle="tooltip" title="{{ '{{reco.match}}' }} ">{{ '{{reco.code.raw_text}}' }}</pre>
 							</div>
                         </li>
                     </ol>
                 </div>
 			</div>
-			<div class="col-md-3">
+			<!--<div class="col-md-3">
                 <h3> Syntax (Structural) </h3>
                 <div id="proposed_recos">
                     <ol> 
@@ -67,13 +67,13 @@
                         </li>
                     </ol>
                 </div>
-			</div>
-			<div class="col-md-3">
+            </div> -->
+			<div class="col-md-4">
                 <h3> Text </h3>
                 <div id="text_recos">
                     <ol> 
-                        <li ng-repeat="reco in textRecos">
-							<div class="container">
+                        <li ng-repeat="reco in textRecos" ng-class="dummy">
+							<div>
 								<pre data-toggle="tooltip" title="{{ '{{reco.match}}' }} ">{{ '{{reco.code.raw_text}}' }}</pre>
 							</div>
                         </li>

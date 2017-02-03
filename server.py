@@ -63,6 +63,7 @@ def loadData():
     else:
         print("Loading solution vectors...")
         solution_vectors = pickle.load(open(solutions_data_file, "rb"))
+    print(len(solution_vectors), " methods loaded...")
         
     if not os.path.isfile(tfIdf_tranformed_data_file):
         print("Extracting Tf-IDF models...")

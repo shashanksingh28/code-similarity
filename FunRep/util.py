@@ -32,8 +32,8 @@ def vector_from_text(code_text):
     return method_vector
 
 def vectors_from_file(solutionsFile):
-    print("Loading vectors from", solutionsFile)
+    # print("Loading vectors from", solutionsFile)
     vectors = unique_vectors_from_file(solutionsFile)
-    print("Total Samples:",len(vectors))
+    # print("Total Samples:",len(vectors))
     return vectors
     
