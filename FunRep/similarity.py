@@ -42,7 +42,8 @@ def stringJaccardSimilarity(string1, string2):
     wordSet2 = set(string2.split())
     return setJaccardSimilarity(wordSet1, wordSet2)
 
-def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifier': 0.1, 'returnType': 0.1, 'annotations': 3, 'exceptions' : 2}):
+#def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifier': 0.1, 'returnType': 0.1, 'annotations': 3, 'exceptions' : 2}, nl_sim=0.0):
+def jaccardSimilarity(method1, method2, featureWeights = {}, nl_sim=0.0):
     """ Given a two methods (class MethodFeatureVector), 
         return the Jaccard Similarity between them and a dictionary of intersections."""
     info_dict = {}
@@ -103,30 +104,36 @@ def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifie
         print("Total:",jaccard_sim_total)
         print("Count:", count)
     """
+    # add nl_sim as a feature
+    jaccard_sim_total += nl_sim
+    count += 1
 
-    # jaccard_sim = jaccard_sim_total / count
+    jaccard_sim = jaccard_sim_total / count
     size_diff = abs(sum(f1['statements'].values()) - sum(f2['statements'].values()))
-    jaccard_sim = (jaccard_sim_total / count) - (size_diff / 10000)
+    # jaccard_sim = (jaccard_sim_total / count) - (size_diff / 10000)
     info_dict['jaccard_sim'] = jaccard_sim
     info_dict['size_diff'] = size_diff
-    
+
     return jaccard_sim, info_dict
 
-def proposed_similarity(method1, method2, nl_dict, nl_model, nl_weight=0.5):
-    """ Our proposed similarity metric """
-    # average of jaccard indexes of sets
-    jaccard_sim, info_dict = jaccardSimilarity(method1, method2)
-
+def nl_similarity(method1, method2, nl_dict, nl_model, nl_weight):
     vec1_bow = nl_dict.doc2bow(method1.nl_tokens)
     vec1 = nl_model[vec1_bow]
     
     vec2_bow = nl_dict.doc2bow(method2.nl_tokens)
     vec2 = nl_model[vec2_bow]
     
-    nl_sim = gensim.matutils.cossim(vec1, vec2)
-    
+    return gensim.matutils.cossim(vec1, vec2)
+
+def proposed_similarity(method1, method2, nl_dict, nl_model, nl_weight=0.5):
+    """ Our proposed similarity metric """
+    # average of jaccard indexes of sets
+    nl_sim = nl_similarity(method1, method2, nl_dict, nl_model, nl_weight)
+    jaccard_sim, info_dict = jaccardSimilarity(method1, method2, nl_sim=nl_sim)
+
     info_dict['nl_sim'] = nl_sim
     info_dict['jaccard_sim'] = jaccard_sim
-    proposed_sim = (1 - nl_weight) * jaccard_sim + nl_weight * nl_sim
+    # proposed_sim = (1 - nl_weight) * jaccard_sim + nl_weight * nl_sim
     # print(proposed_sim)    
-    return proposed_sim, info_dict
+    # return proposed_sim, info_dict
+    return jaccard_sim, info_dict
