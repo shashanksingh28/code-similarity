@@ -68,7 +68,6 @@ def create_language_model(vectors):
 
     tfidf_model = models.TfidfModel(corpus)
     corpus_tfidf = tfidf_model[corpus]
-    import pdb; pdb.set_trace()
     # lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
     return dictionary, tfidf_model
 

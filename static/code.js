@@ -15,8 +15,8 @@ angular.module('similarityApp', ['ui.codemirror'])
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.ratio = 0.3;
-    // $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
-    $scope.baseUrl="http://localhost:5000";
+    $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
+    // $scope.baseUrl="http://localhost:5000";
 
     $scope.updateText = function updateText(results){
     	// console.log("Text:");

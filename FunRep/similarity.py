@@ -56,7 +56,7 @@ def jaccardSimilarity(method1, method2, featureWeights = {}, nl_sim=0.0):
     f1 = method1.features
     f2 = method2.features
 
-    commonFeatures = (f1.keys() & f2.keys()) - method.nl_features | set(['types'])
+    commonFeatures = (f1.keys() & f2.keys()) - method.nl_features | set(['types']) 
     jaccard_sim_total = 0.0
     count = 0
     for key in commonFeatures:

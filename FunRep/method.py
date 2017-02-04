@@ -28,7 +28,7 @@ class MethodFeatureVector:
 
         # String or numeric features
         self.features['returnType'] = str(jsonObj['returnType'])
-        self.features['modifier'] = int(jsonObj['modifier'])
+        # self.features['modifier'] = int(jsonObj['modifier'])
         if 'javaDoc' in jsonObj:
             self.features['java_doc'] = str(jsonObj['javaDoc']).lower()
         if 'comments' in jsonObj:
