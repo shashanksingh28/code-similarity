@@ -4,6 +4,9 @@ from collections import Counter
 from .lang import *
 
 nl_features = set(['variables', 'constants', 'comments', 'java_doc', 'types'])
+signature_features = set(['params','return','exceptions','annotations'])
+structural_features = set(['types','expressions','statements','line_count'])
+conceptual_features = set(['concepts'])
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar 
@@ -27,7 +30,7 @@ class MethodFeatureVector:
         self.features = {}
 
         # String or numeric features
-        self.features['returnType'] = str(jsonObj['returnType'])
+        self.features['return'] = str(jsonObj['returnType'])
         # self.features['modifier'] = int(jsonObj['modifier'])
         if 'javaDoc' in jsonObj:
             self.features['java_doc'] = str(jsonObj['javaDoc']).lower()
@@ -35,13 +38,13 @@ class MethodFeatureVector:
             self.features['comments'] = str(jsonObj['comments']).lower()
         
         # List features
-        self.features['paramTypes'] = MethodFeatureVector.parse_generics(list(jsonObj['paramTypes']))
+        self.features['params'] = MethodFeatureVector.parse_generics(list(jsonObj['paramTypes']))
         
         # set features, where we consider only if present or absent
         self.features['exceptions'] = set(jsonObj['exceptions'])
         self.features['annotations'] = set(jsonObj['annotations'])
         self.features['concepts'] = set(jsonObj['concepts'])
-        self.features['methodCalls'] = set(jsonObj['methodCalls'])
+        self.features['methods_called'] = set(jsonObj['methodCalls'])
         self.features['variables'] = set(jsonObj['variables'])
         self.features['constants'] = set(jsonObj['constants'])
         
@@ -71,7 +74,6 @@ class MethodFeatureVector:
         """ Get only those tokens which one would consider to be natural language tokens
             E.g.: Comments, variable names, tokens, etc """
         # while we are using Tf-IDF
-        # lang_keys = ['variables', 'constants', 'comments', 'java_doc', 'types']
         tokens = []
 
         # Name and parameters
