@@ -51,5 +51,11 @@ def text_pre_process(word_list):
         elif word in datetime:
             out.append("TIME")
         elif len(word) > 1:
-            out.append(lemma.lemmatize(word))
+            # replace all digits with literal D
+            # this helps make a1 and a2 be aD and aD
+            clean_word = re.sub(r'[\d]',"D", word)
+            lemma_word = lemma.lemmatize(clean_word)
+            # if clean_word != lemma_word:
+            #    print(clean_word, lemma_word)
+            out.append(lemma_word)
     return out

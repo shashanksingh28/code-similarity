@@ -19,23 +19,28 @@ app = Flask(__name__)
 
 #### Config section ####
 solutions_input_file = "solutionSet.txt"
-tfIdf_fit_model_file = "models/tokenTf-Idf.model"
-tfIdf_tranformed_data_file = "models/tokenTf-Idf.dat"
 solutions_data_file = "models/solutionVectors.pck"
-nlp_sim_dict_file = "models/dictionary.pck"
-nlp_sim_model_file = "models/sim_model.pck"
-kNearest = 7
+baseline_model_file = "models/baseline.model"
+baseline_dict_file = "models/baseline.dat"
+lang_dict_file = "models/dictionary.pck"
+lang_model_file = "models/sim_model.model"
+kNearest = 5
+
+feature_weights = dict()
+feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
+feature_weights['signature'] = {'features' : ('params','return','exceptions','annotations'), 'weight': 1.0}
+feature_weights['structure'] = {'features' : ('expressions','statements'), 'weight': 1.0}
+feature_weights['concepts'] = {'features' : ('concepts'), 'weight' : 1.0}
 ####
 
 #### Global Variables to be used throughout ####
-# solution vectors which will be recommended
 solution_vectors = None
-# tfIDf model to be used to transform new data
-tfIdf_model = None
-# this will be used to calculate similarity
-tfIdf_data = None
-nl_sim_dict = None
-nl_sim_model = None
+
+baseline_dict = None
+baseline_model = None
+
+lang_dict = None
+lang_model = None
 #####
 
 with app.test_request_context():
@@ -48,10 +53,10 @@ def loadData():
         Also stores necessary data in local system. """    
     
     global solution_vectors
-    global tfIdf_model
-    global tfIdf_data
-    global nl_sim_dict
-    global nl_sim_model
+    global baseline_dict
+    global baseline_model
+    global lang_dict
+    global lang_model
 
     if not os.path.exists("models"):
         os.makedirs("models")
@@ -65,25 +70,31 @@ def loadData():
         solution_vectors = pickle.load(open(solutions_data_file, "rb"))
     print(len(solution_vectors), " methods loaded...")
         
-    if not os.path.isfile(tfIdf_tranformed_data_file):
-        print("Extracting Tf-IDF models...")
-        tfIdf_model, tfIdf_data = ml.tfIdf_models(solution_vectors)
-        pickle.dump(tfIdf_model, open(tfIdf_fit_model_file, "wb"))
-        pickle.dump(tfIdf_data, open(tfIdf_tranformed_data_file, "wb"))
+    documents = []
+    lang_documents = []
+    for vector in solution_vectors: 
+        documents.append(vector.tokens)
+        lang_documents.append(vector.nl_tokens)
+    
+    if not os.path.isfile(baseline_model_file):
+        print("Extracting Baseline models...")
+        baseline_dict, baseline_model = ml.create_tfIdf_model(documents)
+        pickle.dump(baseline_model, open(baseline_model_file, "wb"))
+        pickle.dump(baseline_dict, open(baseline_dict_file, "wb"))
     else:
-        print("Loading Tf-Idf models...")
-        tfIdf_model = pickle.load(open(tfIdf_fit_model_file, "rb"))
-        tfIdf_data = pickle.load(open(tfIdf_tranformed_data_file, "rb"))
+        print("Loading Baseline models...")
+        baseline_dict = pickle.load(open(baseline_dict_file, "rb"))
+        baseline_model = pickle.load(open(baseline_model_file, "rb"))
   
-    if not os.path.isfile(nlp_sim_model_file):
+    if not os.path.isfile(lang_model_file):
         print("Extracting natural language models")
-        nl_sim_dict, nl_sim_model = ml.create_language_model(solution_vectors)
-        pickle.dump(nl_sim_dict, open(nlp_sim_dict_file, "wb"))
-        pickle.dump(nl_sim_model, open(nlp_sim_model_file, "wb"))
+        lang_dict, lang_model = ml.create_tfIdf_model(lang_documents)
+        pickle.dump(lang_dict, open(lang_dict_file, "wb"))
+        pickle.dump(lang_model, open(lang_model_file, "wb"))
     else:
         print("Loading natural language models")
-        nl_sim_dict = pickle.load(open(nlp_sim_dict_file, "rb"))
-        nl_sim_model = pickle.load(open(nlp_sim_model_file, "rb"))
+        lang_dict = pickle.load(open(lang_dict_file, "rb"))
+        lang_model = pickle.load(open(lang_model_file, "rb"))
 
 # Web server components
 class CustomJSONEncoder(JSONEncoder):
@@ -107,40 +118,18 @@ def index():
 @app.route('/simcode', methods=['POST'])
 def proposed_similarity():
     try:
+        request_weights = feature_weights.copy()
         body_string = request.data.decode("utf-8")
         if len(body_string) == 0:
             return jsonify("Empty String")
-        if 'nl_ratio' in request.headers:
-            nl_weight = float(request.headers['nl_ratio'])
-        else:
-            nl_weight = 0.5
-        print("NL_WEIGHT:",nl_weight)
-        # pdb.set_trace()
+        
+        for key in request_weights:
+            if key in request.headers:
+                request_weights[key]['weight'] = float(request.headers[key])
+        print(request_weights)
         method_vector = util.vector_from_text(body_string)
-        nearest = ml.proposed_kNearest(method_vector, solution_vectors, nl_sim_dict, 
-                nl_sim_model, k=kNearest, nl_weight=nl_weight)
-        # nearest contains score, solutions_index and intersections
-        # print(kNearest)
-        nearest_vectors = []
-        for element in nearest:
-            result = {}
-            result['score'] = element[0]
-            result['code'] = solution_vectors[element[1]]
-            result['match'] = element[2]
-            nearest_vectors.append(result)
-        return jsonify(nearest_vectors)
-    except Exception as ex:
-        print(ex)
-        return jsonify(str(ex))
-
-@app.route('/equalJaccard', methods=['POST'])
-def jaccard_kNearest():
-    try:
-        body_string = request.data.decode("utf-8")
-        if len(body_string) == 0:
-            return jsonify("Empty String")
-        method_vector = util.vector_from_text(body_string)
-        nearest = ml.jaccard_kNearest(method_vector, solution_vectors, k=kNearest)
+        nearest = ml.proposed_kNearest(method_vector, solution_vectors, lang_dict, 
+                lang_model, k=kNearest, weights=request_weights)
         # nearest contains score, solutions_index and intersections
         # print(kNearest)
         nearest_vectors = []
@@ -181,5 +170,6 @@ def cosine_kNearest():
         return jsonify(str(ex))
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    # loadData()
+    # app.run(debug=True)
+    loadData()
+    import pdb; pdb.set_trace()

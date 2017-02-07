@@ -82,7 +82,6 @@ public class ASTEnhanced {
     // ---------- Numeric Features --------- //
     boolean isEmpty;
     boolean hasInnerClass;
-    int lineCount;
     
     // This helps determine if the modifier is static
     // If it is static, the scope of a method does not contain class name
@@ -260,7 +259,6 @@ public class ASTEnhanced {
         	this.isEmpty = true;
         	return;
         }
-        this.lineCount = block.getChildrenNodes().size();
         for (Node childNode : block.getChildrenNodes()){
             parseNode(childNode);
         }
@@ -415,7 +413,33 @@ public class ASTEnhanced {
     		content = content.substring(content.indexOf(javaDocString) + javaDocString.length());
         }
     	
-    	String[] lines = content.split("\n");
+    	ArrayList<String> lines = new ArrayList<String>(Arrays.asList(content.split("\n")));
+    	
+    	// BUGGY, looses some hanging comments. Just verify if present, if not, add to end...
+    	if(n instanceof MethodDeclaration){
+        	List<Comment> comments = ((MethodDeclaration) n).getAllContainedComments();
+        	for(Comment comment: comments){
+        		if(!content.contains(comment.toString())){
+        			String commentAligned = "";
+        			// Insert it in the right position
+        			int col = comment.getBegin().column;
+        			
+        			for(int i = 1; i<= col; i++){
+        				commentAligned += " ";
+        			}
+        			commentAligned += comment;
+        			int pos = comment.getBegin().line;
+        			// if pos goes out of bounds, just add it to end
+        			// this happens because sometimes there are empty lines
+        			if(lines.size() < pos){
+        				lines.add(commentAligned);
+        			}else{
+        				lines.add(pos, commentAligned);
+        			}        			
+        		}        		
+        	}
+        }
+    	
         String extracted = "";
         for(String line : lines){
             // System.out.println("# " + line);

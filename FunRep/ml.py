@@ -8,18 +8,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from gensim import corpora, models, similarities
 
-def bag_of_words(vectors):
-    bag = []
-    for vector in vectors:
-        bag.append(' '.join(vector.tokens))
-    return bag
-
-def tfIdf_models(vectors):
-    bow = bag_of_words(vectors)
-    tfidf_fitted_model = TfidfVectorizer(min_df=1).fit(bow)
-    tfidf_transformed_data = tfidf_fitted_model.transform(bow)
-    return tfidf_fitted_model, tfidf_transformed_data
-   
 def jaccard_kNearest(method, solutions, k=3):
     """ Return K Nearest methods based on jaccard similarity.
         Returns a list of tuples containing (score, solutions_index, similarityDictionary)
@@ -57,24 +45,20 @@ def cosine_kNearest(ndim_num_vector, ndim_num_solutions, dim_names, k = 1):
     
     return results
 
-def create_language_model(vectors):
+def create_tfIdf_model(documents):
     """ Given solution vectors, return trained gensim language models for similarity """
-    documents = []
-    for vector in vectors:
-        tokens = vector.nl_tokens
-        documents.append(tokens)
     dictionary = corpora.Dictionary(documents)
     corpus = [dictionary.doc2bow(text) for text in documents]
 
     tfidf_model = models.TfidfModel(corpus)
-    corpus_tfidf = tfidf_model[corpus]
+    # corpus_tfidf = tfidf_model[corpus]
     # lsi_model = models.LsiModel(corpus_tfidf, id2word=dictionary, num_topics=100)
     return dictionary, tfidf_model
 
-def proposed_kNearest(method, solutions, nl_dict, nl_model, k, nl_weight=0.5):
+def proposed_kNearest(method, solutions, nl_dict, nl_model, k, weights):
     """ Our proposed similarity kernel. """
     results = []
-    similarities = [proposed_similarity(method, solution, nl_dict, nl_model, nl_weight) for solution in solutions]
+    similarities = [proposed_similarity(method, solution, nl_dict, nl_model, weights) for solution in solutions]
     sim_scores = [tup[0] for tup in similarities]
     sorted_idx = np.argsort(sim_scores)
     kNearest_idx = sorted_idx[-k:]

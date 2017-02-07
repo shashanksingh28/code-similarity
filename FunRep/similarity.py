@@ -1,5 +1,4 @@
-import pdb
-from collections import Counter
+from collections import Counter, defaultdict
 from . import lang
 import numpy as np
 import gensim
@@ -43,10 +42,10 @@ def stringJaccardSimilarity(string1, string2):
     return setJaccardSimilarity(wordSet1, wordSet2)
 
 #def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifier': 0.1, 'returnType': 0.1, 'annotations': 3, 'exceptions' : 2}, nl_sim=0.0):
-def jaccardSimilarity(method1, method2, featureWeights = {}, nl_sim=0.0):
+def jaccardSimilarity(method1, method2, weights, nl_sim):
     """ Given a two methods (class MethodFeatureVector), 
         return the Jaccard Similarity between them and a dictionary of intersections."""
-    info_dict = {}
+    info_dict = defaultdict(Counter)
     
     # Certain features to be skipped, like lineCount
     # modifier is skipped because it is a choice based on project
@@ -55,12 +54,10 @@ def jaccardSimilarity(method1, method2, featureWeights = {}, nl_sim=0.0):
     # f1 is a conscise way of representing features dictionary for method1
     f1 = method1.features
     f2 = method2.features
-
-    commonFeatures = (f1.keys() & f2.keys()) - method.nl_features | set(['types']) 
-    jaccard_sim_total = 0.0
-    count = 0
+    # import pdb; pdb.set_trace()
+    commonFeatures = (f1.keys() & f2.keys()) - set(method.lang_features)
+    sim_total = 0.0
     for key in commonFeatures:
-        count += 1
         if isinstance(f1[key], dict):
             # In case of method vectors, dictionaries are usually counters
             # sim, count, intersections = counterJaccardSimilarity(f1[key], f2[key])
@@ -89,34 +86,33 @@ def jaccardSimilarity(method1, method2, featureWeights = {}, nl_sim=0.0):
             print("Intersections:",intersections)
         """
         
-        # additional functionality of bosting certain features
-        if key in featureWeights:
-            weight = int(featureWeights[key])
-        else:
-            weight = 1
+        # default weight of 1
+        weight = 1
+        key_category = 'None'
+        for key_category in weights:
+            if key in weights[key_category]['features']:
+                weight = int(weights[key_category]['weight'])
+                key_type = key_category
+                break           
 
-        jaccard_sim_total += weight * sim 
+        # print(key,":",weight," * ",sim)
+        key_sim = weight * sim 
         if sim > 0:
-            info_dict[key] = intersections
+            info_dict[key_category][key] = key_sim 
+        
+        sim_total += key_sim
     
-    """
-    if jaccard_sim_total > 0:
-        print("Total:",jaccard_sim_total)
-        print("Count:", count)
-    """
-    # add nl_sim as a feature
-    jaccard_sim_total += nl_sim
-    count += 1
+    # lang sim was calculated from a different method
+    # incorporte this
+    lang_sim = weights['language']['weight'] * nl_sim
+    info_dict['language'] = lang_sim
 
-    jaccard_sim = jaccard_sim_total / count
-    size_diff = abs(sum(f1['statements'].values()) - sum(f2['statements'].values()))
-    # jaccard_sim = (jaccard_sim_total / count) - (size_diff / 10000)
-    info_dict['jaccard_sim'] = jaccard_sim
-    info_dict['size_diff'] = size_diff
+    sim_total += lang_sim
+    normalized_sim = sim_total / len(f1)
+    info_dict['proposed_sim'] = normalized_sim
+    return normalized_sim, info_dict
 
-    return jaccard_sim, info_dict
-
-def nl_similarity(method1, method2, nl_dict, nl_model, nl_weight):
+def nl_similarity(method1, method2, nl_dict, nl_model):
     vec1_bow = nl_dict.doc2bow(method1.nl_tokens)
     vec1 = nl_model[vec1_bow]
     
@@ -125,15 +121,11 @@ def nl_similarity(method1, method2, nl_dict, nl_model, nl_weight):
     
     return gensim.matutils.cossim(vec1, vec2)
 
-def proposed_similarity(method1, method2, nl_dict, nl_model, nl_weight=0.5):
+def proposed_similarity(method1, method2, nl_dict, nl_model, weights):
     """ Our proposed similarity metric """
     # average of jaccard indexes of sets
-    nl_sim = nl_similarity(method1, method2, nl_dict, nl_model, nl_weight)
-    jaccard_sim, info_dict = jaccardSimilarity(method1, method2, nl_sim=nl_sim)
-
-    info_dict['nl_sim'] = nl_sim
-    info_dict['jaccard_sim'] = jaccard_sim
-    # proposed_sim = (1 - nl_weight) * jaccard_sim + nl_weight * nl_sim
-    # print(proposed_sim)    
+    nl_sim = nl_similarity(method1, method2, nl_dict, nl_model)
+    jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, nl_sim=nl_sim)
     # return proposed_sim, info_dict
+    # print(info_dict)
     return jaccard_sim, info_dict

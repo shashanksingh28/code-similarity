@@ -3,10 +3,9 @@ import re
 from collections import Counter
 from .lang import *
 
-nl_features = set(['variables', 'constants', 'comments', 'java_doc', 'types'])
-signature_features = set(['params','return','exceptions','annotations'])
-structural_features = set(['types','expressions','statements','line_count'])
-conceptual_features = set(['concepts'])
+lang_features = ('variables', 'constants', 'comments', 'java_doc', 'types')
+tm = set()
+tl = set()
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar 
@@ -16,7 +15,8 @@ class MethodFeatureVector:
     def __init__(self, jsonString):
         """ Always initialize from JSON strings like {key1 : value1, key2: value2..}"""
         jsonObj = json.loads(jsonString.strip(), strict=False)
-        
+        global tm
+        global tl
         self.name = jsonObj['name']
         if 'className' in jsonObj:
             self.class_name = jsonObj['className']
@@ -24,7 +24,6 @@ class MethodFeatureVector:
 
         # pure text form of the method
         self.raw_text = jsonObj['text']
-        self.line_count = int(jsonObj['lineCount'])
 
         # extracted features 
         self.features = {}
@@ -45,16 +44,25 @@ class MethodFeatureVector:
         self.features['annotations'] = set(jsonObj['annotations'])
         self.features['concepts'] = set(jsonObj['concepts'])
         self.features['methods_called'] = set(jsonObj['methodCalls'])
-        self.features['variables'] = set(jsonObj['variables'])
-        self.features['constants'] = set(jsonObj['constants'])
         
         # Where counts matter, we use counter objects
+        self.features['variables'] = Counter(jsonObj['variables'])
+        self.features['constants'] = Counter(jsonObj['constants'])
         self.features['expressions'] = Counter(jsonObj['expressions'])
         self.features['statements'] = Counter(jsonObj['statements'])
         self.features['types'] = Counter(jsonObj['types'])
         
-        self.tokens = meaningful_tokens_camelCase(self.raw_text)
+        self.tokens = text_pre_process(meaningful_tokens_camelCase(self.raw_text))
         self.nl_tokens = text_pre_process(self.extract_lang_tokens())
+        tm.update(self.tokens)
+        tl.update(self.nl_tokens)
+        extra = set(self.nl_tokens) - set(self.tokens)
+        if(len(extra) > 0):
+            import pdb; pdb.set_trace()
+            tokens = self.extract_lang_tokens()
+            text_pre_process(tokens)
+            print(self.raw_text)
+            print(extra)
 
     @staticmethod
     def parse_generics(string_iterable):
@@ -79,17 +87,13 @@ class MethodFeatureVector:
         # Name and parameters
         tokens.extend(meaningful_tokens_camelCase(self.name))
 
-        for key in nl_features & self.features.keys():
+        for key in lang_features & self.features.keys():
             if isinstance(self.features[key], str):
                 if key == 'java_doc':
                     # javadocs have syntax keywords like param and return
                     # these are not natural language terms
-                    javadoc = re.sub(r"\b(return | param | see)\b","",self.features[key])
+                    javadoc = re.sub(r"\b(return|param|see)\b","",self.features[key])
                     tokens.extend(meaningful_tokens_camelCase(javadoc))
-                elif key == 'variables':
-                    # args is an extremely common variable name that we remove
-                    self.features[key].remove('args')
-                    tokens.extend(meaningful_tokens_camelCase(self.features[key]))
                 else:
                     tokens.extend(meaningful_tokens_camelCase(self.features[key]))
             elif isinstance(self.features[key], set):
@@ -100,5 +104,7 @@ class MethodFeatureVector:
                 tokens.extend(meaningful_tokens_camelCase(' '.join(self.features[key].elements())))
             elif isinstance(self.features[key], list):
                 tokens.extend(meaningful_tokens_camelCase(' '.join(self.features[key])))
+            else:
+                print("unknown type for:",key)
         
         return list(set(tokens))
