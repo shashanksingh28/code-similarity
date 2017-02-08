@@ -71,6 +71,20 @@ angular.module('similarityApp', ['ui.codemirror'])
             success: $scope.updateProposed
         });
     };
+
+    $scope.postSimRequest = function(model){
+         $.ajax({
+            url: $scope.baseUrl + '/simcode',
+			headers : {'weights': JSON.stringify($scope.weights)},
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            crossDomain: true,
+            data: $scope.methodText,
+            success: $scope.updateProposed
+        });
+    }
+
   }])
   .directive('ngEnter', function () {
     return function (scope, element, attrs) {

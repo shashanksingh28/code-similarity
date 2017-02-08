@@ -98,7 +98,7 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
         # print(key,":",weight," * ",sim)
         key_sim = weight * sim 
         if sim > 0:
-            info_dict[key_category][key] = key_sim 
+            info_dict[key_category][key] = intersections, key_sim
         
         sim_total += key_sim
     
