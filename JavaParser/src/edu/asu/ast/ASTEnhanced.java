@@ -7,6 +7,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.InitializerDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.ModifierSet;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.body.VariableDeclaratorId;
@@ -198,6 +199,8 @@ public class ASTEnhanced {
             
             // Recursively loop through child nodes and make a dictionary
             this.parseBody(methodDec.getBody());
+            
+            this.extractHighLevelConcepts();            
 
         } catch (Exception ex){
             ex.printStackTrace();
@@ -246,6 +249,8 @@ public class ASTEnhanced {
             
             // Recursively loop through child nodes and make a dictionary
             this.parseBody(constDec.getBlock());
+            
+            this.extractHighLevelConcepts();
 
         } catch (Exception ex){
             ex.printStackTrace();
@@ -465,5 +470,17 @@ public class ASTEnhanced {
     	}
     	
     	return comments;
+    }
+    
+    public void extractHighLevelConcepts(){
+        if(this.statements.containsKey("TryStmt")){
+        	this.concepts.add("ExceptionHandling");
+        }
+        if(this.statements.containsKey("SynchronizedStmt") || ModifierSet.isSynchronized(this.modifier)){
+        	this.concepts.add("Synchronization");
+        }
+        if(ModifierSet.isAbstract(this.modifier)){
+        	this.concepts.add("Abstract");
+        }
     }
 }
