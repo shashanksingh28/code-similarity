@@ -415,31 +415,35 @@ public class ASTEnhanced {
     	
     	ArrayList<String> lines = new ArrayList<String>(Arrays.asList(content.split("\n")));
     	
+    	List<Comment> comments = new LinkedList<Comment>();
     	// BUGGY, looses some hanging comments. Just verify if present, if not, add to end...
     	if(n instanceof MethodDeclaration){
-        	List<Comment> comments = ((MethodDeclaration) n).getAllContainedComments();
-        	for(Comment comment: comments){
-        		if(!content.contains(comment.toString())){
-        			String commentAligned = "";
-        			// Insert it in the right position
-        			int col = comment.getBegin().column;
-        			
-        			for(int i = 1; i<= col; i++){
-        				commentAligned += " ";
-        			}
-        			commentAligned += comment;
-        			int pos = comment.getBegin().line;
-        			// if pos goes out of bounds, just add it to end
-        			// this happens because sometimes there are empty lines
-        			if(lines.size() < pos){
-        				lines.add(commentAligned);
-        			}else{
-        				lines.add(pos, commentAligned);
-        			}        			
-        		}        		
-        	}
-        }
-    	
+        	comments = ((MethodDeclaration) n).getAllContainedComments();
+    	}
+    	else if(n instanceof ConstructorDeclaration){
+    		comments = ((ConstructorDeclaration) n).getAllContainedComments();
+    	}
+    	for(Comment comment: comments){
+    		if(!content.contains(comment.toString())){
+    			String commentAligned = "";
+    			// Insert it in the right position
+    			int col = comment.getBegin().column;
+    			
+    			for(int i = 1; i<= col; i++){
+    				commentAligned += " ";
+    			}
+    			commentAligned += comment;
+    			int pos = comment.getBegin().line;
+    			// if pos goes out of bounds, just add it to end
+    			// this happens because sometimes there are empty lines
+    			if(lines.size() < pos){
+    				lines.add(commentAligned);
+    			}else{
+    				lines.add(pos, commentAligned);
+    			}        			
+    		}        		
+    	}
+            	
         String extracted = "";
         for(String line : lines){
             // System.out.println("# " + line);

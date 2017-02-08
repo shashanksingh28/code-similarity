@@ -32,9 +32,9 @@ class MethodFeatureVector:
         self.features['return'] = str(jsonObj['returnType'])
         # self.features['modifier'] = int(jsonObj['modifier'])
         if 'javaDoc' in jsonObj:
-            self.features['java_doc'] = str(jsonObj['javaDoc']).lower()
+            self.features['java_doc'] = str(jsonObj['javaDoc'])
         if 'comments' in jsonObj:
-            self.features['comments'] = str(jsonObj['comments']).lower()
+            self.features['comments'] = str(jsonObj['comments'])
         
         # List features
         self.features['params'] = MethodFeatureVector.parse_generics(list(jsonObj['paramTypes']))
@@ -58,7 +58,6 @@ class MethodFeatureVector:
         tl.update(self.nl_tokens)
         extra = set(self.nl_tokens) - set(self.tokens)
         if(len(extra) > 0):
-            import pdb; pdb.set_trace()
             tokens = self.extract_lang_tokens()
             text_pre_process(tokens)
             print(self.raw_text)
@@ -108,3 +107,6 @@ class MethodFeatureVector:
                 print("unknown type for:",key)
         
         return list(set(tokens))
+
+    def __str__(self):
+        return self.raw_text

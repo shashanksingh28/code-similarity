@@ -7,7 +7,16 @@ pre {
     /* display: inline-block; */
 }
 
-#ratioSlider .slider-selection {
+#signatureSlider .slider-selection {
+    background: #BABABA;
+}
+#structureSlider .slider-selection {
+    background: #BABABA;
+}
+#conceptsSlider .slider-selection {
+    background: #BABABA;
+}
+#languageSlider .slider-selection {
     background: #BABABA;
 }
 

@@ -8,46 +8,33 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from gensim import corpora, models, similarities
 
-def jaccard_kNearest(method, solutions, k=3):
-    """ Return K Nearest methods based on jaccard similarity.
-        Returns a list of tuples containing (score, solutions_index, similarityDictionary)
-    """
-    results = [] 
-    similarities = [jaccardSimilarity(method, solution, {'concepts':2}) for solution in solutions]
-    similarityScores = [tup[0] for tup in similarities]
-    sortedIndices = np.argsort(similarityScores)
-    kNearestIndices = sortedIndices[-k:]
-
-    for i in kNearestIndices[::-1]:
-        results.append((float(np.round(similarities[i][0], decimals = 3)), i, similarities[i][1]))
-
-    return results
-
-def cosine_kNearest(ndim_num_vector, ndim_num_solutions, dim_names, k = 1):
+def cosine_kNearest(method, solutions, dictionary, model, k):
     """ Provided a single vector and a list of vectors with the same dimensions, finds closest
         based on cosine similarity. Features is just a list of features, so it also provides
         a list of which features contributed to the cosine 
         Returns a list of tuples containing (score, solutions_index, similarityDictionary)
     """
-    similarities = cosine_similarity(ndim_num_vector, ndim_num_solutions).ravel()
-    
+    similarities = [ gensim_lang_cossim(method, solution, dictionary, model) for solution in solutions]
     # since we need indexes
     sortedIndices = np.argsort(similarities)
     kNearestIndices = sortedIndices[-k:]
     results = []
-    
+    method_bow = dictionary.doc2bow(method.tokens)
+    method_bow_keys = set([tup[0] for tup in method_bow])
     for i in kNearestIndices[::-1]:
         intersectingTokens = []
-        for j, feature in enumerate(dim_names):
-            if ndim_num_vector[0,j] > 0 and ndim_num_solutions[i,j] > 0:
-                intersectingTokens.append(feature)
-        results.append((float(np.round(similarities[i], decimals = 3)), i, intersectingTokens))
-    
+        solution_bow = dictionary.doc2bow(solutions[i].tokens)
+        solution_bow_keys = set([tup[0] for tup in solution_bow])
+        intersect_keys = method_bow_keys & solution_bow_keys
+        intersect_tokens = [dictionary[key] for key in intersect_keys]
+        results.append((float(np.round(similarities[i], decimals = 4)), i, intersect_tokens))    
     return results
 
 def create_tfIdf_model(documents):
     """ Given solution vectors, return trained gensim language models for similarity """
     dictionary = corpora.Dictionary(documents)
+    # remove the most infrequent words
+    dictionary.filter_extremes(no_below=1)
     corpus = [dictionary.doc2bow(text) for text in documents]
 
     tfidf_model = models.TfidfModel(corpus)

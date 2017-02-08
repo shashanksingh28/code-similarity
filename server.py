@@ -96,6 +96,9 @@ def loadData():
         lang_dict = pickle.load(open(lang_dict_file, "rb"))
         lang_model = pickle.load(open(lang_model_file, "rb"))
 
+    print(len(lang_dict)," language tokens")
+    print(len(baseline_dict)," baseline tokens")
+
 # Web server components
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj):
@@ -123,10 +126,13 @@ def proposed_similarity():
         if len(body_string) == 0:
             return jsonify("Empty String")
         
-        for key in request_weights:
-            if key in request.headers:
-                request_weights[key]['weight'] = float(request.headers[key])
-        print(request_weights)
+        if request.headers['weights']: 
+            header = json.loads(request.headers['weights'])
+            print(header)
+            for weight_key in header:
+                if weight_key in request_weights:
+                    request_weights[weight_key]['weight'] = float(header[weight_key])
+
         method_vector = util.vector_from_text(body_string)
         nearest = ml.proposed_kNearest(method_vector, solution_vectors, lang_dict, 
                 lang_model, k=kNearest, weights=request_weights)
@@ -152,9 +158,8 @@ def cosine_kNearest():
             return jsonify("Empty String")
         method_vector = util.vector_from_text(body_string)
         # first transform the given method_vector with our model
-        method_vector_transformed = tfIdf_model.transform([' '.join(method_vector.tokens)])
-        nearest = ml.cosine_kNearest(method_vector_transformed, tfIdf_data, 
-                tfIdf_model.get_feature_names(), k=kNearest)
+        nearest = ml.cosine_kNearest(method_vector, solution_vectors, baseline_dict,
+                baseline_model, k=kNearest)
         # nearest contains score, solutions_index and intersections
         # print(kNearest)
         nearest_vectors = []
@@ -166,7 +171,6 @@ def cosine_kNearest():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
-        print(sys.exec_info()[0])
         return jsonify(str(ex))
 
 if __name__ == "__main__":

@@ -112,19 +112,19 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
     info_dict['proposed_sim'] = normalized_sim
     return normalized_sim, info_dict
 
-def nl_similarity(method1, method2, nl_dict, nl_model):
-    vec1_bow = nl_dict.doc2bow(method1.nl_tokens)
-    vec1 = nl_model[vec1_bow]
+def gensim_lang_cossim(method1, method2, dictionary, model):
+    vec1_bow = dictionary.doc2bow(method1.nl_tokens)
+    vec1 = model[vec1_bow]
     
-    vec2_bow = nl_dict.doc2bow(method2.nl_tokens)
-    vec2 = nl_model[vec2_bow]
+    vec2_bow = dictionary.doc2bow(method2.nl_tokens)
+    vec2 = model[vec2_bow]
     
     return gensim.matutils.cossim(vec1, vec2)
 
 def proposed_similarity(method1, method2, nl_dict, nl_model, weights):
     """ Our proposed similarity metric """
     # average of jaccard indexes of sets
-    nl_sim = nl_similarity(method1, method2, nl_dict, nl_model)
+    nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
     jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, nl_sim=nl_sim)
     # return proposed_sim, info_dict
     # print(info_dict)
