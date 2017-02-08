@@ -24,7 +24,7 @@ baseline_model_file = "models/baseline.model"
 baseline_dict_file = "models/baseline.dat"
 lang_dict_file = "models/dictionary.pck"
 lang_model_file = "models/sim_model.model"
-kNearest = 5
+kNearest = 10
 
 feature_weights = dict()
 feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}

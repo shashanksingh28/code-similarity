@@ -36,6 +36,7 @@ class MethodFeatureVector:
         if 'comments' in jsonObj:
             self.features['comments'] = str(jsonObj['comments'])
         
+        self.features['modifier'] = int(jsonObj['modifier'])
         # List features
         self.features['params'] = MethodFeatureVector.parse_generics(list(jsonObj['paramTypes']))
         
