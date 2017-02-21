@@ -57,6 +57,35 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
     # import pdb; pdb.set_trace()
     commonFeatures = (f1.keys() & f2.keys()) - set(method.lang_features)
     sim_total = 0.0
+
+    info = defaultdict(Counter)
+    for feature_category in weights:
+        category_count = 0
+        category_sim = 0
+        for feature in weights[feature_category]['features']:
+            if not feature in f1 or not feature in f2:
+                continue
+            if isinstance(f1[key], dict):
+                # In case of method vectors, dictionaries are usually counters
+                # sim, count, intersections = counterJaccardSimilarity(f1[key], f2[key])
+                sim, intersections = counter_cossim(f1[key], f2[key])
+            elif isinstance(f1[key], list):
+                sim, intersections = listJaccardSimilarity(f1[key], f2[key])
+            elif isinstance(f1[key], set):
+                # textbook definition of jaccard similarity
+                sim, intersections = setJaccardSimilarity(f1[key], f2[key])
+            elif isinstance(f1[key], str):
+                sim, intersections = stringJaccardSimilarity(f1[key], f2[key])
+            elif isinstance(f1[key], int) or isinstance(f1[key], float) or isinstance(f1[key], bool):
+                sim = 1 if f1[key] == f2[key] else 0
+                intersections = set([f1[key]])
+            category_sim += sim
+            category_count += 1
+            info[feature_category][feature] = intersections
+        # overall score for featur category
+        info[feature_category]['score'] =  category_sim / category_count
+        
+    """
     for key in commonFeatures:
         if isinstance(f1[key], dict):
             # In case of method vectors, dictionaries are usually counters
@@ -77,14 +106,6 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
             print("Unknown type for jaccard similarity :",key)
             continue
         
-        """
-        if sim > 0:
-            print("Feature:",key)
-            print(f1[key])
-            print(f2[key])
-            print("Score:",sim)
-            print("Intersections:",intersections)
-        """
         
         # default weight of 1
         weight = 1
@@ -101,15 +122,17 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
             info_dict[key_category][key] = intersections, key_sim
         
         sim_total += key_sim
-    
-    # lang sim was calculated from a different method
-    # incorporte this
-    lang_sim = weights['language']['weight'] * nl_sim
-    info_dict['language'] = lang_sim
+    """
 
-    sim_total += lang_sim
-    normalized_sim = sim_total / len(f1)
-    info_dict['proposed_sim'] = normalized_sim
+    # lang sim was calculated from a different method
+    lang_sim = weights['language']['weight'] * nl_sim
+    info['language']['score'] = lang_sim
+
+    total_sim = 0.0
+    for feature_category in weights:
+        total_sim += weights[feature_category]['weight'] * info[feature_category]['score']
+    normalized_sim = total_sim / len(weights)
+    info['simlarity'] = normalized_sim
     return normalized_sim, info_dict
 
 def gensim_lang_cossim(method1, method2, dictionary, model):

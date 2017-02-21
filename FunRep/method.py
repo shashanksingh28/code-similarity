@@ -4,8 +4,6 @@ from collections import Counter
 from .lang import *
 
 lang_features = ('variables', 'constants', 'comments', 'java_doc', 'types')
-tm = set()
-tl = set()
 
 class MethodFeatureVector:
     """ A method object represents Java Methods parsed via the featureExtractor.jar 
@@ -15,8 +13,6 @@ class MethodFeatureVector:
     def __init__(self, jsonString):
         """ Always initialize from JSON strings like {key1 : value1, key2: value2..}"""
         jsonObj = json.loads(jsonString.strip(), strict=False)
-        global tm
-        global tl
         self.name = jsonObj['name']
         if 'className' in jsonObj:
             self.class_name = jsonObj['className']
@@ -55,14 +51,6 @@ class MethodFeatureVector:
         
         self.tokens = text_pre_process(meaningful_tokens_camelCase(self.raw_text))
         self.nl_tokens = text_pre_process(self.extract_lang_tokens())
-        tm.update(self.tokens)
-        tl.update(self.nl_tokens)
-        extra = set(self.nl_tokens) - set(self.tokens)
-        if(len(extra) > 0):
-            tokens = self.extract_lang_tokens()
-            text_pre_process(tokens)
-            print(self.raw_text)
-            print(extra)
 
     @staticmethod
     def parse_generics(string_iterable):

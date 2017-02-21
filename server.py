@@ -126,13 +126,13 @@ def proposed_similarity():
         if len(body_string) == 0:
             return jsonify("Empty String")
         
-        if request.headers['weights']: 
+        if 'weights' in request.headers: 
             header = json.loads(request.headers['weights'])
             print(header)
             for weight_key in header:
                 if weight_key in request_weights:
                     request_weights[weight_key]['weight'] = float(header[weight_key])
-
+        # pdb.set_trace()
         method_vector = util.vector_from_text(body_string)
         nearest = ml.proposed_kNearest(method_vector, solution_vectors, lang_dict, 
                 lang_model, k=kNearest, weights=request_weights)
