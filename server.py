@@ -183,6 +183,30 @@ def cosine_kNearest():
     except Exception as ex:
         return jsonify(str(ex))
 
+@app.route('/concept', methods=['POST'])
+def concept_tag_kNearest():
+    try:
+        body_string = request.data.decode("utf-8")
+        if len(body_string) == 0:
+            return jsonify("Empty String")
+        method_vector = util.vector_from_text(body_string)
+        # first transform the given method_vector with our model
+        nearest = ml.concept_tag_kNearest(method_vector, solution_vectors, lang_dict,
+                lang_model, k=kNearest)
+        # nearest contains score, solutions_index and intersections
+        # print(kNearest)
+        nearest_vectors = []
+        for element in nearest:
+            result = {}
+            result['score'] = element[0]
+            result['code'] = solution_vectors[element[1]]
+            result['match'] = element[2]
+            nearest_vectors.append(result)
+        return jsonify(nearest_vectors)
+    except Exception as ex:
+        return jsonify(str(ex))
+
+
 if __name__ == "__main__":
     # app.run(debug=True)
     loadData()

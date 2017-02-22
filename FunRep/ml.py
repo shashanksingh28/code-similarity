@@ -53,3 +53,15 @@ def proposed_kNearest(method, solutions, nl_dict, nl_model, k, weights):
     for i in kNearest_idx[::-1]:
         results.append((float(np.round(similarities[i][0], decimals = 3)), i, similarities[i][1]))
     return results
+
+
+def concept_tag_kNearest(method, solutions, nl_dict, nl_model, k):
+    """ Our proposed similarity kernel. """
+    results = []
+    similarities = [concept_tags_similarity(method, solution, nl_dict, nl_model) for solution in solutions]
+    sim_scores = [tup[0] for tup in similarities]
+    sorted_idx = np.argsort(sim_scores)
+    kNearest_idx = sorted_idx[-k:]
+    for i in kNearest_idx[::-1]:
+        results.append((float(np.round(similarities[i][0], decimals = 3)), i, similarities[i][1]))
+    return results

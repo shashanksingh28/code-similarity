@@ -110,10 +110,11 @@ def proposed_similarity(method1, method2, nl_dict, nl_model, weights):
     jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, nl_sim=nl_sim)
     return jaccard_sim, info_dict
 
-def concept_tags_similarity(method1, method2, nl_dict, nl_model, weights):
+def concept_tags_similarity(method1, method2, nl_dict, nl_model):
     """ UPitt concept tags similarity """
-    # average of jaccard indexes of sets
     nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
     jaccard_sim, info_dict = counter_cossim(method1.concepts, method2.concepts)
-    avg_sim = jaccard_sim + nl_sim / 2
+    avg_sim = (jaccard_sim + nl_sim) / 2
+    if len(info_dict) > 1:
+        print(method2)
     return avg_sim, info_dict

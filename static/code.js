@@ -51,7 +51,7 @@ angular.module('similarityApp', ['ui.codemirror'])
     $scope.postRequests = function postRequests(){
         
         $.ajax({
-            url: $scope.baseUrl + '/cosine',
+            url: $scope.baseUrl + '/concept',
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
