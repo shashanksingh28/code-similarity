@@ -118,6 +118,16 @@ app.json_encoder = CustomJSONEncoder
 def index():
     return render_template('index.html')
 
+def extract_info(info_dict):
+    scores = {}
+    matches = {}
+    for key in info_dict.keys() & feature_weights.keys():
+        scores[key] = round(info_dict[key]['score'], 4)
+        if len(info_dict[key]) > 1:
+            matches[key] = info_dict[key]
+            del matches[key]['score']
+    return scores, matches
+
 @app.route('/simcode', methods=['POST'])
 def proposed_similarity():
     try:
@@ -143,7 +153,7 @@ def proposed_similarity():
             result = {}
             result['score'] = element[0]
             result['code'] = solution_vectors[element[1]]
-            result['match'] = element[2]
+            result['scores'], result['matches'] = extract_info(element[2])
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
@@ -176,4 +186,3 @@ def cosine_kNearest():
 if __name__ == "__main__":
     # app.run(debug=True)
     loadData()
-    import pdb; pdb.set_trace()

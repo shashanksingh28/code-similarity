@@ -41,20 +41,14 @@ def stringJaccardSimilarity(string1, string2):
     wordSet2 = set(string2.split())
     return setJaccardSimilarity(wordSet1, wordSet2)
 
-#def jaccardSimilarity(method1, method2, featureWeights = {'concepts': 3,'modifier': 0.1, 'returnType': 0.1, 'annotations': 3, 'exceptions' : 2}, nl_sim=0.0):
 def jaccardSimilarity(method1, method2, weights, nl_sim):
     """ Given a two methods (class MethodFeatureVector), 
         return the Jaccard Similarity between them and a dictionary of intersections."""
     info_dict = defaultdict(Counter)
     
-    # Certain features to be skipped, like lineCount
-    # modifier is skipped because it is a choice based on project
-    # nl_features = set(['java_doc','comments','variables','constants', 'types'])
-    
     # f1 is a conscise way of representing features dictionary for method1
     f1 = method1.features
     f2 = method2.features
-    # import pdb; pdb.set_trace()
     commonFeatures = (f1.keys() & f2.keys()) - set(method.lang_features)
     sim_total = 0.0
 
@@ -65,75 +59,41 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
         for feature in weights[feature_category]['features']:
             if not feature in f1 or not feature in f2:
                 continue
-            if isinstance(f1[key], dict):
+            if isinstance(f1[feature], dict):
                 # In case of method vectors, dictionaries are usually counters
                 # sim, count, intersections = counterJaccardSimilarity(f1[key], f2[key])
-                sim, intersections = counter_cossim(f1[key], f2[key])
-            elif isinstance(f1[key], list):
-                sim, intersections = listJaccardSimilarity(f1[key], f2[key])
-            elif isinstance(f1[key], set):
+                sim, intersections = counter_cossim(f1[feature], f2[feature])
+            elif isinstance(f1[feature], list):
+                sim, intersections = listJaccardSimilarity(f1[feature], f2[feature])
+            elif isinstance(f1[feature], set):
                 # textbook definition of jaccard similarity
-                sim, intersections = setJaccardSimilarity(f1[key], f2[key])
-            elif isinstance(f1[key], str):
-                sim, intersections = stringJaccardSimilarity(f1[key], f2[key])
-            elif isinstance(f1[key], int) or isinstance(f1[key], float) or isinstance(f1[key], bool):
-                sim = 1 if f1[key] == f2[key] else 0
-                intersections = set([f1[key]])
-            category_sim += sim
+                sim, intersections = setJaccardSimilarity(f1[feature], f2[feature])
+            elif isinstance(f1[feature], str):
+                sim, intersections = stringJaccardSimilarity(f1[feature], f2[feature])
+            elif isinstance(f1[feature], int) or isinstance(f1[feature], float) or isinstance(f1[feature], bool):
+                sim = 1 if f1[feature] == f2[feature] else 0
+                intersections = set([f1[feature]])
+            
             category_count += 1
-            info[feature_category][feature] = intersections
+            category_sim += sim
+            if sim > 0:
+                info[feature_category][feature] = intersections
         # overall score for featur category
-        info[feature_category]['score'] =  category_sim / category_count
-        
-    """
-    for key in commonFeatures:
-        if isinstance(f1[key], dict):
-            # In case of method vectors, dictionaries are usually counters
-            # sim, count, intersections = counterJaccardSimilarity(f1[key], f2[key])
-            sim, intersections = counter_cossim(f1[key], f2[key])
-        elif isinstance(f1[key], list):
-            sim, intersections = listJaccardSimilarity(f1[key], f2[key])
-        elif isinstance(f1[key], set):
-            # textbook definition of jaccard similarity
-            sim, intersections = setJaccardSimilarity(f1[key], f2[key])
-        elif isinstance(f1[key], str):
-            sim, intersections = stringJaccardSimilarity(f1[key], f2[key])
-        elif isinstance(f1[key], int) or isinstance(f1[key], float) or isinstance(f1[key], bool):
-            sim = 1 if f1[key] == f2[key] else 0
-            intersections = set([f1[key]])
+        if not category_count == 0:
+            info[feature_category]['score'] =  category_sim / category_count
         else:
-            # some type we do not know how to deal with
-            print("Unknown type for jaccard similarity :",key)
-            continue
-        
-        
-        # default weight of 1
-        weight = 1
-        key_category = 'None'
-        for key_category in weights:
-            if key in weights[key_category]['features']:
-                weight = int(weights[key_category]['weight'])
-                key_type = key_category
-                break           
-
-        # print(key,":",weight," * ",sim)
-        key_sim = weight * sim 
-        if sim > 0:
-            info_dict[key_category][key] = intersections, key_sim
-        
-        sim_total += key_sim
-    """
+            info[feature_category]['score'] = 0
+     
 
     # lang sim was calculated from a different method
     lang_sim = weights['language']['weight'] * nl_sim
-    info['language']['score'] = lang_sim
-
+    info['language']['score'] = nl_sim
     total_sim = 0.0
     for feature_category in weights:
         total_sim += weights[feature_category]['weight'] * info[feature_category]['score']
     normalized_sim = total_sim / len(weights)
     info['simlarity'] = normalized_sim
-    return normalized_sim, info_dict
+    return normalized_sim, info
 
 def gensim_lang_cossim(method1, method2, dictionary, model):
     vec1_bow = dictionary.doc2bow(method1.nl_tokens)
@@ -146,9 +106,14 @@ def gensim_lang_cossim(method1, method2, dictionary, model):
 
 def proposed_similarity(method1, method2, nl_dict, nl_model, weights):
     """ Our proposed similarity metric """
-    # average of jaccard indexes of sets
     nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
     jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, nl_sim=nl_sim)
-    # return proposed_sim, info_dict
-    # print(info_dict)
     return jaccard_sim, info_dict
+
+def concept_tags_similarity(method1, method2, nl_dict, nl_model, weights):
+    """ UPitt concept tags similarity """
+    # average of jaccard indexes of sets
+    nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
+    jaccard_sim, info_dict = counter_cossim(method1.concepts, method2.concepts)
+    avg_sim = jaccard_sim + nl_sim / 2
+    return avg_sim, info_dict
