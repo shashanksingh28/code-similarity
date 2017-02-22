@@ -4,6 +4,7 @@ import mysql.connector
 import tempfile
 import os
 from collections import Counter
+import MySQLdb
 
 # used to call jar files
 from subprocess import Popen, PIPE, STDOUT
@@ -17,14 +18,15 @@ db_user='root'
 db_pass='root'
 db_port='3306'
 db_name='parser'
-cnx = mysql.connector.connect(user=db_user,password=db_pass,database=db_name)
-query = "SELECT concept FROM ent_content_concept WHERE content_id = %s"
+query = "SELECT concept FROM ent_content_concept WHERE content_id="
+# cnx = mysql.connector.connect(user=db_user,password=db_pass,database=db_name)
 ###
 
 def get_concept_tags(text):
+    cnx = mysql.connector.connect(user=db_user,password=db_pass,database=db_name)
     uniq_id = "#C" + str(int(time.time()))
+    ctr = Counter()
     raw_text = uniq_id + "\n" + text + "\nEOF"
-    c = cnx.cursor(buffered=True)
     fp = create_temp_file(raw_text)
     try:
         proc = Popen(['java', '-jar', java_concept_tagger, fp.name, db_user, db_pass, db_port])
@@ -34,28 +36,33 @@ def get_concept_tags(text):
                 raise Exception(out.decode() + err.decode())
             else:
                 print("Error code for:",text,sep="\n")
+        curs = cnx.cursor()
+        this_query = query + '"' + uniq_id + '"'
+        # print(this_query)
+        curs.execute(this_query)
+        concepts = [concept[0] for concept in curs.fetchall()]
+        ctr = Counter(concepts)
+        curs.close()
+        cnx.close()
     except:
         print("Exception for:", text,sep="\n")
     finally:
         del_temp_file(fp)
-    # extract concepts from db
-    c.execute(query, (uniq_id,))
-    concepts = []
-    for concept in c:
-        concepts.append(concept[0])
-
-    return Counter(concepts), uniq_id
+    return ctr, uniq_id
 
 def unique_vectors_from_file(input_file):
     doc_vectors = {}
     with open(input_file, "r") as f:
+        ctr = 0
         for line in f:
             if re.search(r'^#*$', line) or len(line) == 0:
                 continue
             vector = MethodFeatureVector(line)
             vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
+            print(ctr, len(vector.concepts))
             if not vector.is_empty:
                 doc_vectors[vector.raw_text.strip()] = vector
+            ctr += 1    
     return list(doc_vectors.values())
 
 def vector_from_text(code_text):

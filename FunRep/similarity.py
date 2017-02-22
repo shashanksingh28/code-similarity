@@ -25,7 +25,6 @@ def listJaccardSimilarity(l1, l2):
         Note that this method does double count if element present twice in both lists. """
     c1 = Counter(l1)
     c2 = Counter(l2)
-    # return counterJaccardSimilarity(c1, c2)
     return counter_cossim(c1, c2)
 
 def setJaccardSimilarity(s1, s2):
@@ -33,7 +32,6 @@ def setJaccardSimilarity(s1, s2):
     lengthUnion = len(s1 | s2)
     if lengthUnion == 0:
         return 0.0, set()
-    # return (len(intersect) / lengthUnion) , lengthUnion, intersect
     return (len(intersect) / lengthUnion) , intersect
 
 def stringJaccardSimilarity(string1, string2):
