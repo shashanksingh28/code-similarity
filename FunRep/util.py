@@ -58,10 +58,10 @@ def unique_vectors_from_file(input_file):
             if re.search(r'^#*$', line) or len(line) == 0:
                 continue
             vector = MethodFeatureVector(line)
-            vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
-            print(ctr, len(vector.concepts))
             if not vector.is_empty:
+                vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
                 doc_vectors[vector.raw_text.strip()] = vector
+                print(ctr, len(vector.concepts))
             ctr += 1    
     return list(doc_vectors.values())
 

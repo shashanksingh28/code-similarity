@@ -15,8 +15,8 @@ angular.module('similarityApp', ['ui.codemirror'])
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.weights = {'language': 1, 'structure': 1, 'signature': 1,'concepts': 1};
-    // $scope.baseUrl="http://ec2-35-167-88-109.us-west-2.compute.amazonaws.com";
-    $scope.baseUrl="http://localhost:5000";
+    $scope.baseUrl="http://ec2-35-163-170-172.us-west-2.compute.amazonaws.com";
+    // $scope.baseUrl="http://localhost:5000";
 
     $scope.updateText = function updateText(results){
         if(Object.prototype.toString.call(results) === '[object Array]') {
