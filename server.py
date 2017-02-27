@@ -69,15 +69,14 @@ def loadData():
         print("Loading solution vectors...")
         solution_vectors = pickle.load(open(solutions_data_file, "rb"))
     print(len(solution_vectors), " methods loaded...")
-        
-    documents = []
-    lang_documents = []
-    for vector in solution_vectors: 
-        documents.append(vector.tokens)
-        lang_documents.append(vector.nl_tokens)
     
     if not os.path.isfile(baseline_model_file):
         print("Extracting Baseline models...")
+        documents = []
+        lang_documents = []
+        for vector in solution_vectors: 
+            documents.append(vector.tokens)
+            lang_documents.append(vector.nl_tokens)
         baseline_dict, baseline_model = ml.create_tfIdf_model(documents)
         pickle.dump(baseline_model, open(baseline_model_file, "wb"))
         pickle.dump(baseline_dict, open(baseline_dict_file, "wb"))

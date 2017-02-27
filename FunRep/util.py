@@ -4,7 +4,6 @@ import mysql.connector
 import tempfile
 import os
 from collections import Counter
-import MySQLdb
 
 # used to call jar files
 from subprocess import Popen, PIPE, STDOUT

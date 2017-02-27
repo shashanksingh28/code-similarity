@@ -113,6 +113,6 @@ def concept_tags_similarity(method1, method2, nl_dict, nl_model):
     nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
     jaccard_sim, info_dict = counter_cossim(method1.concepts, method2.concepts)
     avg_sim = (jaccard_sim + nl_sim) / 2
-    if len(info_dict) > 1:
-        print(method2)
+    #if len(info_dict) > 1:
+    #    print(method2)
     return avg_sim, info_dict
