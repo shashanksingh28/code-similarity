@@ -3,6 +3,7 @@ import sys
 import os
 from FunRep import util, method, ml
 import pickle
+import threading
 
 solutions_data_file = "models/solutionVectors.pck"
 test_data_file = "models/testVectors.pck"
@@ -14,6 +15,48 @@ feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
 feature_weights['signature'] = {'features' : ('params','return','exceptions','annotations'), 'weight': 1.0}
 feature_weights['structure'] = {'features' : ('expressions','statements'), 'weight': 1.0}
 feature_weights['concepts'] = {'features' : ('concepts'), 'weight' : 1.0}
+
+class AnalyzeDiff:
+
+    def __init__(self, solution_vectors, lang_dict, lang_model, k, feature_weights):
+        self._solution_vectors = solution_vectors
+        self._lang_dict = lang_dict
+        self._lang_model = lang_model
+        self.k = k
+        self._cNearest = []
+        self._kNearest = []
+        self.feature_weights = feature_weights
+
+    def _get_kNearest(self):
+        self._kNearest = ml.proposed_kNearest(self.vector, self._solution_vectors, self._lang_dict, self._lang_model, self.k, self.feature_weights)
+    
+    def _get_cNearest(self):
+        self._cNearest = ml.concept_tag_kNearest(self.vector, self._solution_vectors, self._lang_dict, self._lang_model, self.k)
+
+    def getNearestData(self, vector):
+        # import pdb; pdb.set_trace()
+        self.vector = vector
+        tk = threading.Thread(target=self._get_kNearest)
+        tc = threading.Thread(target=self._get_cNearest)
+        tk.start()
+        tc.start()
+        tk.join()
+        tc.join()
+        
+        """ Now that we have fetched kNearest, get row of differences """
+        data = []
+        for i in range(self.k):
+            proposed_vector = self._solution_vectors[self._kNearest[i][1]]
+            tag_vector = self._solution_vectors[self._cNearest[i][1]]
+            
+            if proposed_vector == tag_vector:
+                continue
+            
+            data.append([ i+1, vector.raw_text, list(vector.concepts.keys()), proposed_vector.raw_text,\
+                    list(proposed_vector.concepts.keys()), tag_vector.raw_text, list(tag_vector.concepts.keys()) ])
+        
+        return data
+    
 
 def main(testFile, k=5):
     if not os.path.isfile(solutions_data_file):
@@ -49,27 +92,17 @@ def main(testFile, k=5):
 
 
     data = []
+    analyzer = AnalyzeDiff(solution_vectors, lang_dict, lang_model, k, feature_weights)
     for i, vector in enumerate(test_vectors):
-        nearest_concept_tags = ml.concept_tag_kNearest(vector,solution_vectors,lang_dict, lang_model, k)
-        nearest_proposed = ml.proposed_kNearest(vector, solution_vectors, lang_dict, lang_model, k, feature_weights)
-        for j in range(k):
-            if nearest_proposed[j][1] == nearest_concept_tags[j][1]:
-                continue
-            #data.append([ i+1, j+1, vector.raw_text + "\n\n" + str(dict(vector.concepts)), 
-            #            solution_vectors[nearest_proposed[j][1]].raw_text + "\n\n" + str(dict(nearest_proposed[j][2])) + "\n" + str(nearest_proposed[j][0]),
-            #            solution_vectors[nearest_concept_tags[j][1]].raw_text + "\n\n" + str(dict(nearest_concept_tags[j][2])) + "\n" + str(nearest_proposed[j][0]) ])
-            proposed_vector = solution_vectors[nearest_proposed[j][1]]
-            tag_vector = solution_vectors[nearest_concept_tags[j][1]]
-            data.append([i+1, j+1, vector.raw_text, str(vector.concepts),
-                        proposed_vector.raw_text, nearest_proposed[j][0], str(proposed_vector.concepts),
-                        tag_vector.raw_text, nearest_concept_tags[j][0], str(tag_vector.concepts)
-                        ]) 
-
-            
+        records = analyzer.getNearestData(vector)
+        for record in records:
+            data.append(record)
         print(i)
         
-    pd.DataFrame(data=data, columns=['#', 'Rank', 'Sample','Sample_Concepts','IR_Reco', 'IR_Score',
-                'IR_Reco_concepts', 'Tags_Reco', 'Tags_Score','Tags_Reco_concepts']).to_csv('out.csv')
+    pd.DataFrame(data=data, columns=['Rank', 'Sample','Sample_Concepts','IR_Reco',
+                'IR_Reco_concepts', 'Tags_Reco', 'Tags_Reco_concepts'],
+                index_label='#').to_csv('comparison.csv')
+    
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
