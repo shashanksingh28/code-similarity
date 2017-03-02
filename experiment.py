@@ -6,12 +6,13 @@ import pickle
 import threading
 
 solutions_data_file = "models/solutionVectors.pck"
+solutions_input_file = "solutionSet.txt"
 test_data_file = "models/testVectors.pck"
 lang_dict_file = "models/dictionary.pck"
 lang_model_file = "models/sim_model.model"
 
 feature_weights = dict()
-feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
+# feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
 feature_weights['signature'] = {'features' : ('params','return','exceptions','annotations'), 'weight': 1.0}
 feature_weights['structure'] = {'features' : ('expressions','statements'), 'weight': 1.0}
 feature_weights['concepts'] = {'features' : ('concepts'), 'weight' : 1.0}
@@ -58,7 +59,7 @@ class AnalyzeDiff:
         return data
     
 
-def main(testFile, k=5):
+def main(testFile, k=3):
     if not os.path.isfile(solutions_data_file):
         print("Extracting solution vectors...")
         solution_vectors = util.vectors_from_file(solutions_input_file)
@@ -98,10 +99,12 @@ def main(testFile, k=5):
         for record in records:
             data.append(record)
         print(i)
-        
-    pd.DataFrame(data=data, columns=['Rank', 'Sample','Sample_Concepts','IR_Reco',
-                'IR_Reco_concepts', 'Tags_Reco', 'Tags_Reco_concepts'],
-                index_label='#').to_csv('comparison.csv')
+
+    df = pd.DataFrame(data=data, columns=['Rank', 'Sample','Sample_Concepts','IR_Reco',
+                'IR_Reco_concepts', 'Tags_Reco', 'Tags_Reco_concepts'])
+    df.index.name='#'
+    df.to_csv('comparison.csv')
+    
     
 
 if __name__ == "__main__":
