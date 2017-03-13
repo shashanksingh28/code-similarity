@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="wrapper text-center">
+{% if msg %}
+<p> {{ msg }}</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+	<div class="form-group">
+    	<label for="username"> Username:</label>
+    	<input type="text" name="username" id="username">
+	</div>
+	<div class="form-group">
+    	<label for="email"> Email:</label>
+    	<input type="text" name="username" id="username">
+	</div>
+	<div class="form-group">
+    	<label for="password"> Password:</label>
+    	<input type="password" name="password" id="password">
+	</div>
+	<div>
+		<button type="submit" class="btn btn-primary"> Signup </button>
+	</div>
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+</div>
+{# Assumes you setup the password_reset view in your URLconf #}
+{# <p><a href="{% url 'password_reset' %}">Lost password?</a></p> #}
+
+{% endblock %}
