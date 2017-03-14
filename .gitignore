@@ -6,4 +6,7 @@ JavaParser/RemoteSystemsTempFiles
 __pycache__/
 *$py.class
 *.pyc
-
+RemoteSystemsTempFiles
+.metadata/
+.recommenders/
+.ipynb_*
