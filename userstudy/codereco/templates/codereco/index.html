@@ -1,90 +1,59 @@
-<!DOCTYPE html>
-<html ng-app="similarityApp">
-	<meta charset="UTF-8">
-    {% load staticfiles %}
-	<head>
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+{% extends 'base.html' %}
+{% block content %}
 
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/css/bootstrap-slider.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.0/bootstrap-slider.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-		
-		<link rel="stylesheet" href="static/codemirror-5.23.0/lib/codemirror.css">
-		<script src="static/codemirror-5.23.0/lib/codemirror.js"></script>
-		<script src="static/codemirror-5.23.0/mode/clike/clike.js"></script>
-		<script src="static/codemirror-5.23.0/addon/edit/matchbrackets.js"></script>
-		<script src="static/codemirror-5.23.0/addon/edit/closebrackets.js"></script>
-		
-        <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css">
-		<script src="static/codemirror-5.23.0/ui-codemirror.js"></script>
-
-	</head>
-	<body ng-controller="AppController as ctrl" >
-		<script type="text/javascript" src="static/code.js"></script>
-        <!-- <div ng-controller="AppController as ctrl" class="container">-->
-			<div class="col-md-4">
-                <h3>Java Method</h3>
-                <form>
-					<div ng-keypress="keySend($event)" class="form-group form-group-lg" id="codeArea">
-						<label for="method_text"> Code </label>
-						<!-- <textarea rows="20" class="form-control" id="method_text" required></textarea> -->
-						<ui-codemirror ng-enter="postRequests()" class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
-                   	</div>
-					<div class="form-group">
-						<button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
-					</div>
-					<div class="form-group">
-						<label for="signature"> Signature Weight </label><br>
-						<input type="number" id="signature" data-slider-id='signatureSlider' type="text" data-provide="slider" data-slider-min="0"
-							data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['signature']" ng-change="postSimRequest(weights)">
-					</div>
-					<div class="form-group">
-						<label for="structure"> Structure Weight </label><br>
-						<input type="number" id="structure" data-slider-id='structureSlider' type="text" data-provide="slider" data-slider-min="0"
-							data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['structure']" ng-change="postSimRequest(weights)">
-					</div>
-					<div class="form-group">
-						<label for="concepts"> Concepts Weight </label><br>
-						<input type="number" id="concepts" data-slider-id='conceptsSlider' type="text" data-provide="slider" data-slider-min="0"
-							data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['concepts']" ng-change="postSimRequest(weights)">
-					</div>
-					<div class="form-group">
-						<label for="language"> Language Weight </label><br>
-						<input type="number" id="language" data-slider-id='languageSlider' type="text" data-provide="slider" data-slider-min="0"
-							data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['language']" ng-change="postSimRequest(weights)">
-					</div>
-				</form>
-			</div>
-			<div class="col-md-4">
-                <h3> Proposed </h3>
-                <div id="proposed_recos">
-                    <ol> 
-                        <li ng-repeat="reco in proposedRecos" ng-class="dummy">
-							<div>
-                                <span class="label label-info">{{ reco.scores }}</span>
-								<pre data-toggle="tooltip" title="{{ reco.matches }}">{{reco.code.raw_text}}</pre>
-							</div>
-                        </li>
-                    </ol>
-                </div>
-			</div>
-			<div class="col-md-4">
-                <h3> Text </h3>
-                <div id="text_recos">
-                    <ol> 
-                        <li ng-repeat="reco in textRecos" ng-class="dummy">
-							<div>
-								<pre data-toggle="tooltip" title="{{ reco.match }} ">{{reco.code.raw_text}}</pre>
-							</div>
-                        </li>
-                    </ol>
-                </div>
-			</div>
-            <!-- </div> -->
-	</body>
-</html>
+    <script type="text/javascript" src="static/code.js"></script>
+<!-- <div ng-controller="AppController as ctrl" class="container">-->
+<div class="row" >
+    <h3>{{ question }}</h3>
+</div>
+<div class="row" ng-controller="AppController as ctrl" >
+    <div class="col-md-6" >
+        <h3>Java Method</h3>
+        <form>
+            {% csrf_token %}
+            <div ng-keypress="keySend($event)" class="form-group form-group-lg" id="codeArea">
+                <label for="method_text"> Code </label>
+                <!-- <textarea rows="20" class="form-control" id="method_text" required></textarea> -->
+                <ui-codemirror ng-enter="postRequests()" class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
+            </div>
+            <div class="form-group">
+                <button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="form-group">
+                <label for="signature"> Signature Weight </label><br>
+                <input type="number" id="signature" data-slider-id='signatureSlider' type="text" data-provide="slider" data-slider-min="0"
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['signature']" ng-change="postSimRequest(weights)">
+            </div>
+            <div class="form-group">
+                <label for="structure"> Structure Weight </label><br>
+                <input type="number" id="structure" data-slider-id='structureSlider' type="text" data-provide="slider" data-slider-min="0"
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['structure']" ng-change="postSimRequest(weights)">
+            </div>
+            <div class="form-group">
+                <label for="concepts"> Concepts Weight </label><br>
+                <input type="number" id="concepts" data-slider-id='conceptsSlider' type="text" data-provide="slider" data-slider-min="0"
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['concepts']" ng-change="postSimRequest(weights)">
+            </div>
+            <div class="form-group">
+                <label for="language"> Language Weight </label><br>
+                <input type="number" id="language" data-slider-id='languageSlider' type="text" data-provide="slider" data-slider-min="0"
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['language']" ng-change="postSimRequest(weights)">
+            </div>
+        </form>
+    </div>
+    {% verbatim %}
+    <div class="col-md-6">
+        <h3> Recommendations </h3>
+        <div id="proposed_recos">
+            <ul> 
+                <li ng-repeat="reco in mixRecos" ng-class="dummy">
+                    <div>
+                        <pre data-toggle="tooltip"> {{ reco.text }}</pre>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endverbatim %}
+</div>
+{% endblock %}

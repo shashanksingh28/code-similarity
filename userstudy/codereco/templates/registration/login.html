@@ -16,7 +16,7 @@
     {% endif %}
 {% endif %}
 <form method="post" action="{% url 'login' %}">
-{% csrf_token %}
+    {% csrf_token %}
 	<div class="form-group">
     	<label for="Username"> Username:</label>
     	<input type="text" name="username" id="username">
@@ -27,7 +27,7 @@
 	</div>	
 	<div>
 		<button type="submit" class="btn btn-primary"> Login </button>
-		<button class="btn"> Register </button>		
+		<a class="btn btn-link" href="/register">Register</a>		
 	</div>
 <input type="hidden" name="next" value="{{ next }}" />
 </form>

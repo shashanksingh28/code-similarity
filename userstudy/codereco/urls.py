@@ -20,5 +20,9 @@ from . import views
 urlpatterns = [
     # url(r'^', include('django.contrib.auth.urls')),
     url(r'^login', views.user_login, name='login'),
+    url(r'^register', views.user_register, name='register'),
+    url(r'^logout', views.user_logout, name='logout'),
     url(r'^$', views.index, name='index'),
+    url(r'^q1', views.q1, name='question1'),
+    url(r'^q2', views.q2, name='question2'),
 ]

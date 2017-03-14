@@ -84,8 +84,8 @@ def jaccardSimilarity(method1, method2, weights, nl_sim):
      
 
     # lang sim was calculated from a different method
-    lang_sim = weights['language']['weight'] * nl_sim
-    info['language']['score'] = nl_sim
+    # lang_sim = weights['language']['weight'] * nl_sim
+    # info['language']['score'] = nl_sim
     total_sim = 0.0
     for feature_category in weights:
         total_sim += weights[feature_category]['weight'] * info[feature_category]['score']
@@ -104,15 +104,16 @@ def gensim_lang_cossim(method1, method2, dictionary, model):
 
 def proposed_similarity(method1, method2, nl_dict, nl_model, weights):
     """ Our proposed similarity metric """
-    nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
-    jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, nl_sim=nl_sim)
+    # nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
+    # jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, nl_sim=nl_sim)
+    jaccard_sim, info_dict = jaccardSimilarity(method1, method2, weights, None)
     return jaccard_sim, info_dict
 
 def concept_tags_similarity(method1, method2, nl_dict, nl_model):
     """ UPitt concept tags similarity """
-    nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
+    # nl_sim = gensim_lang_cossim(method1, method2, nl_dict, nl_model)
     jaccard_sim, info_dict = counter_cossim(method1.concepts, method2.concepts)
-    avg_sim = (jaccard_sim + nl_sim) / 2
-    #if len(info_dict) > 1:
+    # avg_sim = (jaccard_sim + nl_sim) / 2
+    # if len(info_dict) > 1:
     #    print(method2)
-    return avg_sim, info_dict
+    return jaccard_sim, info_dict

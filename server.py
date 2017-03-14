@@ -6,6 +6,7 @@ import os
 import time
 import pickle
 import json
+import random
 
 from FunRep import method
 import FunRep.util as util
@@ -14,8 +15,10 @@ import FunRep.ml as ml
 # Web server requirements
 from flask import Flask, jsonify, request, render_template, url_for
 from flask.json import JSONEncoder
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
 #### Config section ####
 solutions_input_file = "solutionSet.txt"
@@ -203,6 +206,63 @@ def concept_tag_kNearest():
             nearest_vectors.append(result)
         return jsonify(nearest_vectors)
     except Exception as ex:
+        return jsonify(str(ex))
+
+@app.route('/mix', methods=['POST'])
+def mix_similarity():
+    try:
+        request_weights = feature_weights.copy()
+        body_string = request.data.decode("utf-8")
+        if len(body_string) == 0:
+            return jsonify("Empty String")
+        
+        if 'weights' in request.headers: 
+            header = json.loads(request.headers['weights'])
+            print(header)
+            for weight_key in header:
+                if weight_key in request_weights:
+                    request_weights[weight_key]['weight'] = float(header[weight_key])
+        # pdb.set_trace()
+        method_vector = util.vector_from_text(body_string)
+        proposed_nearest = ml.proposed_kNearest(method_vector, solution_vectors, lang_dict, 
+                lang_model, k=5, weights=request_weights)
+        cosine_nearest = ml.cosine_kNearest(method_vector, solution_vectors, baseline_dict,
+                baseline_model, k=5)
+        proposed_nearest = [tup[1] for tup in proposed_nearest]
+        cosine_nearest = [tup[1] for tup in cosine_nearest]
+        # print(proposed_nearest)
+        # print(cosine_nearest)
+        results = []
+        for i in range(len(proposed_nearest)):
+            reco_index = proposed_nearest[i]            
+            reco = {}
+            if reco_index in cosine_nearest:
+                reco['source'] = 2
+                reco['rank_1'] = i + 1
+                reco['rank_0'] = cosine_nearest.index(reco_index) + 1
+                cosine_nearest.remove(reco_index)
+            else:
+                reco['source'] = 1
+            reco['rank'] = i + 1
+            reco['text'] = solution_vectors[reco_index].raw_text
+            reco['weights'] = header
+            results.append(reco)
+                
+        for i in range(len(cosine_nearest)):
+            reco_index = cosine_nearest[i]
+            reco = {}
+            reco['rank'] = i + 1
+            reco['source'] = 0
+            reco['text'] = solution_vectors[reco_index].raw_text
+            results.append(reco)
+        
+        # print(results)
+        random.shuffle(results)
+        # print(results)
+        return jsonify(results)
+
+    except Exception as ex:
+        print(ex)
         return jsonify(str(ex))
 
 
