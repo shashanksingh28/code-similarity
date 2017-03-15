@@ -10,3 +10,7 @@ RemoteSystemsTempFiles
 .metadata/
 .recommenders/
 .ipynb_*
+
+
+*.sqlite3
+migrations/

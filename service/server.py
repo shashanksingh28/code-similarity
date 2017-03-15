@@ -245,7 +245,7 @@ def mix_similarity():
                 reco['source'] = 1
             reco['rank'] = i + 1
             reco['text'] = solution_vectors[reco_index].raw_text
-            reco['weights'] = header
+            # reco['weights'] = header
             results.append(reco)
                 
         for i in range(len(cosine_nearest)):
