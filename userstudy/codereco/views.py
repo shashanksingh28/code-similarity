@@ -69,8 +69,6 @@ def user_vote(request):
         if request.method == "POST":
             data = json.loads(request.body.decode())
             source = data['reco']['source']
-            # import pdb; pdb.set_trace();
-            # print(data['reco'])
             if source == 2:
                 # we need to create two vote objects here
                 vote1, vote2 = Vote(), Vote()
