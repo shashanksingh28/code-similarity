@@ -12,3 +12,9 @@ class Vote(models.Model):
     rating = models.IntegerField()
     time = models.DateTimeField(auto_now_add=True)
 
+class Submission(models.Model):
+    submissionid = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User)
+    question = models.IntegerField()
+    code = models.TextField()
+    time = models.DateTimeField(auto_now_add=True)

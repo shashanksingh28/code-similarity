@@ -1,11 +1,11 @@
 import json
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from .models import Vote
+from .models import Vote, Submission
 
 # Create your views here.
 question1 = {'questionId' : 1, 'question' : 'Write a method that takes an integer n and prints the Fibonacci series till nth term.'}
@@ -81,13 +81,27 @@ def user_vote(request):
                 vote2.save()
             else:
                 vote = Vote()
-                vote.question = data['qId']
+                vott.question = data['qId']
                 vote.user = request.user
                 vote.rank = data['reco']['rank']
                 vote.source = source
                 vote.rating = data['reco']['rating']
                 vote.save()
-        return HttpResponse("")
+        return JsonResponse({})
+    except Exception as ex:
+        print(ex)
+        return HttpResponse(str(ex))
+
+@login_required
+@csrf_exempt
+def user_submit(request):
+    try:
+        if request.method == "POST":
+            req_json = json.loads(str(request.body.decode()))
+            subm = Submission(user=request.user, question=req_json['questionId'],\
+                    code=req_json['text'])
+            subm.save()
+            return HttpResponseRedirect('/')            
     except Exception as ex:
         print(ex)
         return HttpResponse(str(ex))

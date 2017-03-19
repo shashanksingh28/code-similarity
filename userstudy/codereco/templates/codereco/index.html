@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <script type="text/javascript" src="static/code.js"></script>
+<script type="text/javascript" src="static/angular-input-stars.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/angular-input-stars.css">
+<script type="text/javascript" src="static/code.js"></script>
 <!-- <div ng-controller="AppController as ctrl" class="container">-->
 <div class="row" >
     <h3>{{ question }}</h3>
@@ -24,7 +27,7 @@
             {% csrf_token %}
             <div ng-keypress="keySend($event)" class="form-group form-group-lg" id="codeArea">
                 <label for="method_text"> Code </label>
-                <ui-codemirror ng-enter="postSimRequest()" class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
+                <ui-codemirror class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
             </div>
             <div class="form-group">
                 <button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary"> Search </button>
@@ -59,7 +62,8 @@
             <ol> 
                 <li ng-repeat="reco in mixRecos" ng-class="dummy">
                     <div>
-						<div star-rating rating-value="reco.rating" max="5" on-rating-selected="rate(rating, reco)"></div>
+						<input-stars max="5" ng-model="reco.rating" on-star-click="rate(rating, reco)"></input-stars>
+						<!-- <div star-rating rating-value="reco.rating" max="5" on-rating-selected="rate(rating, reco)"></div> -->
                         <pre data-toggle="tooltip" ng-click="vote(reco)"> {{ reco.text }}</pre>
                     </div>
                 </li>

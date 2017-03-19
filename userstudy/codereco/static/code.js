@@ -1,4 +1,4 @@
-angular.module('codereco',['ui.codemirror'])
+angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
   .controller('AppController', ['$scope', function($scope) {
     $scope.count = 0;
     $scope.methodText = "";  
@@ -17,20 +17,20 @@ angular.module('codereco',['ui.codemirror'])
     $scope.weights = {'language': 1, 'structure': 1, 'signature': 1,'concepts': 1};
     // $scope.baseUrl="http://ec2-35-163-170-172.us-west-2.compute.amazonaws.com";
     $scope.baseUrl="http://localhost"
-    $scope.serviceUrl= $scope.baseUrl + ":5000";   
-    $scope.studyUrl= $scope.baseUrl + ":8000";   
-    
+    $scope.serviceUrl= $scope.baseUrl + ":8080";   
+    $scope.studyUrl= $scope.baseUrl + ":80";    
     $scope.ratings = {};
 
     $scope.update = function update(results){
         if(Object.prototype.toString.call(results) === '[object Array]') {
         	for(var i = 0; i < results.length; i++){
+        		var key = results[i].source + "," + results[i].rank;
 				// If we have seen a rating before, don't loose it
-				if (results[i].text in $scope.ratings){
-				    results[i].rating == $scope.ratings[results[i].text];
+				if (key in $scope.ratings){
+				    results[i].rating = $scope.ratings[key];
 				}
                 else{
-				    results[i].rating = 1;
+				    results[i].rating = 0;
                 }
 			}
 			$scope.mixRecos = results;
@@ -71,13 +71,8 @@ angular.module('codereco',['ui.codemirror'])
         });
     }
 
-    $scope.rate = function(newRating, reco){
+    $scope.rate = function(error, reco){
         var vote = new Object();
-        // Hack alert! Wasn't reflecting automatically
-        if (reco.rating == newRating){
-            return;
-        }
-        reco.rating = newRating;
         vote.qId = qId;
         vote.reco = reco;
         console.log(vote);
@@ -89,22 +84,29 @@ angular.module('codereco',['ui.codemirror'])
             dataType: 'json',
             crossDomain: true,
             data: angular.toJson(vote),
-            success: function(){
-                 $scope.ratings[reco.text] = reco.rating;
+            success: function(data){
+                var key = reco.source + "," + reco.rank;
+                $scope.ratings[key] = reco.rating;
             }
         });
     }
 
 	$scope.submit = function(){
-	  if (confirm('Are you sure you want to save this thing into the database?')) {
+	  var reqData = new Object();
+	  reqData.questionId = qId;
+	  reqData.text = $scope.methodText;
+	  if (confirm('Are you sure? You cannot come back to this question later.')) {
    	     $.ajax({
-            url: $scope.serviceUrl + '/finish',
+            url: $scope.studyUrl + '/submit',
 			headers : {'weights': JSON.stringify($scope.weights)},
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             crossDomain: true,
-            data: qId
+            data: angular.toJson(reqData),
+            success: function(data){
+            	console.log("Done");
+            }
         });
 	  }
 	}; 
@@ -120,40 +122,4 @@ angular.module('codereco',['ui.codemirror'])
             }
         });
     };
-  })
-  .directive('starRating', function(){
-    return {
-        restrict: 'A',
-        template: '<ul class="rating">' +
-            '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
-            '\u2605' +
-            '</li>' +
-            '</ul>',
-        scope: {
-            ratingValue: '=',
-            max: '=',
-            onRatingSelected: '&'
-        },
-        link: function (scope, elem, attrs) {
-            var updateStars = function () {
-                scope.stars = [];
-                for (var i = 0; i < scope.max; i++) {
-                    scope.stars.push({
-                        filled: i < scope.ratingValue
-                    });
-                }
-            };
-            scope.toggle = function (index) {
-                scope.ratingValue = index + 1;
-                scope.onRatingSelected({
-                    rating: index + 1
-                });
-            };
-            scope.$watch('ratingValue', function (oldVal, newVal) {
-                if (newVal) {
-                    updateStars();
-                }
-            });
-        }
-    }
   });
