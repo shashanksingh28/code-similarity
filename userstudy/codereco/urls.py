@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^q1', views.q1, name='question1'),
     url(r'^q2', views.q2, name='question2'),
     url(r'^vote', views.user_vote, name="vote"),
-    url(r'^submit', views.user_submit, name='submit')
+    url(r'^submit', views.user_submit, name='submit'),
+    url(r'^weightupdate', views.user_weight_update, name='weight_update'),
 ]

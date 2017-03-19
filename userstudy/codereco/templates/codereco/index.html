@@ -4,8 +4,6 @@
 <script type="text/javascript" src="static/angular-input-stars.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="static/angular-input-stars.css">
-<script type="text/javascript" src="static/code.js"></script>
-<!-- <div ng-controller="AppController as ctrl" class="container">-->
 <div class="row" >
     <h3>{{ question }}</h3>
     <script type="text/javascript">
@@ -17,9 +15,9 @@
         else{
             $("#q2_link").addClass("active");
         }
-       
     </script>
 </div>
+<script type="text/javascript" src="static/code.js"></script>
 <div class="row" ng-controller="AppController as ctrl" >
     <div class="col-md-6" >
         <h3>Java Method</h3>
@@ -30,28 +28,28 @@
                 <ui-codemirror class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
             </div>
             <div class="form-group">
-                <button type="button" ng-click="postRequests()" id="Submit" class="btn btn-primary"> Search </button>
-                <button type="button" ng-click="submit()" id="Finish" class="btn btn-success"> Submit </button>
+                <button type="button" ng-click="postRequests()" class="btn btn-primary"> Search </button>
+                <button type="button" ng-click="submit()" ng-disabled="!searched || !weighted" class="btn btn-success"> Submit </button>
             </div>
             <div class="form-group">
                 <label for="signature"> Signature Weight </label><br>
                 <input type="number" id="signature" data-slider-id='signatureSlider' type="text" data-provide="slider" data-slider-min="0"
-                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['signature']" ng-change="postSimRequest(weights)">
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['signature']">
             </div>
             <div class="form-group">
                 <label for="structure"> Structure Weight </label><br>
                 <input type="number" id="structure" data-slider-id='structureSlider' type="text" data-provide="slider" data-slider-min="0"
-                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['structure']" ng-change="postSimRequest(weights)">
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['structure']" >
             </div>
             <div class="form-group">
                 <label for="concepts"> Concepts Weight </label><br>
                 <input type="number" id="concepts" data-slider-id='conceptsSlider' type="text" data-provide="slider" data-slider-min="0"
-                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['concepts']" ng-change="postSimRequest(weights)">
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['concepts']">
             </div>
             <div class="form-group">
                 <label for="language"> Language Weight </label><br>
                 <input type="number" id="language" data-slider-id='languageSlider' type="text" data-provide="slider" data-slider-min="0"
-                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['language']" ng-change="postSimRequest(weights)">
+                    data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['language']">
             </div>
         </form>
     </div>
@@ -63,7 +61,6 @@
                 <li ng-repeat="reco in mixRecos" ng-class="dummy">
                     <div>
 						<input-stars max="5" ng-model="reco.rating" on-star-click="rate(rating, reco)"></input-stars>
-						<!-- <div star-rating rating-value="reco.rating" max="5" on-rating-selected="rate(rating, reco)"></div> -->
                         <pre data-toggle="tooltip" ng-click="vote(reco)"> {{ reco.text }}</pre>
                     </div>
                 </li>

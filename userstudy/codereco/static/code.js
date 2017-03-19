@@ -1,6 +1,8 @@
 angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
   .controller('AppController', ['$scope', function($scope) {
-    $scope.count = 0;
+    
+    $scope.searched = false;
+    $scope.weighted = false;
     $scope.methodText = "";  
     $scope.editorOptions={
         mode:"text/x-java",
@@ -42,6 +44,7 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     };
 
     $scope.postRequests = function postRequests(){
+        $scope.searched = true;
         $.ajax({
             url: $scope.serviceUrl + '/mix',
 			headers : {'weights': JSON.stringify($scope.weights)},
@@ -54,11 +57,8 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
         });
     };
 
-     $scope.postSimRequest = function(model){
-		$scope.count += 1;
-		if($scope.count % 3 != 0){
-			return;
-		}
+     $scope.postSimRequest = function(){
+        $scope.weighted = true;
         $.ajax({
             url: $scope.serviceUrl + '/mix',
 			headers : {'weights': JSON.stringify($scope.weights)},
@@ -69,13 +69,22 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             data: $scope.methodText,
             success: $scope.update
         });
+
+        $.ajax({
+            url: $scope.studyUrl + '/weightupdate',
+			headers : {'weights': JSON.stringify($scope.weights)},
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            crossDomain: true
+        });
     }
 
     $scope.rate = function(error, reco){
         var vote = new Object();
         vote.qId = qId;
         vote.reco = reco;
-        console.log(vote);
+        // console.log(vote);
         $.ajax({
             url: $scope.studyUrl + '/vote',
 			headers : {'weights': JSON.stringify($scope.weights)},
@@ -109,7 +118,16 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             }
         });
 	  }
-	}; 
+	};
+    
+    
+    angular.element(document).ready(function () {
+        $('#signatureSlider').on('slideStop', $scope.postSimRequest).data('slider');
+        $('#structureSlider').on('slideStop', $scope.postSimRequest).data('slider');
+        $('#conceptsSlider').on('slideStop', $scope.postSimRequest).data('slider');
+        $('#languageSlider').on('slideStop', $scope.postSimRequest).data('slider');
+    });
+   
   }])
   .directive('ngEnter', function () {
     return function (scope, element, attrs) {

@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from .models import Vote, Submission
+from .models import Vote, Submission, CustomWeight
 
 # Create your views here.
 question1 = {'questionId' : 1, 'question' : 'Write a method that takes an integer n and prints the Fibonacci series till nth term.'}
@@ -17,12 +17,17 @@ def index(request):
 
 @login_required
 def q1(request):
+    subm = Submission.objects.filter(user=request.user, question=1)
+    if subm is not None:
+        return render(request, 'codereco/done.html')
     return render(request, 'codereco/index.html', question1)
 
 @login_required
 def q2(request):
+    subm = Submission.objects.filter(user=request.user, question=2)
+    if subm is not None:
+        return render(request, 'codereco/done.html')
     return render(request, 'codereco/index.html', question2)
-
 
 def user_login(request):
     if request.method == "GET":
@@ -34,7 +39,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return q1(request)
             else:
                 return render(request, 'registration/login.html', {'msg': 'Username or Password incorrect'})
         except Exception as ex:
@@ -62,10 +67,21 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+def get_weights(request, vote=None):
+    weights = json.loads(request.META['HTTP_WEIGHTS'])
+    custom_weight = CustomWeight(vote=vote)
+    custom_weight.user = request.user
+    custom_weight.signature = weights['signature']
+    custom_weight.structure = weights['structure']
+    custom_weight.concepts = weights['concepts']
+    custom_weight.language = weights['language']
+    return custom_weight
+
 @login_required
 @csrf_exempt
 def user_vote(request):
     try:
+        cw = None
         if request.method == "POST":
             data = json.loads(request.body.decode())
             source = data['reco']['source']
@@ -79,14 +95,20 @@ def user_vote(request):
                 vote1.rating, vote2.rating = data['reco']['rating'], data['reco']['rating']
                 vote1.save()
                 vote2.save()
+                cw1 = get_weights(request, vote1)
+                cw1.save()
+                cw2 = get_weights(request, vote2)
+                cw2.save()
             else:
                 vote = Vote()
-                vott.question = data['qId']
+                vote.question = data['qId']
                 vote.user = request.user
                 vote.rank = data['reco']['rank']
                 vote.source = source
                 vote.rating = data['reco']['rating']
                 vote.save()
+                cw = get_weights(request, vote)
+                cw.save()        
         return JsonResponse({})
     except Exception as ex:
         print(ex)
@@ -105,3 +127,10 @@ def user_submit(request):
     except Exception as ex:
         print(ex)
         return HttpResponse(str(ex))
+
+@login_required
+@csrf_exempt
+def user_weight_update(request):
+    cw = get_weights(request)
+    cw.save()
+    return HttpResponse()
