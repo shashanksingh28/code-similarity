@@ -13,20 +13,20 @@ question2 = {'questionId' : 2, 'question' : 'Write a method that returns a new s
 
 @login_required
 def index(request):
-    return render(request, 'codereco/index.html', question1)
+    return q1(request)
 
 @login_required
 def q1(request):
     subm = Submission.objects.filter(user=request.user, question=1)
-    if subm is not None:
-        return render(request, 'codereco/done.html')
+    if subm.exists():
+        return render(request, 'codereco/done.html', question1)
     return render(request, 'codereco/index.html', question1)
 
 @login_required
 def q2(request):
     subm = Submission.objects.filter(user=request.user, question=2)
-    if subm is not None:
-        return render(request, 'codereco/done.html')
+    if subm.exists():
+        return render(request, 'codereco/done.html', question2)
     return render(request, 'codereco/index.html', question2)
 
 def user_login(request):
@@ -123,7 +123,7 @@ def user_submit(request):
             subm = Submission(user=request.user, question=req_json['questionId'],\
                     code=req_json['text'])
             subm.save()
-            return HttpResponseRedirect('/')            
+            return HttpResponse()            
     except Exception as ex:
         print(ex)
         return HttpResponse(str(ex))
