@@ -17,8 +17,8 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.weights = {'language': 1, 'structure': 1, 'signature': 1,'concepts': 1};
-    $scope.baseUrl="http://ec2-35-160-242-80.us-west-2.compute.amazonaws.com";
-    // $scope.baseUrl="http://localhost";
+    // $scope.baseUrl="http://ec2-35-160-242-80.us-west-2.compute.amazonaws.com";
+    $scope.baseUrl="http://localhost";
     $scope.serviceUrl= $scope.baseUrl + ":8080";   
     $scope.studyUrl= $scope.baseUrl + ":80";    
     $scope.ratings = {};
@@ -91,7 +91,6 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            crossDomain: true,
             data: angular.toJson(vote),
             success: function(data){
                 var key = reco.source + "," + reco.rank;
@@ -111,7 +110,6 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            crossDomain: true,
             data: angular.toJson(reqData),
             success: function(data){
             	console.log("Done");

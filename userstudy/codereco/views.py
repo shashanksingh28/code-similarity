@@ -123,7 +123,7 @@ def user_submit(request):
             subm = Submission(user=request.user, question=req_json['questionId'],\
                     code=req_json['text'])
             subm.save()
-            return HttpResponse()            
+            return JsonResponse({})            
     except Exception as ex:
         print(ex)
         return HttpResponse(str(ex))
@@ -133,4 +133,4 @@ def user_submit(request):
 def user_weight_update(request):
     cw = get_weights(request)
     cw.save()
-    return HttpResponse()
+    return JsonResponse({})
