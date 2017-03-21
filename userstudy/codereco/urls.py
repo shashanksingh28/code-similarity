@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^vote', views.user_vote, name="vote"),
     url(r'^submit', views.user_submit, name='submit'),
     url(r'^weightupdate', views.user_weight_update, name='weight_update'),
+    url(r'^cutcopy', views.user_log, name='log'),
 ]

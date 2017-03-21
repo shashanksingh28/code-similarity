@@ -28,3 +28,17 @@ class CustomWeight(models.Model):
     concepts = models.FloatField()
     language = models.FloatField()
     time = models.DateTimeField(auto_now_add=True)
+
+class UserQuestion(models.Model):
+    userqid = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User)
+    question = models.IntegerField()
+
+class CutCopy(models.Model):
+    ccid = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User)
+    question = models.IntegerField()
+    source = models.IntegerField()
+    rank = models.IntegerField()
+    rating = models.IntegerField()
+    time = models.DateTimeField(auto_now_add=True)

@@ -1,15 +1,19 @@
 import json
+import threading
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from .models import Vote, Submission, CustomWeight
+from .models import Vote, Submission, CustomWeight, UserQuestion, CutCopy
 
 # Create your views here.
 question1 = {'questionId' : 1, 'question' : 'Write a method that takes an integer n and prints the Fibonacci series till nth term.'}
 question2 = {'questionId' : 2, 'question' : 'Write a method that returns a new sorted array of integers'}
+questions = {1 : question1, 2 : question2}
+counter = 0
+lock = threading.Lock()
 
 @login_required
 def index(request):
@@ -20,6 +24,9 @@ def q1(request):
     subm = Submission.objects.filter(user=request.user, question=1)
     if subm.exists():
         return render(request, 'codereco/done.html', question1)
+    curr = UserQuestion.objects.filter(user=request.user, question=1)
+    if not curr.exists():
+        return render(request, 'codereco/other.html')
     return render(request, 'codereco/index.html', question1)
 
 @login_required
@@ -27,6 +34,9 @@ def q2(request):
     subm = Submission.objects.filter(user=request.user, question=2)
     if subm.exists():
         return render(request, 'codereco/done.html', question2)
+    curr = UserQuestion.objects.filter(user=request.user, question=2)
+    if not curr.exists():
+        return render(request, 'codereco/other.html')
     return render(request, 'codereco/index.html', question2)
 
 def user_login(request):
@@ -47,6 +57,7 @@ def user_login(request):
         return render(request, 'registration/login.html', {'msg':'Username and '})
         
 def user_register(request):
+    global counter
     if request.method == "GET":
         return render(request, 'registration/register.html')
     elif request.method == "POST":
@@ -57,7 +68,15 @@ def user_register(request):
             user = User.objects.create_user(username, email, password)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                lock.acquire()
+                if counter % 2 == 0:
+                    userquestion = UserQuestion(user=user,question=0)
+                else:
+                    userquestion = UserQuestion(user=user,question=1)
+                counter += 1
+                lock.release()
+                userquestion.save()
+            return HttpResponseRedirect('/')
         except Exception as ex:
             print(ex)
         return HttpResponseRedirect('/register')
@@ -123,10 +142,45 @@ def user_submit(request):
             subm = Submission(user=request.user, question=req_json['questionId'],\
                     code=req_json['text'])
             subm.save()
+            curr = UserQuestion.objects.filter(user=request.user).get()
+            if curr.question == 2:
+                curr.question = 1
+            else:
+                curr.question = 2
+            curr.save()
             return JsonResponse({})            
     except Exception as ex:
         print(ex)
         return HttpResponse(str(ex))
+
+@login_required
+@csrf_exempt
+def user_log(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body.decode())
+            source = data['reco']['source']
+            if source == 2:
+                # we need to create two vote objects here
+                log1, log2 = CutCopy(), CutCopy()
+                log1.question, log2.question = data['qId'], data['qId']
+                log1.user, log2.user = request.user, request.user             
+                log1.rank, log2.rank = data['reco']['rank_1'], data['reco']['rank_0']
+                log1.rating, log2.rating = data['reco']['rating'], data['reco']['rating']
+                log1.source, log2.source = 1, 0
+                log1.save()
+                log2.save()
+            else:
+                log = CutCopy()
+                log.question = data['qId']
+                log.user = request.user
+                log.rank = data['reco']['rank']
+                log.rating = data['reco']['rating']
+                log.source = source
+                log.save()
+    except Exception as ex:
+        print(ex)
+    return HttpResponse()
 
 @login_required
 @csrf_exempt

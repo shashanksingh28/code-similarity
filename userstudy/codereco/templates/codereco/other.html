@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script type="text/javascript" src="static/angular-input-stars.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="static/angular-input-stars.css">
+<div class="row" >
+    <h3>{{ question }}</h3>
+    <script type="text/javascript">
+        // Save the current questionId    
+        qId = {{ questionId}};
+        if (qId == 1){
+            $("#q1_link").addClass("active");
+        }
+        else{
+            $("#q2_link").addClass("active");
+        }
+    </script>
+</div>
+<div class="row">
+    You should complete the other question first.<br>
+</div>
+{% endblock %}

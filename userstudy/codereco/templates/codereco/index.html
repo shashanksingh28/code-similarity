@@ -4,32 +4,43 @@
 <script type="text/javascript" src="static/angular-input-stars.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="static/angular-input-stars.css">
+<div ng-controller="AppController as ctrl">
 <div class="row" >
-    <h3>{{ question }}</h3>
-    <script type="text/javascript">
-        // Save the current questionId    
-        qId = {{ questionId}};
-        if (qId == 1){
-            $("#q1_link").addClass("active");
-        }
-        else{
-            $("#q2_link").addClass("active");
-        }
-    </script>
+    <div class="col-md-8">
+        <h3> Problem </h3>
+        <h4>{{ question }}</h4>
+        <script type="text/javascript">
+            // Save the current questionId    
+            qId = {{ questionId}};
+            if (qId == 1){
+                $("#q1_link").addClass("active");
+            }
+            else{
+                $("#q2_link").addClass("active");
+            }
+        </script>
+    </div>
+    {% verbatim %}
+    <div class="col-md-4">
+        <h4>Votes given: {{voteCount}} / {{voteTotal}}</h4>
+    </div
+    {% endverbatim %}
 </div>
 <script type="text/javascript" src="static/code.js"></script>
-<div class="row" ng-controller="AppController as ctrl" >
+<div class="row">
     <div class="col-md-6" >
         <h3>Java Method</h3>
         <form>
             {% csrf_token %}
+            {% verbatim %}
             <div ng-keypress="keySend($event)" class="form-group form-group-lg" id="codeArea">
                 <label for="method_text"> Code </label>
                 <ui-codemirror class="panel" id="method_text" ng-model="methodText" ui-codemirror-opts="editorOptions"></ui-codemirror>
+                <span class="alert alert-warning" ng-if="error">{{ error }}</span>
             </div>
             <div class="form-group">
                 <button type="button" ng-click="postRequests()" class="btn btn-primary"> Search </button>
-                <button type="button" ng-click="submit()" ng-disabled="!searched || !weighted" class="btn btn-success"> Submit </button>
+                <button type="button" ng-click="submit()" ng-disabled="!searched || !weighted || voteCount / voteTotal < 1" class="btn btn-success"> Submit </button>
             </div>
             <div class="form-group">
                 <label for="signature"> Signature Weight </label><br>
@@ -53,7 +64,6 @@
             </div>
         </form>
     </div>
-    {% verbatim %}
     <div class="col-md-6">
         <h3> Recommendations </h3>
         <div id="proposed_recos">
@@ -61,12 +71,13 @@
                 <li ng-repeat="reco in mixRecos" ng-class="dummy">
                     <div>
 						<input-stars max="5" ng-model="reco.rating" on-star-click="rate(rating, reco)"></input-stars>
-                        <pre data-toggle="tooltip" ng-click="vote(reco)"> {{ reco.text }}</pre>
+                        <pre data-toggle="tooltip" ng-click="vote(reco)" ng-cut="log(reco)" ng-copy="log(reco)"> {{ reco.text }}</pre>
                     </div>
                 </li>
             </ol>
         </div>
     </div>
     {% endverbatim %}
+</div>
 </div>
 {% endblock %}

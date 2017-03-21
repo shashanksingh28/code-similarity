@@ -22,6 +22,8 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     $scope.serviceUrl= $scope.baseUrl + ":8080";   
     $scope.studyUrl= $scope.baseUrl + ":80";    
     $scope.ratings = {};
+    $scope.voteCount = 0;
+    $scope.voteTotal = 15;
 
     $scope.update = function update(results){
         if(Object.prototype.toString.call(results) === '[object Array]') {
@@ -36,11 +38,13 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
                 }
 			}
 			$scope.mixRecos = results;
-			$scope.$apply();
+			$scope.error = "";
 		}
         else{
             console.log(results);
+            $scope.error = "Check for compilation errors..";
         }
+		$scope.$apply();
     };
 
     $scope.postRequests = function postRequests(){
@@ -84,6 +88,7 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
         var vote = new Object();
         vote.qId = qId;
         vote.reco = reco;
+        $scope.voteCount += 1;
         // console.log(vote);
         $.ajax({
             url: $scope.studyUrl + '/vote',
@@ -117,7 +122,23 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             }
         });
 	  }
-	};    
+	};
+
+	$scope.log = function(reco){
+	    console.log(reco);
+        var vote = new Object();
+        vote.qId = qId;
+        vote.reco = reco;
+        $scope.voteCount += 1;
+        $.ajax({
+            url: $scope.studyUrl + '/cutcopy',
+			headers : {'weights': JSON.stringify($scope.weights)},
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: angular.toJson(vote)
+        });
+    }
     
     angular.element(document).ready(function () {
         $('#signatureSlider').on('slideStop', $scope.postSimRequest).data('slider');
