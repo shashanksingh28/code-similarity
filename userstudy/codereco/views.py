@@ -9,8 +9,16 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Vote, Submission, CustomWeight, UserQuestion, CutCopy
 
 # Create your views here.
-question1 = {'questionId' : 1, 'question' : 'Write a method that takes an integer n and prints the Fibonacci series till nth term.'}
-question2 = {'questionId' : 2, 'question' : 'Write a method that returns a new sorted array of integers'}
+question1 = {'questionId' : 1, 'question' : """Write a method that takes an integer array and returns the largest difference between its elements.
+For example, if array contains [7, 4, 1], the method should return 6 as the largest difference (7 - 1)"""}
+question2 = {'questionId' : 2, 'question' : """Write a method that returns the n\'th element of a linkedlist. You are given the head node.
+    
+    class Node{
+        Node next;
+        int value;
+    }
+    
+What should you do if the list is less than n elements long?"""}
 questions = {1 : question1, 2 : question2}
 counter = 0
 lock = threading.Lock()
@@ -70,9 +78,9 @@ def user_register(request):
                 login(request, user)
                 lock.acquire()
                 if counter % 2 == 0:
-                    userquestion = UserQuestion(user=user,question=0)
-                else:
                     userquestion = UserQuestion(user=user,question=1)
+                else:
+                    userquestion = UserQuestion(user=user,question=2)
                 counter += 1
                 lock.release()
                 userquestion.save()

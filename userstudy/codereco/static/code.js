@@ -99,7 +99,8 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             data: angular.toJson(vote),
             success: function(data){
                 var key = reco.source + "," + reco.rank;
-                $scope.ratings[key] = reco.rating;
+                // Buggy because different recos come for same source and rank
+                // $scope.ratings[key] = reco.rating;
             }
         });
     }
@@ -117,7 +118,6 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             dataType: 'json',
             data: angular.toJson(reqData),
             success: function(data){
-            	console.log("Done");
             	window.location.replace($scope.studyUrl);
             }
         });
