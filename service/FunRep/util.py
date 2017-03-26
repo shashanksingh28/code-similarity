@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE, STDOUT
 from .method import MethodFeatureVector
 
 ### Cofig section ###
-java_method_extractor = "JavaMethodFeatureExtractor.jar"
+java_method_extractor = "/var/www/code-similarity/service/JavaMethodFeatureExtractor.jar"
 java_file_extractor = "JavaFileFeatureExtractor.jar"
 java_concept_tagger = "javaparser_batch_mode/javaparser_batch.jar"
 db_user='root'
@@ -58,10 +58,10 @@ def unique_vectors_from_file(input_file):
                 continue
             vector = MethodFeatureVector(line)
             if not vector.is_empty:
-                vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
+                # vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
                 doc_vectors[vector.raw_text.strip()] = vector
                 # print(ctr, len(vector.concepts))
-            ctr += 1    
+                ctr += 1
     return list(doc_vectors.values())
 
 def vector_from_text(code_text):

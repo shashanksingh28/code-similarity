@@ -20,19 +20,20 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
+base_path = "/var/www/code-similarity/service"
 #### Config section ####
-solutions_input_file = "solutionSet.txt"
-solutions_data_file = "models/solutionVectors.pck"
-baseline_model_file = "models/baseline.model"
-baseline_dict_file = "models/baseline.dat"
-lang_dict_file = "models/dictionary.pck"
-lang_model_file = "models/sim_model.model"
+solutions_input_file = base_path + "/solutionSet.txt"
+solutions_data_file = base_path + "/models/solutionVectors.pck"
+baseline_model_file = base_path + "/models/baseline.model"
+baseline_dict_file = base_path + "/models/baseline.dat"
+lang_dict_file = base_path + "/models/dictionary.pck"
+lang_model_file = base_path + "/models/sim_model.model"
 kNearest = 10
 
 feature_weights = dict()
 feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
-feature_weights['signature'] = {'features' : ('params','return','exceptions','annotations'), 'weight': 1.0}
-feature_weights['structure'] = {'features' : ('expressions','statements'), 'weight': 1.0}
+feature_weights['signature'] = {'features' : ('params','return','modifier'), 'weight': 1.0}
+feature_weights['structure'] = {'features' : ('expressions', 'statements', 'methods_called', 'types', 'exceptions','annotations'), 'weight': 1.0}
 feature_weights['concepts'] = {'features' : ('concepts'), 'weight' : 1.0}
 ####
 
@@ -144,12 +145,9 @@ def proposed_similarity():
             for weight_key in header:
                 if weight_key in request_weights:
                     request_weights[weight_key]['weight'] = float(header[weight_key])
-        # pdb.set_trace()
         method_vector = util.vector_from_text(body_string)
         nearest = ml.proposed_kNearest(method_vector, solution_vectors, lang_dict, 
                 lang_model, k=kNearest, weights=request_weights)
-        # nearest contains score, solutions_index and intersections
-        # print(kNearest)
         nearest_vectors = []
         for element in nearest:
             result = {}
@@ -173,7 +171,6 @@ def cosine_kNearest():
         nearest = ml.cosine_kNearest(method_vector, solution_vectors, baseline_dict,
                 baseline_model, k=kNearest)
         # nearest contains score, solutions_index and intersections
-        # print(kNearest)
         nearest_vectors = []
         for element in nearest:
             result = {}
@@ -196,7 +193,6 @@ def concept_tag_kNearest():
         nearest = ml.concept_tag_kNearest(method_vector, solution_vectors, lang_dict,
                 lang_model, k=kNearest)
         # nearest contains score, solutions_index and intersections
-        # print(kNearest)
         nearest_vectors = []
         for element in nearest:
             result = {}
@@ -218,20 +214,17 @@ def mix_similarity():
         
         if 'weights' in request.headers: 
             header = json.loads(request.headers['weights'])
-            print(header)
             for weight_key in header:
                 if weight_key in request_weights:
                     request_weights[weight_key]['weight'] = float(header[weight_key])
-        # pdb.set_trace()
         method_vector = util.vector_from_text(body_string)
+        # import pdb; pdb.set_trace()
         proposed_nearest = ml.proposed_kNearest(method_vector, solution_vectors, lang_dict, 
                 lang_model, k=5, weights=request_weights)
         cosine_nearest = ml.cosine_kNearest(method_vector, solution_vectors, baseline_dict,
                 baseline_model, k=5)
         proposed_nearest = [tup[1] for tup in proposed_nearest]
         cosine_nearest = [tup[1] for tup in cosine_nearest]
-        # print(proposed_nearest)
-        # print(cosine_nearest)
         results = []
         for i in range(len(proposed_nearest)):
             reco_index = proposed_nearest[i]            
@@ -245,7 +238,6 @@ def mix_similarity():
                 reco['source'] = 1
             reco['rank'] = i + 1
             reco['text'] = solution_vectors[reco_index].raw_text
-            # reco['weights'] = header
             results.append(reco)
                 
         for i in range(len(cosine_nearest)):
@@ -256,9 +248,7 @@ def mix_similarity():
             reco['text'] = solution_vectors[reco_index].raw_text
             results.append(reco)
         
-        # print(results)
         random.shuffle(results)
-        # print(results)
         return jsonify(results)
 
     except Exception as ex:
@@ -267,5 +257,5 @@ def mix_similarity():
 
 
 if __name__ == "__main__":
-    # app.run(debug=True)
     loadData()
+    app.run()

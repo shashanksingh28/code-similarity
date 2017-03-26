@@ -10,6 +10,7 @@ class Vote(models.Model):
     source = models.IntegerField()
     rank = models.IntegerField()
     rating = models.IntegerField()
+    code = models.TextField(null=True)
     time = models.DateTimeField(auto_now_add=True)
 
 class Submission(models.Model):
@@ -27,12 +28,14 @@ class CustomWeight(models.Model):
     structure = models.FloatField()
     concepts = models.FloatField()
     language = models.FloatField()
+    code = models.TextField(null=True)
     time = models.DateTimeField(auto_now_add=True)
 
 class UserQuestion(models.Model):
     userqid = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     question = models.IntegerField()
+    count = models.IntegerField(default=0)
 
 class CutCopy(models.Model):
     ccid = models.AutoField(primary_key=True)

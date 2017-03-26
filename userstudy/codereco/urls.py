@@ -22,11 +22,14 @@ urlpatterns = [
     url(r'^login', views.user_login, name='login'),
     url(r'^register', views.user_register, name='register'),
     url(r'^logout', views.user_logout, name='logout'),
-    url(r'^$', views.index, name='index'),
-    url(r'^q1', views.q1, name='question1'),
-    url(r'^q2', views.q2, name='question2'),
+    url(r'^$', views.tutorial, name='index'),
+    url(r'^study/q1', views.q1, name='question1'),
+    url(r'^study/q2', views.q2, name='question2'),
+    url(r'^study', views.index, name='question2'),
+    url(r'^tutorial', views.tutorial),
     url(r'^vote', views.user_vote, name="vote"),
     url(r'^submit', views.user_submit, name='submit'),
     url(r'^weightupdate', views.user_weight_update, name='weight_update'),
     url(r'^cutcopy', views.user_log, name='log'),
+    url(r'^feedback', views.feedback, name='feedback')
 ]

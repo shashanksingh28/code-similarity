@@ -74,22 +74,20 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             success: $scope.update
         });
 
-        $.ajax({
+        /*$.ajax({
             url: $scope.studyUrl + '/weightupdate',
 			headers : {'weights': JSON.stringify($scope.weights)},
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            crossDomain: true,
-            data: $scope.methodText
-        });
+            crossDomain: true
+        });*/
     }
 
     $scope.rate = function(error, reco){
-        var vote = new Object();
+        /*var vote = new Object();
         vote.qId = qId;
         vote.reco = reco;
-        vote.code = $scope.methodText;
         $scope.voteCount += 1;
         // console.log(vote);
         $.ajax({
@@ -104,11 +102,11 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
                 // Buggy because different recos come for same source and rank
                 // $scope.ratings[key] = reco.rating;
             }
-        });
+        });*/
     }
 
 	$scope.submit = function(){
-	  var reqData = new Object();
+	  /*var reqData = new Object();
 	  reqData.questionId = qId;
 	  reqData.text = $scope.methodText;
 	  if (confirm('Are you sure? You cannot come back to this question later.')) {
@@ -120,14 +118,14 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             dataType: 'json',
             data: angular.toJson(reqData),
             success: function(data){
-            	window.location.replace($scope.studyUrl+"/study");
+            	window.location.replace($scope.studyUrl);
             }
         });
-	  }
+	  }*/
 	};
 
 	$scope.log = function(reco){
-	    console.log(reco);
+	    /*console.log(reco);
         var vote = new Object();
         vote.qId = qId;
         vote.reco = reco;
@@ -139,7 +137,7 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: angular.toJson(vote)
-        });
+        });*/
     }
     
     angular.element(document).ready(function () {

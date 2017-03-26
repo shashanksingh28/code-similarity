@@ -11,14 +11,27 @@ from .models import Vote, Submission, CustomWeight, UserQuestion, CutCopy
 # Create your views here.
 question1 = {'questionId' : 1, 'question' : """Write a method that takes an integer array and returns the largest difference between its elements.
 For example, if array contains [7, 4, 1], the method should return 6 as the largest difference (7 - 1)"""}
-question2 = {'questionId' : 2, 'question' : """Write a method that returns the n\'th element of a linkedlist. You are given the head node.
-    
-    class Node{
-        Node next;
-        int value;
+question2 = {'questionId' : 2, 'question' : """
+    class Person{
+        String name;
+        int age;
     }
-    
-What should you do if the list is less than n elements long?"""}
+    class Employee extends Person{
+        double getSalary();
+    }
+    class BusinessOwner extends Person {
+        double getProfit();
+    }
+    class Veteran extends Person{
+        String veteran_id;
+    }
+
+Write a java method that takes a person and returns their tax as below:
+1. For employees, if salary < $10,000, 2% of salary, else 5%
+2. For business owners, 10% of their profit
+3. 0 for veterans
+
+What would you do if a person is none of these?"""}
 questions = {1 : question1, 2 : question2}
 counter = 0
 lock = threading.Lock()
@@ -30,22 +43,36 @@ def index(request):
 @login_required
 def q1(request):
     subm = Submission.objects.filter(user=request.user, question=1)
+    curr = UserQuestion.objects.filter(user=request.user).get()
     if subm.exists():
-        return render(request, 'codereco/done.html', question1)
-    curr = UserQuestion.objects.filter(user=request.user, question=1)
-    if not curr.exists():
-        return render(request, 'codereco/other.html')
+        if curr.count == 2:
+            return feedback(request)
+        else:
+            return render(request, 'codereco/done.html', question1)
+    elif curr.question == 2:
+        return render(request, 'codereco/other.html', question1)
     return render(request, 'codereco/index.html', question1)
 
 @login_required
 def q2(request):
     subm = Submission.objects.filter(user=request.user, question=2)
+    curr = UserQuestion.objects.filter(user=request.user).get()
     if subm.exists():
-        return render(request, 'codereco/done.html', question2)
-    curr = UserQuestion.objects.filter(user=request.user, question=2)
-    if not curr.exists():
-        return render(request, 'codereco/other.html')
+        if curr.count == 2:
+            return feedback(request)
+        else:
+            return render(request, 'codereco/done.html', question2)
+    elif curr.question == 1:
+        return render(request, 'codereco/other.html', question2)
     return render(request, 'codereco/index.html', question2)
+
+@login_required
+def feedback(request):
+    return render(request, 'feedback.html')
+
+@login_required
+def tutorial(request):
+    return render(request, 'codereco/tutorial.html', {'questionId':3})
 
 def user_login(request):
     if request.method == "GET":
@@ -57,7 +84,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return q1(request)
+                return tutorial(request)
             else:
                 return render(request, 'registration/login.html', {'msg': 'Username or Password incorrect'})
         except Exception as ex:
@@ -102,6 +129,7 @@ def get_weights(request, vote=None):
     custom_weight.structure = weights['structure']
     custom_weight.concepts = weights['concepts']
     custom_weight.language = weights['language']
+    custom_weight.code = request.body.decode()
     return custom_weight
 
 @login_required
@@ -112,6 +140,8 @@ def user_vote(request):
         if request.method == "POST":
             data = json.loads(request.body.decode())
             source = data['reco']['source']
+            code = data['code']
+            rating = data['reco']['rating']
             if source == 2:
                 # we need to create two vote objects here
                 vote1, vote2 = Vote(), Vote()
@@ -119,7 +149,8 @@ def user_vote(request):
                 vote1.user, vote2.user = request.user, request.user             
                 vote1.rank, vote2.rank = data['reco']['rank_1'], data['reco']['rank_0']
                 vote1.source, vote2.source = 1, 0
-                vote1.rating, vote2.rating = data['reco']['rating'], data['reco']['rating']
+                vote1.rating, vote2.rating = rating, rating
+                vote1.code, vote2.code = code
                 vote1.save()
                 vote2.save()
                 cw1 = get_weights(request, vote1)
@@ -132,7 +163,8 @@ def user_vote(request):
                 vote.user = request.user
                 vote.rank = data['reco']['rank']
                 vote.source = source
-                vote.rating = data['reco']['rating']
+                vote.rating = rating
+                vote.code = code
                 vote.save()
                 cw = get_weights(request, vote)
                 cw.save()        
@@ -155,6 +187,7 @@ def user_submit(request):
                 curr.question = 1
             else:
                 curr.question = 2
+            curr.count += 1
             curr.save()
             return JsonResponse({})            
     except Exception as ex:

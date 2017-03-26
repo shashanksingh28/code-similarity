@@ -14,32 +14,30 @@
 	    
         {% load staticfiles %}
 		<link rel="stylesheet" href="{% static 'style.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'codemirror-5.23.0/lib/codemirror.css' %}">
-		<script src="{% static 'codemirror-5.23.0/lib/codemirror.js' %}"></script>
-		<script src="{% static 'codemirror-5.23.0/mode/clike/clike.js' %}"></script>
-		<script src="{% static 'codemirror-5.23.0/addon/edit/matchbrackets.js' %}"></script>
-		<script src="{% static 'codemirror-5.23.0/addon/edit/closebrackets.js' %}"></script>
+        <link rel="stylesheet" href="static/codemirror-5.23.0/lib/codemirror.css">
+		<script src="static/codemirror-5.23.0/lib/codemirror.js"></script>
+		<script src="static/codemirror-5.23.0/mode/clike/clike.js"></script>
+		<script src="static/codemirror-5.23.0/addon/edit/matchbrackets.js"></script>
+		<script src="static/codemirror-5.23.0/addon/edit/closebrackets.js"></script>
 		
-		<script src="{% static 'codemirror-5.23.0/ui-codemirror.js' %}"></script>
-		<base href="/study/" />
+		<script src="static/codemirror-5.23.0/ui-codemirror.js"></script>
+        <script type="text/javascript" src="static/code.js"></script>
 	</head>
 	<body ng-app="codereco">
-		
         <div class="navbar navbar-default">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/"> Codereco </a>
             </div>
             <ul class="nav navbar-nav">
-                <li id="q1_link"><a href="q1">Question 1</a></li>
-                <li id="q2_link"><a href="q2">Question 2</a></li>
+				<li id="q3_link"><a href='tutorial'>Tutorial</a></li>
             </ul>
             <ul class="nav navbar-right">
-                <li><a href='../logout'>Logout</a>
+                <li><a href='logout'>Logout</a>
             </ul>
         </div>
 		<div class="container">
-			{% block content %}
-        	{% endblock %}
+            Thank you for taking the test.<br>
+            Please take a couple of minutes to provide <a href="https://goo.gl/forms/ApYtJbY2TqoWFeiW2" target="_blank">feedback</a>
 		</div>
 	</body>
 </html>
