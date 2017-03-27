@@ -349,6 +349,7 @@ public class ASTEnhanced {
                 		}
             		} else if (varDeclerator.getInit() instanceof CastExpr){
             			this.concepts.add("Casting");
+            			this.concepts.add("PolyMorphism");
             		}
             	}
             }
@@ -481,6 +482,9 @@ public class ASTEnhanced {
         }
         if(ModifierSet.isAbstract(this.modifier)){
         	this.concepts.add("Abstract");
+        }
+        if(this.expressions.containsKey("InstanceOfExpr")){
+        	this.concepts.add("PolyMorphism");
         }
     }
 }
