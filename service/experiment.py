@@ -12,9 +12,9 @@ lang_dict_file = "models/dictionary.pck"
 lang_model_file = "models/sim_model.model"
 
 feature_weights = dict()
-# feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
-feature_weights['signature'] = {'features' : ('params','return','exceptions','annotations'), 'weight': 1.0}
-feature_weights['structure'] = {'features' : ('expressions','statements'), 'weight': 1.0}
+feature_weights['language'] = {'features' : method.lang_features, 'weight':1.0}
+feature_weights['signature'] = {'features' : ('params','return','modifier'), 'weight': 1.0}
+feature_weights['structure'] = {'features' : ('expressions', 'statements', 'methods_called', 'types', 'exceptions','annotations'), 'weight': 1.0}
 feature_weights['concepts'] = {'features' : ('concepts'), 'weight' : 1.0}
 
 class AnalyzeDiff:
@@ -28,38 +28,25 @@ class AnalyzeDiff:
         self._kNearest = []
         self.feature_weights = feature_weights
 
-    def _get_kNearest(self):
-        self._kNearest = ml.proposed_kNearest(self.vector, self._solution_vectors, self._lang_dict, self._lang_model, self.k, self.feature_weights)
-    
-    def _get_cNearest(self):
-        self._cNearest = ml.concept_tag_kNearest(self.vector, self._solution_vectors, self._lang_dict, self._lang_model, self.k)
-
     def getNearestData(self, vector):
-        # import pdb; pdb.set_trace()
-        self.vector = vector
-        tk = threading.Thread(target=self._get_kNearest)
-        tc = threading.Thread(target=self._get_cNearest)
-        tk.start()
-        tc.start()
-        tk.join()
-        tc.join()
-        
+        proposed_kNearest = ml.proposed_kNearest(vector, self._solution_vectors, self._lang_dict, self._lang_model, self.k, self.feature_weights)
+        baseline_kNearest = ml.cosine_kNearest(vector, self._solution_vectors, self._lang_dict, self._lang_model, self.k)
         """ Now that we have fetched kNearest, get row of differences """
         data = []
         for i in range(self.k):
-            proposed_vector = self._solution_vectors[self._kNearest[i][1]]
-            tag_vector = self._solution_vectors[self._cNearest[i][1]]
+            proposed_vector = self._solution_vectors[proposed_kNearest[i][1]]
+            baseline_vector = self._solution_vectors[baseline_kNearest[i][1]]
             
-            if proposed_vector == tag_vector:
+            if proposed_vector == baseline_vector:
                 continue
             
             data.append([ i+1, vector.raw_text, list(vector.concepts.keys()), proposed_vector.raw_text,\
-                    list(proposed_vector.concepts.keys()), tag_vector.raw_text, list(tag_vector.concepts.keys()) ])
+                    list(proposed_vector.concepts.keys()), baseline_vector.raw_text, list(baseline_vector.concepts.keys()) ])
         
         return data
     
 
-def main(testFile, k=3):
+def main(testFile, k=5):
     if not os.path.isfile(solutions_data_file):
         print("Extracting solution vectors...")
         solution_vectors = util.vectors_from_file(solutions_input_file)
@@ -103,8 +90,7 @@ def main(testFile, k=3):
     df = pd.DataFrame(data=data, columns=['Rank', 'Sample','Sample_Concepts','IR_Reco',
                 'IR_Reco_concepts', 'Tags_Reco', 'Tags_Reco_concepts'])
     df.index.name='#'
-    df.to_csv('comparison.csv')
-    
+    df.to_csv('comparison.csv')    
     
 
 if __name__ == "__main__":

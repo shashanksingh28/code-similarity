@@ -22,7 +22,7 @@
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
-    <Annotation>
+    <!--<Annotation>
         <AnnotationProperty abbreviatedIRI="rdfs:label"/>
         <Literal datatypeIRI="&xsd;string">java_ontology</Literal>
     </Annotation>
@@ -35,7 +35,7 @@
         <Literal datatypeIRI="&xsd;string">This is a second version of Java ontology created by the PAWS group for indexing adaptive java content
 The main purpose of this ontology is to represent the domian of Java and provide the basis for modelling of student knowledge of java concepts and content-based adaptation of Java-related learning activities
 This version is an RDFS ontology. It spesifieds the basic vocabulary of the domain. It has three relations: subClassOf, partOf-hasPart  and relatedTo</Literal>
-    </Annotation>
+    </Annotation>-->
     <Declaration>
         <Class IRI="#AbstractClass"/>
     </Declaration>
