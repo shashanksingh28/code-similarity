@@ -58,7 +58,7 @@ def unique_vectors_from_file(input_file):
                 continue
             vector = MethodFeatureVector(line)
             if not vector.is_empty:
-                # vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
+                vector.concepts, vector.c_id = get_concept_tags(vector.raw_text)
                 doc_vectors[vector.raw_text.strip()] = vector
                 # print(ctr, len(vector.concepts))
                 ctr += 1
@@ -76,7 +76,7 @@ def vector_from_text(code_text):
     for line in method_text.split("\n"):
         if re.search(r'^[^#].+$', line):
             method_vector = MethodFeatureVector(line)
-            # method_vector.concepts, method_vector.c_id = get_concept_tags(method_vector.raw_text)
+            method_vector.concepts, method_vector.c_id = get_concept_tags(method_vector.raw_text)
             break
     return method_vector
 
