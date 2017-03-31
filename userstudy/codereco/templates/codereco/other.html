@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<script type="text/javascript" src="static/angular-input-stars.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="static/angular-input-stars.css">
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'code.js'%}"></script>
 <div class="row" >
     <script type="text/javascript">
         // Save the current questionId    

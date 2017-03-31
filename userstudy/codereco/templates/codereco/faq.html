@@ -1,0 +1,197 @@
+{% extends 'base.html'%}
+{% block content %}
+
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'code.js'%}"></script>
+<div class="row" >
+    <script type="text/javascript">
+		$("#faq_link").addClass("active");
+    </script>
+</div>
+<div class="panel-group" id="accordion">
+        <div class="faqHeader">Important</div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">How do I vote?</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    On top of each recommendation, you will see stars. On a scale of 1 to 5, give 1 star to a recommedation that was somewhat related to your task
+					to 5 stars if a recommendation really helped you complete your task.
+                </div>
+            </div>
+        </div>
+
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">How do I customize the recommendations?</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    You will see sliders for each type of feature below your code editor. Try reducing or increasing weights of these features and observe change in recommendations.
+                </div>
+            </div>
+        </div>
+
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">What are signature features?</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+					<ul>
+						<li> Return type: Match the type of variable returned. (int, double, String, etc)
+						<li> Modifier: Match the type of modifier. (public, private, static)
+						<li> Arguments: Match the type of arguments. for e.g: if your method takes in a String and an integer as a parameter, try to find a another function that also takes the same.
+					</ul>
+                </div>
+            </div>
+        </div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">What are structural features?</a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="panel-body">
+					<ul>
+						<li> Statements: Match statements like for, while, if, etc</li>
+						<li> Expressions: Match expressions like boolean expressions, greater than, less than, etc</li>
+						<li> Exceptions: Match exceptions thrown and handled</li>
+						<li> Annotations: Match annotations like '@Override'</li>
+						<li> Methods : Match method calls like Collections.sort(), System.out.println(), etc</li>
+					</ul>
+                </div>
+            </div>
+        </div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">What are concept features?</a>
+                </h4>
+            </div>
+            <div id="collapseFive" class="panel-collapse collapse">
+                <div class="panel-body">
+					<ul>
+						High level features like:
+						<li> Recursion</li>
+						<li> Casting </li>
+						<li> Polymorphism </li>
+						<li> Exception Handling </li>
+						<li> Inner Classes and Methods </li>
+					</ul>
+                </div>
+            </div>
+        </div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">What are language features?</a>
+                </h4>
+            </div>
+            <div id="collapseSix" class="panel-collapse collapse">
+                <div class="panel-body">
+                    Match text from:
+					<ul>
+						<li> Method name </li>
+						<li> Java Documentation </li>
+						<li> Comments </li>
+						<li> Variable names </li>
+					</ul>
+                </div>
+            </div>
+        </div>
+
+	 	
+        <div class="faqHeader">Help</div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTen">
+					I am getting a message saying 'Check for compilation errors'. How do I know the error?</a>
+                </h4>
+            </div>
+            <div id="collapseTen" class="panel-collapse collapse">
+				<div class="panel-body">
+					Unfortunately the system is not advanced enough to show you the exact error.<br>
+					Most common causes are:<br>
+					<ul>
+						<li> You are missing a semi-colon after some line.</li>
+						<li> You have written an incorrect signature, like 'void double method(){}'. It can return either void or double.</li>
+					</ul>
+                </div>
+            </div>
+        </div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Submit button is disabled?</a>
+                </h4>
+            </div>
+            <div id="collapseEleven" class="panel-collapse collapse">
+                <div class="panel-body">
+                     Submit button will be enabled based on 2 pre-requisites:
+					<ol>
+						<li> You have provided at least 15 votes. You can see the number of votes on the top right</li>
+						<li> You have customized your recommendations at least once.</li>
+					</ol>
+                </div>
+            </div>
+        </div>
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwelve">Getting irrelevant recommendations?</a>
+                </h4>
+            </div>
+            <div id="collapseTwelve" class="panel-collapse collapse">
+                <div class="panel-body">
+                    Try:
+					<ol>
+						<li> Adding more content to your method. This could be comments, code, the way you would naturally do without recommendations. </li>
+						<li> Check for what kind of features you are looking for and adjust weights accordingly. </li>
+					</ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.faqHeader {
+        font-size: 27px;
+        margin: 20px;
+    }
+.panel-heading [data-toggle="collapse"]:after {
+    font-family: 'Glyphicons Halflings';
+    /*content: "e072"; /* "play" icon */
+    float: right;
+    color: #F58723;
+    font-size: 18px;
+    line-height: 22px;
+    /* rotate "play" icon from > (right arrow) to down arrow */
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.panel-heading [data-toggle="collapse"].collapsed:after {
+    /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    color: #454444;
+}
+</style>
+{% endblock %}

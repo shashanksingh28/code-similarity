@@ -20,8 +20,11 @@
 		<script src="{% static 'codemirror-5.23.0/addon/edit/matchbrackets.js' %}"></script>
 		<script src="{% static 'codemirror-5.23.0/addon/edit/closebrackets.js' %}"></script>
 		
+		<script type="text/javascript" src="{% static 'angular-input-stars.js' %}"></script>
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="{% static 'angular-input-stars.css' %}">
 		<script src="{% static 'codemirror-5.23.0/ui-codemirror.js' %}"></script>
-		<base href="/study/" />
+		<base href="/" /> 
 	</head>
 	<body ng-app="codereco">
 		
@@ -30,8 +33,9 @@
                 <a class="navbar-brand" href="/"> Codereco </a>
             </div>
             <ul class="nav navbar-nav">
-                <li id="q1_link"><a href="q1">Question 1</a></li>
-                <li id="q2_link"><a href="q2">Question 2</a></li>
+                <li id="q1_link" target="_blank"><a href="study/q1">Question 1</a></li>
+                <li id="q2_link" target="_blank"><a href="study/q2">Question 2</a></li>
+                <li id="faq_link" target="_blank"><a href="study/faq">Help FAQ</a></li>
             </ul>
             <ul class="nav navbar-right">
                 <li><a href='../logout'>Logout</a>

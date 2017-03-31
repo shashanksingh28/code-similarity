@@ -38,7 +38,11 @@ lock = threading.Lock()
 
 @login_required
 def index(request):
-    return q1(request)
+    return faq(request)
+
+@login_required
+def faq(request):
+    return render(request, 'codereco/faq.html')
 
 @login_required
 def q1(request):

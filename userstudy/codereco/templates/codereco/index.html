@@ -2,9 +2,6 @@
 {% block content %}
 
 {% load staticfiles %}
-<script type="text/javascript" src="{% static 'angular-input-stars.js' %}"></script>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'angular-input-stars.css' %}">
 <script type="text/javascript" src="{% static 'code.js'%}"></script>
 <div ng-controller="AppController as ctrl">
 <div class="row" >
@@ -20,6 +17,9 @@
             else if (qId && qId == 2){
                 $("#q2_link").addClass("active");
             }
+			else{
+				$("#faq_link").addClass("active");
+			}
         </script>
     </div>
     {% verbatim %}
