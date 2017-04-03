@@ -17,8 +17,8 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.weights = {'language': 1, 'structure': 1, 'signature': 1,'concepts': 1};
-    $scope.baseUrl="http://ec2-34-208-177-148.us-west-2.compute.amazonaws.com";
-    // $scope.baseUrl="http://localhost";
+    // $scope.baseUrl="http://ec2-34-208-177-148.us-west-2.compute.amazonaws.com";
+    $scope.baseUrl="http://localhost";
     $scope.serviceUrl= $scope.baseUrl + ":8080";   
     $scope.studyUrl= $scope.baseUrl + ":80";    
     $scope.ratings = {};
@@ -26,6 +26,7 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     $scope.voteTotal = 15;
 
     $scope.update = function update(results){
+        $scope.ratings = {};
         if(Object.prototype.toString.call(results) === '[object Array]') {
         	for(var i = 0; i < results.length; i++){
         		var key = results[i].source + "," + results[i].rank;
@@ -42,7 +43,7 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
 		}
         else{
             console.log(results);
-            $scope.error = "Check for compilation errors..";
+            $scope.error = "Check for compilation errors.. (semicolons, keywords or just comment everything and try uncommenting one by one)";
         }
 		$scope.$apply();
     };
@@ -85,6 +86,11 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     }
 
     $scope.rate = function(error, reco){
+        var key = reco.source + "," + reco.rank;
+        if (!(key in $scope.ratings)){
+            $scope.ratings[key] = reco.rating;
+            $scope.voteCount += 1;
+        }
         /*var vote = new Object();
         vote.qId = qId;
         vote.reco = reco;

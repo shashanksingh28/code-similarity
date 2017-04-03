@@ -1,36 +1,25 @@
 {% extends 'base-tutorial.html' %}
 {% block content %}
-
-<script type="text/javascript" src="static/angular-input-stars.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="static/angular-input-stars.css">
+{% load staticfiles %}
 <div ng-controller="AppController as ctrl">
-<div class="row" >
-    <div class="col-md-8">
-        <h3> Tutorial Page</h3>
-		
-		<h4> The objective of the user study is to evaluate recommendations. Recommendations might not give you an exact answer, but they are meant to help you
-			program by showing you similar methods to get ideas from. Modify weights to focus on features you currently care about the most.</h4>
 
-		<h4> Give stars to samples that are related to your code. You need to rate at least 15 to submit. The objective is NOT to come up with the answer, but EVALUATING
-		how much the recommender helps you find the answer. Please do not use search engines as that would impact this study, it's ok not to get the answer rather than 
-        search elsewhere.</h4>
+<script type="text/javascript" src="static/code-dummy.js"></script>
+<div class="row" >
+    <div class="col-md-9">
+        <h3> Problem </h3>
+        <h4><pre class="pre-wrap">{{ question }}</pre></h4>
         <script type="text/javascript">
             // Save the current questionId    
-            qId = {{ questionId}};
-            if (qId == 1){
-                $("#q1_link").addClass("active");
-            }
-            else if(qId == 2){
-                $("#q2_link").addClass("active");
-            }
-			else if(qId == 3){
-				$("#q3_link").addClass("active");
-			}
+            qId = {{ questionId }};
+			$("#test_link").addClass("active");
         </script>
     </div>
+    {% verbatim %}
+    <div class="col-md-3">
+        <h4>Votes given: {{voteCount}} / {{voteTotal}}</h4>
+    </div>
+    {% endverbatim %}
 </div>
-<script type="text/javascript" src="static/code-dummy.js"></script>
 <div class="row">
     <div class="col-md-6" >
         <h3>Java Method</h3>
@@ -44,7 +33,7 @@
             </div>
             <div class="form-group">
                 <button type="button" ng-click="postRequests()" class="btn btn-primary"> Search </button>
-                <!-- <button type="button" ng-click="submit()" ng-disabled="!searched || !weighted || voteCount / voteTotal < 1" class="btn btn-success"> Submit </button> -->
+                <button type="button" ng-click="submit()" ng-disabled="!searched || !weighted || voteCount / voteTotal < 1" class="btn btn-success"> Submit </button>
             </div>
             <div class="form-group">
                 <label for="signature"> Signature (Access modifier, return type, arguments) </label><br>
@@ -84,4 +73,5 @@
     {% endverbatim %}
 </div>
 </div>
+
 {% endblock %}

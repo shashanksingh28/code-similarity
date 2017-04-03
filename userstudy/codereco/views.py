@@ -32,6 +32,12 @@ Write a java method that takes a person and returns their tax as below:
 3. 0 for veterans
 
 What would you do if a person is none of these?"""}
+
+# Test Question
+test_question = {'questionId': 3, 'question' : """
+Write a java method that takes in a binary string (e.g.: "101") and returns its decimal integer value (5).
+"""}
+
 questions = {1 : question1, 2 : question2}
 counter = 0
 lock = threading.Lock()
@@ -75,8 +81,12 @@ def feedback(request):
     return render(request, 'feedback.html')
 
 @login_required
-def tutorial(request):
-    return render(request, 'codereco/tutorial.html', {'questionId':3})
+def intro(request):
+    return render(request, 'codereco/intro.html', {'questionId':3})
+
+@login_required
+def test(request):
+    return render(request, 'codereco/test.html', test_question)
 
 def user_login(request):
     if request.method == "GET":
