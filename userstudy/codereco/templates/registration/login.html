@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-tutorial.html" %}
 
 {% block content %}
 
@@ -6,7 +6,8 @@
 {% if msg %}
 <p> {{ msg }}</p>
 {% endif %}
-
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'code.js'%}"></script>
 {% if next %}
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,

@@ -98,7 +98,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return tutorial(request)
+                return intro(request)
             else:
                 return render(request, 'registration/login.html', {'msg': 'Username or Password incorrect'})
         except Exception as ex:
