@@ -4,57 +4,57 @@
 <script type="text/javascript" src="static/angular-input-stars.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="static/angular-input-stars.css">
+
+<script type="text/javascript" src="{% static 'code.js'%}"></script>
+
 <div ng-controller="AppController as ctrl">
 <div class="row" >
     <div class="col-md-12">
         <h3> Codereco</h3>
-		
-		<h4> We need your help with a research user study on the effectiveness of a new recommendation algorithm that we have designed to recommend java methods.
-			It will need approximately 30 mins of your time and the overview of the workflow is below:</h4><br>
 		<img src="{% static 'userstudy.png'%}">
-
-
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <h3> Introduction </h3>
-        <p>Programmers seek information usually by coming up with the right keywords to search for, browsing the search results and incorporating newly learnt information 
-        into their current context (program). They often face challenges in this workflow if they do not know the right keyword to query for or if the information
-        is not relavant to their current context. We have made a recommendation algorithm which extracts both structural and text features from the context of a java
-        method and makes simialar recommendations with the objective of helping the programmer learn quicker by examples.</p>
-        
-        <p>This user study is to evaluate its performance as compared to a pure text search. You will be shown <b> 10 recommendations on every search query,
-            randomly shuffled (not ranked).</b> Please rate the recommendations based on <b> how much they helped you complete your task.</b>
-        They need not give you exact solutions, they can give you ideas or hints.
-        
+        <h3> Introduction </h3>        
+		<p> The system is designed to evaluate a new recommendation algorithm as compared to a text based algorithm. For every time you search, 
+		you will be shown 5 recommendations from both algorithms,  <b> randomly shuffled (not ranked).</b> Please rate the recommendations based on 
+		<b> how much they helped you complete your task.</b> Note that they need not give you exact solutions, they can give high level ideas or hints.
+
         <p>Please <b>rate at least 15 recommendations per problem</b> to submit and proceed to the next problem. <b> Do not use search engines as that will impact
             the study. </b>
 
-        <h3> Test Page </h3>
-        Try solving the problem in the test tab in the navigation bar. 
+        <h3> Example </h3>
+		Try solving the problem in the <a href="/test" target="_blank">test</a> tab in the navigation bar. 
         While you are at it, explore the voting interface and observe the changes in recommendations based on feature weights. As an example, see below screenshots<br><br>
         <ol>
-            <li> Type in the method outline that you are looking for and hit 'search'. You will see some recommendations come up<br>
+			<li> Type in the method outline that you are looking for and hit 'search'. You will see some recommendations come up<br><br>
                 <img src="{% static '1.png' %}" height="400px">
             </li><br>
             <li> From the recommendations on the right, you found one to be somewhat related to conversion between values so gave it 2 stars. As soon as you voted,
-                notice your updated vote count out of 15. Once this crosses 15, submit button will be enabled.<br>
+				notice your updated vote count out of 15. Once this crosses 15, submit button will be enabled.<br><br>
                 <img src="{% static '2.png' %}" height="400px">
             </li><br>
             <li> With the hope of getting some related methods, you start writing comments and increase your 'Language' feature weights because you want to focus on
-                matching comments. This helps you get a couple more relevant recommendations to vote for.<br>
-                <img src="{% static '3.png' %}" height="550px">
+				matching comments. This helps you get a couple more relevant recommendations to vote for.<br><br>
+				<img src="{% static '3.png' %}" height="550px"> <br>
+				1. Type in comments <br>2. Increase weight for Language features <br>3. Recommendation involving 'convertion' <br>4. Recommendation involving 'integer'.
             </li><br>
             <li> Integer.toString() looks like it might do the job but it returns a String while you need to return an int. So you change focus to 'Structure' and 'Concept'
                 features more and reduce weight on 'Language'. This helps you find Integer.parseInt(), which seems more like what you are looking for..<br>
-                <img src="{% static '4.png' %}" height="550px">
+				<img src="{% static '4.png' %}" height="550px"><br>
+				1. Increase Structure (syntactical matches) <br>2. Increase Concepts (conceptual matches) <br> Reduce Language back
             </li>
         </ol>
         <h3> Problem 1 and 2 </h3>
-        Wait for instructions on how to access Problems, you will get a new web address.
+        
+		Note that sometimes you do not find exactly what you are looking for. In such cases, you should try writing something on your own and search after a couple of 
+		lines so that the algorithm has more data to recommend on. Remember the objective is to vote for recommendations that are relevant and helpful samples, not exact.
+		<br> Also note that you have to write only ONE method per problem. Do not split your algorithm into two methods.
+		<h4><b> Start solving the two attemps <a href="/study" target="_blank">HERE</a> after reading the FAQ page thoroughly. </b> </h4>
+
         <h3> Feedback </h3>
-        Please spend a couple of minutes to give us feedback <a href="https://goo.gl/forms/ApYtJbY2TqoWFeiW2" target="_blank"> here.</a>
+        Please spend a couple of minutes to give us anonymous feedback <a href="https://goo.gl/forms/L66FjOGAQVtqwR5w1" target="_blank"> here.</a>
 
     </div>
 </div>

@@ -25,8 +25,8 @@ SECRET_KEY = '*m+y9&(ld&k-=--jr&39hwi3gw#!ok7-if0yq=5n5*cc=vrlne'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['ec2-52-43-83-129.us-west-2.compute.amazonaws.com',
+        '52.43.83.129']
 
 # Application definition
 
@@ -121,3 +121,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/login'
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")

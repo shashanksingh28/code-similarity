@@ -110,3 +110,10 @@ ul.rating {
 .clear{
   margin-top:20px;
 }
+
+img {
+	padding:1px;
+	border:1px solid #021a40;
+    background-color:#ff0;
+}
+

@@ -17,8 +17,8 @@ angular.module('codereco',['ui.codemirror', 'angular-input-stars'])
     $scope.textRecos = null;
     $scope.proposedRecos = null;
     $scope.weights = {'language': 1, 'structure': 1, 'signature': 1,'concepts': 1};
-    // $scope.baseUrl="http://ec2-34-208-177-148.us-west-2.compute.amazonaws.com";
-    $scope.baseUrl="http://localhost";
+    $scope.baseUrl="http://ec2-52-43-83-129.us-west-2.compute.amazonaws.com";
+    // $scope.baseUrl="http://localhost";
     $scope.serviceUrl= $scope.baseUrl + ":8080";   
     $scope.studyUrl= $scope.baseUrl + ":80";    
     $scope.ratings = {};

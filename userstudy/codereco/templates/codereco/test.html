@@ -6,7 +6,7 @@
 <script type="text/javascript" src="static/code-dummy.js"></script>
 <div class="row" >
     <div class="col-md-9">
-        <h3> Problem </h3>
+        <h3> This is a test problem. Link to actual problem in landing page </h3>
         <h4><pre class="pre-wrap">{{ question }}</pre></h4>
         <script type="text/javascript">
             // Save the current questionId    
@@ -24,6 +24,11 @@
     <div class="col-md-6" >
         <h3>Java Method</h3>
         <form>
+			<style>
+				li{
+					font-size: 0.75em;
+				}
+			</style>
             {% csrf_token %}
             {% verbatim %}
             <div ng-keypress="keySend($event)" class="form-group form-group-lg" id="codeArea">
@@ -37,22 +42,49 @@
             </div>
             <div class="form-group">
                 <label for="signature"> Signature (Access modifier, return type, arguments) </label><br>
-                <input type="number" id="signature" data-slider-id='signatureSlider' type="text" data-provide="slider" data-slider-min="0"
+                <ul>
+						<li> Return type: Match the type of variable returned. (int, double, String, etc)
+						<li> Modifier: Match the type of modifier. (public, private, static)
+						<li> Arguments: Match the type of arguments. for e.g: if your method takes in a String and an integer as a parameter, try to find a another function that also takes the same.
+					</ul>
+				<input type="number" id="signature" data-slider-id='signatureSlider' type="text" data-provide="slider" data-slider-min="0"
                     data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['signature']">
+
             </div>
             <div class="form-group">
                 <label for="structure"> Structure (Syntax constructs. For eg: exceptions, operators ...) </label><br>
-                <input type="number" id="structure" data-slider-id='structureSlider' type="text" data-provide="slider" data-slider-min="0"
+                <ul>
+						<li> Statements: Match statements like for, while, if, etc</li>
+						<li> Expressions: Match expressions like boolean expressions, greater than, less than, etc</li>
+						<li> Exceptions: Match exceptions thrown and handled</li>
+						<li> Annotations: Match annotations like '@Override'</li>
+						<li> Methods : Match method calls like Collections.sort(), System.out.println(), etc</li>
+					</ul>
+				<input type="number" id="structure" data-slider-id='structureSlider' type="text" data-provide="slider" data-slider-min="0"
                     data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['structure']" >
+					
             </div>
             <div class="form-group">
                 <label for="concepts"> Concepts (High level concepts like OOP) </label><br>
-                <input type="number" id="concepts" data-slider-id='conceptsSlider' type="text" data-provide="slider" data-slider-min="0"
+                <ul>
+						<li> Recursion</li>
+						<li> Casting </li>
+						<li> Polymorphism </li>
+						<li> Exception Handling </li>
+						<li> Inner Classes and Methods </li>
+					</ul>
+				<input type="number" id="concepts" data-slider-id='conceptsSlider' type="text" data-provide="slider" data-slider-min="0"
                     data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['concepts']">
             </div>
             <div class="form-group">
                 <label for="language"> Language (For e.g.: comments, java-doc ....) </label><br>
-                <input type="number" id="language" data-slider-id='languageSlider' type="text" data-provide="slider" data-slider-min="0"
+					<ul>
+						<li> Method name </li>
+						<li> Java Documentation </li>
+						<li> Comments </li>
+						<li> Variable names </li>
+					</ul>
+				<input type="number" id="language" data-slider-id='languageSlider' type="text" data-provide="slider" data-slider-min="0"
                     data-slider-max="5" data-slider-step="0.5" data-slider-value="1" ng-model="weights['language']">
             </div>
         </form>

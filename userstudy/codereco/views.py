@@ -113,8 +113,9 @@ def user_register(request):
         try:
             username = request.POST['username']
             password = request.POST['password']
-            email = request.POST['email']
-            user = User.objects.create_user(username, email, password)
+            # Commented for anonymous user study
+            # email = request.POST['email']
+            user = User.objects.create_user(username, None, password)
             if user is not None:
                 login(request, user)
                 lock.acquire()
