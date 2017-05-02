@@ -40,8 +40,8 @@ class AnalyzeDiff:
             if proposed_vector == baseline_vector:
                 continue
             
-            data.append([ i+1, vector.raw_text, list(vector.concepts.keys()), proposed_vector.raw_text,\
-                    list(proposed_vector.concepts.keys()), baseline_vector.raw_text, list(baseline_vector.concepts.keys()) ])
+            data.append([ i+1, vector.raw_text, vector.concepts, proposed_vector.raw_text,\
+                    proposed_vector.concepts, baseline_vector.raw_text, baseline_vector.concepts ])
         
         return data
     

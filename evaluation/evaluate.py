@@ -2,61 +2,67 @@
 import sys
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
+from math import log2, log
 from collections import Counter
+from scipy.stats import entropy, ttest_rel
 
-ontology_file = "ontologytree.txt"
-
-depths = Counter()
-
-def getDepthDict(ontology_file):
-    depths = Counter()
-    with open(ontology_file, "r") as f:
-        for line in f:
-            d = 0
-            while line.startswith("----"):
-                d += 1
-                line = line[4:]
-            concept = line.split(":")[1]
-            depths[concept.strip()] = d
-    return depths
-
-def avg_depth(concept_list):
-    if len(concept_list) == 0:
+def counterJaccardSim(c1, c2):
+    cU = c1 | c2
+    cI = c1 & c2
+    sum_cU = sum(cU.values())
+    if sum_cU == 0:
         return 0
-    total_depth = 0
-    for concept in concept_list:
-        total_depth += depths[concept]
-    return total_depth / len(concept_list)
+    return sum(cI.values()) / sum_cU
 
-def evaluate(csv_file):
+def getCounter(x):
+    return eval(x)
+
+def transform(csv_file):
+    """ Apply evaluation functions and simple count enhancements and return """
     df = pd.read_csv(csv_file, usecols=['Rank','Sample_Concepts','Codereco_Concepts','Baseline_Concepts'])
-    df.loc[:,'Sample_Concepts'] = df['Sample_Concepts'].apply(eval)
+    df.loc[:,'Sample_Concepts'] = df['Sample_Concepts'].apply(getCounter)
     df.loc[:,'Sample_Concepts_Count'] = df['Sample_Concepts'].apply(len)
-    df.loc[:,'Codereco_Concepts'] = df['Codereco_Concepts'].apply(eval)
+    df.loc[:,'Codereco_Concepts'] = df['Codereco_Concepts'].apply(getCounter)
     df.loc[:,'Codereco_Concepts_Count'] = df['Codereco_Concepts'].apply(len)
-    df.loc[:,'Baseline_Concepts'] = df['Baseline_Concepts'].apply(eval)
+    df.loc[:,'Baseline_Concepts'] = df['Baseline_Concepts'].apply(getCounter)
     df.loc[:,'Baseline_Concepts_Count'] = df['Baseline_Concepts'].apply(len)
-   
-    """df.loc[:,'Sample_Concepts_Avg_Depth'] = df['Sample_Concepts'].apply(avg_depth)
-    df.loc[:,'Codereco_Concepts_Avg_Depth'] = df['Codereco_Concepts'].apply(avg_depth)
-    df.loc[:,'Baseline_Concepts_Avg_Depth'] = df['Baseline_Concepts'].apply(avg_depth)"""
-     
-    df.loc[:,'Codereco-Sample-int'] = df.apply(lambda x: len(set(x['Sample_Concepts']) & set(x['Codereco_Concepts'])), axis=1)
-    df.loc[:,'Baseline-Sample-int'] = df.apply(lambda x: len(set(x['Sample_Concepts']) & set(x['Baseline_Concepts'])), axis=1)
-    df.loc[:,'Codereco-Count > Baseline-Count'] = df[['Codereco_Concepts_Count','Baseline_Concepts_Count']]\
-            .apply(lambda x : x['Codereco_Concepts_Count'] >= x['Baseline_Concepts_Count'], axis=1)
-    df.loc[:,'Codereco-int > Baseline-int'] = df[['Codereco-Sample-int','Baseline-Sample-int']]\
-            .apply(lambda x : x['Codereco-Sample-int'] >= x['Baseline-Sample-int'], axis=1)
-    
-    df.loc[:,'Codereco - Sample'] = df.apply(lambda x : np.abs(x['Codereco_Concepts_Count'] - x['Sample_Concepts_Count']), axis=1)
-    df.loc[:,'Baseline - Sample'] = df.apply(lambda x : np.abs(x['Baseline_Concepts_Count'] - x['Sample_Concepts_Count']), axis=1)
-    
     return df
 
+def entropy(counter):
+    ent = 0
+    if len(counter) is None:
+        return ent
+    total = sum(counter.values())
+    for key in counter:
+        p = counter[key] / total
+        ent -= p * log(p)
+    return ent
+
 if __name__ == "__main__":
-    depths = getDepthDict(ontology_file)
-    out_df = evaluate(sys.argv[1])
-    out_df.to_csv('evaluation_data.csv')
-    out_df.describe().to_csv('evaluation_summary.csv')
-    import pdb; pdb.set_trace()
+    if len(sys.argv) < 2:
+        print("Provide csv file containing data")
+        sys.exit(1)
+    
+    df = transform(sys.argv[1])
+    
+    _ = df[['Sample_Concepts_Count','Baseline_Concepts_Count','Codereco_Concepts_Count']].plot.box(title='Unique Concepts Distribution')
+    print(ttest_rel(df['Baseline_Concepts_Count'],df['Codereco_Concepts_Count']))
+    plt.show()
+
+    df['Codereco_Similarity'] = df.apply(lambda x: counterJaccardSim(x['Sample_Concepts'],x['Codereco_Concepts']), axis=1)
+    df['Baseline_Similarity'] = df.apply(lambda x: counterJaccardSim(x['Sample_Concepts'],x['Baseline_Concepts']), axis=1)
+    print(ttest_rel(df['Baseline_Similarity'],df['Codereco_Similarity']))
+    _ = df[['Baseline_Similarity','Codereco_Similarity']].plot.box(title='Sample Concepts Jaccard Similarity')
+    plt.show()
+
+    df['Baseline_Entropy'] = df['Baseline_Concepts'].apply(entropy)
+    df['Codereco_Entropy'] = df['Codereco_Concepts'].apply(entropy)
+    print(ttest_rel(df['Baseline_Entropy'],df['Codereco_Entropy']))
+    _ = df[['Baseline_Entropy','Codereco_Entropy']].plot.box(title='Concepts Entropy')
+    plt.show()
+    
+    df.to_csv('evaluation_data.csv')
+    df.describe().to_csv('evaluation_summary.csv')
+    print(df.describe())
+    
