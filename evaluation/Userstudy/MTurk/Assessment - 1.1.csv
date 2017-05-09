@@ -1,0 +1,31 @@
+"Timestamp","What was your unique login id?","Feedback [Recommendations helped]","Feedback [Customizations were intuitive]","Feedback [Signature features helped]","Feedback [Structure features helped]","Feedback [Concept features helped]","Feedback [Language features helped]","Feedback [Recommendations will reduce search time]","Feedback [Would like to see this as IDE plugin]","How would you rate yourself on Java expertise?","How many years (or months) of Java experience do you have?","Any general comments or feedback?"
+"2017/04/20 8:05:37 pm GMT-6","2822998","Neutral","Disagree","Neutral","Neutral","Agree","Agree","Strongly Agree","Strongly Agree","7","3 years",""
+"2017/04/20 11:46:29 pm GMT-6","4183247","Neutral","Agree","Agree","Neutral","Neutral","Neutral","Agree","Strongly Agree","7","3",""
+"2017/04/21 1:16:58 am GMT-6","7762477","Agree","Agree","Strongly Agree","Agree","Disagree","Disagree","Agree","Agree","7","7 years",""
+"2017/04/21 1:52:37 am GMT-6","8096889","Disagree","Disagree","Agree","Neutral","Disagree","Agree","Disagree","Agree","5","2 years",""
+"2017/04/21 2:44:17 am GMT-6","8430193","Agree","Neutral","Agree","Disagree","Neutral","Agree","Agree","Strongly Agree","8","5",""
+"2017/04/21 2:57:27 pm GMT-6","4309395","Neutral","Neutral","Neutral","Neutral","Neutral","Neutral","Neutral","Neutral","5","1","no"
+"2017/04/22 11:42:56 pm GMT-6","2951642","Strongly Agree","Agree","Strongly Agree","Neutral","Neutral","Agree","Agree","Neutral","4","3","Nice Experience"
+"2017/04/24 1:11:15 pm GMT-6","8203262","Agree","Agree","Agree","Agree","Agree","Agree","Agree","Agree","3","2","I was not able to submit my recommendations, why ?"
+"2017/04/24 1:49:33 pm GMT-6","9136014","Agree","Disagree","Agree","Neutral","Neutral","Disagree","Disagree","Strongly Agree","10","4 years","Regarding the user study:
+1. Navigation is a bit fuzzy. By reading the instructions and clicking start ""HERE"" link, I was directed to FAQs instead of Problem 1. On clicking Problem 1, a message comes to solve other problem first. 
+2. I assume that the recommendations are used to solve the problem. There were times when I needed an answer regarding syntax but I coudn't get a recommendation since syntax has to be right.
+3. During problem solving, usually there are questions like ""how to sort an array using a library"", there seems to be no way to get recommendations for these questions. Writing in comments about this is similar to googling.
+4. Points 2 and 3 are listed only because the user is forced to give 15 recommendations. With the given problems and I, after getting a few recommendations, I was forced to find the other recommendations and sometimes mark even if they were irrelevant. IMPORTANT: Some recommendations (3-4) were very pretty accurate 5/5 but rest were not related. Those 3-4 recommendations were enough to solve problem but I had to forcefully select other irrelevant recommendations. "
+"2017/04/26 6:42:19 pm GMT-6","7558747","Strongly Agree","Strongly Agree","Strongly Agree","Agree","Agree","Strongly Agree","Strongly Agree","Strongly Agree","3","2",""
+"2017/04/27 1:55:57 am GMT-6","8140898","Agree","Neutral","Disagree","Neutral","Agree","Neutral","Agree","Neutral","7","2","No"
+"2017/04/27 6:33:31 pm GMT-6","9499199","Neutral","Neutral","Disagree","Agree","Disagree","Strongly Disagree","Neutral","Neutral","8","3 years",""
+"2017/04/27 9:17:11 pm GMT-6","4518716","Neutral","Disagree","Strongly Agree","Strongly Disagree","Agree","Agree","Neutral","Neutral","8","5","Could not get the recommendations to pop up anything with 'instanceof' or 'throw new Exception' , no matter how hard I tried to guide it. Seems to work OK when searching for general algorithms, but falls a bit short on specific structures. Interesting concept nonetheless. And btw, the link to this form in the test lead to a Restricted one. "
+"2017/04/29 4:00:42 pm GMT-6","5178947","Agree","Neutral","Neutral","Agree","Strongly Agree","Strongly Agree","Agree","Strongly Agree","6","25",""
+"2017/05/06 1:48:00 am GMT-6","1455244","Agree","Agree","Agree","Neutral","Neutral","Neutral","Agree","Neutral","9","15 years","Had to submit before completion because I wanted to check the code for completion.  Might be better to add some kind of verification that the questions were submitted. "
+"2017/05/06 8:25:27 am GMT-6","9233128","Neutral","Agree","Agree","Agree","Neutral","Disagree","Neutral","Neutral","8","7","Because sliders are used for the search features for Signature, Structure, etc…, it's a bit ambiguous as to how ""strict"" they make the search."
+"2017/05/06 2:04:43 pm GMT-6","6913795","Neutral","Agree","Neutral","Neutral","Neutral","Neutral","Agree","Agree","5","2 years","I like the concept for sure, if it had a little more problem specific recommendations I'd be much more keen to use it"
+"2017/05/06 5:35:52 pm GMT-6","4663282","Neutral","Disagree","Neutral","Neutral","Neutral","Disagree","Neutral","Disagree","6","It's been a few years since I used in for anything that was going into a production environment, but I'd worked with it for almost 4 years at that point.",""
+"2017/05/06 8:32:05 pm GMT-6","9427460","Neutral","Neutral","Neutral","Neutral","Neutral","Neutral","Neutral","Agree","9","10","Honestly, the questions were too easy since I am a java instructor and we use these in our very first course. Secondly, some of your recommendations were completely irrelevant (i.e. what is the point of recommending a method with paintComponent in a question on array differences?). 
+
+Overall the idea is fabulous, however textual hints or points might help better for beginning programmers compared to actual code that your system was recommending. This is because, for a beginning programmer, reading recommended code in itself becomes an exercise. You can try putting shorter more relevant 'hint' kind of features compared to such larger chunks of code being recommended.
+
+Best of luck with your IDE and idea. 
+
+-Bye."
+"2017/05/07 9:48:42 am GMT-6","4152710","Strongly Agree","Strongly Agree","Strongly Agree","Strongly Agree","Strongly Agree","Strongly Agree","Strongly Agree","Strongly Agree","4","3","Good"

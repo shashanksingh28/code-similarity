@@ -1,0 +1,212 @@
+submissionid,question,code,time,user_id
+1,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}",2017-03-24 05:41:50.202776,2
+2,1,"int maxDiff(int[] array) {
+  Arrays.sort(array);
+  return array[0] - array[array.length-1];
+}",2017-03-24 05:52:45.034775,2
+3,1,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  //Return maximum difference in an array
+  return max-min;
+}",2017-03-24 06:13:26.845151,3
+4,2,"double getTax(Person p) {
+  //type casting objects
+  int tax = 0;
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    if(e.getSalary() < 10000.0)
+      tax = 0.02 * p.getSalary();
+    else
+      tax = 0.05 * p.getSalary();
+    return tax;
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+    tax = 0.1 * b.getProfit();
+    return tax;
+  }
+  else if(p instanceof Veteran) {
+    return tax;
+  }
+  else throw new Exception(""Person does not fit into any category"");
+}",2017-03-24 06:55:38.783248,3
+5,1,"int largeDiff(int[] myArray){
+  
+}",2017-03-24 21:42:41.198977,17
+6,1,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}",2017-03-24 21:42:54.637463,61
+7,1,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}",2017-03-24 21:42:54.867454,47
+8,2,"class Employee extends Person{
+  double getSalary();
+}",2017-03-24 21:43:57.793674,36
+9,2,"void mymethod() {
+  // get salary from percentages
+}",2017-03-24 21:44:27.358595,16
+10,2,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}",2017-03-24 21:45:44.157123,46
+11,2,"void somethod(){
+  //some comments
+}",2017-03-24 21:46:17.697122,12
+12,2,"public void Person()
+{
+  //interface
+}",2017-03-24 21:46:19.571741,34
+13,1,"public int compare(){
+  
+}",2017-03-24 21:46:36.164793,39
+14,1,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+  return difference;
+}",2017-03-24 21:47:46.379462,29
+15,2,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+  
+ if(p.getSalary() < 10000){
+   return p.getProfit()*.10;
+ }     
+}",2017-03-24 21:48:08.355298,8
+16,1,"void somethod() {
+  // show luck
+}",2017-03-24 21:49:30.251702,13
+17,2,"void salary(){
+	//
+      
+}
+
+
+
+  
+  ",2017-03-24 21:50:05.477027,44
+18,2,"//help me
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+",2017-03-24 21:50:24.338257,47
+19,1,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}",2017-03-24 21:50:26.812181,46
+20,2,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}",2017-03-24 21:50:29.776460,61
+21,1,"int largeDifference(int[] array)
+{
+  int count=0; 
+  //return difference between elements
+  
+  
+  if(array.length==0)
+  {
+    retun -1;
+  }
+  
+  for(int i=0;i<=array.length;i++)
+  {
+    if(i==array.length)
+    {
+      count=Math.abs(array[i]-array[0]);
+    }
+    else
+    {
+      count=Math.abs(array[i]-array[i+1]); 
+    }
+  }
+}",2017-03-24 21:50:30.930424,11
+22,1,"public void Diff()
+{int[] array;
+ //compute difference
+}",2017-03-24 21:50:46.185860,34
+23,2,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}",2017-03-24 21:51:01.159729,29
+24,2,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}",2017-03-24 21:51:15.485805,17
+25,2,"void getSalary()
+{
+  
+}",2017-03-24 21:52:09.485680,22
+26,1,"void numbers()
+{
+  int array[]; // get numbers
+  
+}
+",2017-03-24 21:54:44.542400,22
+27,2,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }",2017-03-24 21:57:59.323358,4

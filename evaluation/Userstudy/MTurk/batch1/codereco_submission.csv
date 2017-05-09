@@ -1,0 +1,494 @@
+submissionid,question,code,time,user_id
+1,2,"public double calculateTax(Person p){
+  //instance Of method
+  
+  if(p instanceof Employee){
+    Employee e = (Employee)p
+    if(e.getSalary()<10000){
+      return e.getSalary()*0.02;
+    }else{
+      return e.getSalary()*0.05;
+    }
+  }else if(p instanceof BusinessOwner){
+    BusinessOwner b = (BusinessOwner)p;
+    return b.getProfit()*0.1;
+  }
+  return 0.0;
+}",2017-04-20 19:56:49.677771,4
+2,1,"public int getMaxDifference(int input[]){
+// difference of maximum and minimum of the array
+  int min=Integer.MAX_VALUE;
+  int max = Integer.MIN_VALUE;
+  for(int i=0;i<input.length;i++){
+    if(input[i]>max)
+      max = input[i];
+    else if(input[i]<min)
+      min = input[i];
+  }
+  return max-min;
+}",2017-04-20 20:57:20.143863,4
+3,1,"int largestDifference(int[] a) {
+  //Returns the largest difference
+  //Takes an int array as input
+  int largest=INTEGER.Minimum;
+  int smallest = INTEGER.Maximum;
+  for(int i=0; i<a.length; i++) {
+    if(a[i] > largest) {
+      largest = a[i];
+    }
+    if(a[i] < smallest) {
+      smallest = a[i];
+    }
+  }
+  return largest - smallest;
+}",2017-04-21 05:38:52.046866,5
+4,2,"int getTax(Person person) {
+  //Returns the tax for a person
+  //Takes a Person class as input
+  if(person instanceof Employee) {
+    Employee e = (Employee) person;
+    if(e.getSalary() < 10000) {
+      return e.getSalary() * .02;
+    }
+    else {
+      return e.getSalary() * 0.05;
+    }
+  }
+  
+  if(person instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) person;
+    return b.getProfit() * 0.10;
+  }
+  
+  if(person instanceof Veteran) {
+    return 0;
+  }
+}",2017-04-21 05:45:15.082069,5
+5,1,"int largestDifference(int[] input) {
+  int largest = 0;
+  for (int i = 1; i < input.length; i++) {
+    for(int j = i+1; j < input.length; j++) {
+      if (Math.abs(input[i]-input[j]) > largest) {
+          largest = Math.abs(input[i]-input[j]);
+      }
+    }
+  }
+    return largest;
+}",2017-04-21 07:09:36.967707,7
+6,2,"public double getTax(Person person) {
+  if(person instanceof Veteran) {
+    return 0;
+  }
+  if(person instanceof BusinessOwner) {
+    return .1 * ((BusinessOwner)person).getProfit();
+  }
+  if(person instanceof Employee) {
+    double salary = ((Employee)person).getSalary();
+    if(salary < 10000) {
+      return .02 * salary;
+    } else {
+      return .05 * salary;
+    }
+  }
+  throw new IllegalArgumentException(""Input Person must be Employee, Veteran, or Business Owner."");
+}",2017-04-21 07:15:58.731688,7
+7,1,"/**
+* Find the largest diffence between the elements in the array.
+* This means finding the min and the max element and subtracting the min from the max.
+*/
+int largestDifference(int [] values) {
+  int largest = a[0];
+  int smallest = a[0];
+  for (int i = 1; i < values.length; i++){
+    if(a[i] > largest) {
+      largest = a[i];
+    }
+    if(a[i] < smallest) {
+      smallest = a[i];
+    }
+  }
+  return largest-smallest;
+  
+}",2017-04-21 07:31:19.742278,9
+8,2,"/**
+* Compute tax for different types of people.
+* Tax is 0 for veterans and everyone else.
+*/
+double computeTaxForPerson(Person p) {
+  double tax = 0;
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    if(e.getSalary() < 10000){
+      tax = e.getSalary * 0.02;
+    } else {
+      tax = e.getSalary * 0.05;
+    }
+  } else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+    tax = b.getProfit * 0.1;
+  }
+  
+  return tax;
+  
+}",2017-04-21 07:50:30.438714,9
+9,2,"double calculateTaxFromPersonSalary(Person person, double salary){
+  // Given a person and his/her salary
+  // Calculate tax
+  // float rate = 0;
+  
+  //if(person instanceOf Employee){
+  // if(salary > 10000){
+  // rate = 5;
+  //}else{
+  //   rate = 2;
+//}
+  //}else if(person instanceOf BusinessOwner){
+  // rate = 10;
+//}
+}",2017-04-21 08:35:29.602018,10
+10,1,"int largestDifferenceInArrayElements(int[] ar){
+  
+  // find maximum element from the array
+  // find minimum element from the array
+  // returns difference between max and min
+  
+}",2017-04-21 08:42:26.828788,10
+11,2,"double computeTax()
+{
+  Person p;
+  Employee e=new Employee();
+  if (e.getSalary()<10000)
+    tax=e.getSalary()*.02;
+  else
+    tax=e.getSalary()*.05;
+  BusinessOwner bo=new BusinessOwner();
+  tax=bo.getProfit()*.1;
+  Veterans v=new Veterans();
+  tax=0;
+}",2017-04-21 19:35:37.659312,16
+12,1,"double diffElement(int[] a)
+{
+  int max=a[0];
+  for(int i;i<=a.length;i++)
+    if (max<a[i])
+     max=a[i];
+  int min=0;
+  for(int i;i<=a.length;i++)
+     if (a[i]<min)
+		min=a[i];
+  diff=max-min;
+  return diff;
+}",2017-04-21 19:42:21.168131,16
+13,1,"int largestDifference(int a[]){
+  //compute the largest difference between elements of an array of integers
+}",2017-04-21 20:49:49.276408,17
+14,2,"int computeTax(Person person){
+  //compute tax given salary
+}",2017-04-21 20:55:45.513884,17
+15,2,"private double calculateTax(Person person){
+  double taxCal = 0;
+  if(person instanceof Employee){
+    if(((Employee)person).getSalary()<10000){
+      taxCal= (person.getSalary())*0.02;
+    }
+    else
+      taxCal= (person.getSalary())*0.05;
+    
+  }
+  else if(person instanceof BusinessOwner ){
+    taxCal= ((BusinessOwner)person.getProfit())*0.10;
+  }
+  else if(person instanceof Veteran ){
+    return taxCal;
+  }
+  return taxCal;
+  
+  
+}",2017-04-23 08:56:27.227574,28
+16,1,"private int diffCalci(int[] numbers){
+  int largest = 0;
+  int smallest = 0;
+ 	for(int i=0;i<numbers.length;i++){
+      if(numbers[i]>largest )
+        largest= numbers[i];
+      if(numbers[i]<smallest)
+        smallest=numbers[i];
+    }
+  return largest - smallest;
+  
+}",2017-04-23 09:05:00.430617,28
+17,1,"int findLargestDiff (int[] values){ 
+  
+  int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+  int smallest = values[0];
+for (int i = 1; i < values.length; i++) {
+        if (values[i] < smallest) {
+            smallest = values[i];
+        }
+    }
+  return largest-smallest;
+}",2017-04-23 16:33:42.378972,31
+18,2,"public double tax(Person person){
+  
+}",2017-04-23 16:40:27.434719,31
+19,1,"public int largest(int[] arr) {
+  int min = arr[0];
+  int max = arr[1];
+  
+  for (int i = 0; i<arr.length; i++) {
+    if (arr[i] < min) min = arr[i];
+    if (arr[i] > max) max = arr[i];
+  }
+  
+  return max = min;
+}",2017-04-24 01:19:51.788303,35
+20,2,"public double tax(Person p) {
+  if (p instanceof Employee) {
+    p = (Employee) p;
+    double sal = p.getSalary();
+    return (sal < 10000) : sal * 0.02 ? sal * 0.05;
+  } else if (p instanceof BusinessOwner) {
+    p = (BusinessOwner) p;
+    return p.getProfit() * 0.1;
+  } else {
+    return 0;
+  }
+}",2017-04-24 01:28:52.853061,35
+21,1,"public static int diffLargestAndSmallest(final ArrayList<Integer> list) {
+    if (list.isEmpty()) {
+        return 0;
+    } else {
+        return (Collections.max(list) - Collections.min(list)) + 1;
+    }
+}",2017-04-24 16:38:02.637590,37
+22,2,"public Double getTax(Person person) {
+  if (person instanceof Employee) {
+    Employee e = (Employee) person;
+    if (e.getSalary() < 10000) {
+      // Percentage of salary
+      return 2 * e.getSalary() / 100;
+    } else {
+      return 5 * e.getSalary() / 100;
+    }
+  } else if (person instanceof BusinessOwner) {
+    return 10 * e.getProfit() / 100;
+  } else if (person instanceof Veteran) {
+    return 0;
+  }
+  // null return for double wrapper class
+  return null;
+}",2017-04-24 18:59:09.702635,38
+23,1,"// largest difference between array elements
+public int maxDiffArr(int[] a) {
+  // sort the array in increasing order
+  Arrays.sort(a);
+  // difference between the last and first array elements
+  // is the max difference
+  return a[a.length - 1] - a[0];
+}",2017-04-24 19:31:57.238709,38
+24,2,"// Method overloading for different types of parameters
+// calculate tax for Employee object
+public double calculateTax(Employee e){
+  double sal = e.getSalary();
+  if (sal < 100000){
+    return sal * 0.02;
+  }
+  else{
+    return sal * 0.05;
+  }
+}
+
+// calculate tax for BusinessOwner object
+public double calculateTax(BusinessOwner b){
+  return b.getProfit() * 0.1;
+}
+
+// calculate tax for Veteran object
+public double calculateTax(Veteran v){
+  return 0;
+}
+
+// calculate tax for Person object
+public double calculateTax(Person p){
+  return 0;
+}",2017-04-24 20:33:24.909593,40
+25,1,"public int maxDifference(int[] input){
+  if(input.length == 0 || input == null)
+    return -1;
+  // Find the maximum and minimum from the integer array
+  // Return the difference of max and min.
+  int max = -2147483648;
+  int min = 2147483647;
+  
+  for(int i = 0; i < input.length; i++){
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max - min;
+}
+
+
+",2017-04-24 21:15:29.605103,40
+26,1,"int largestDifferenceInArray(int[] a) {
+ 	/* determines largest difference between two elements in array */
+  	int max = a[0];
+  	for (int i = 1; i < a.length; i++) {
+        if (max < a[i]) {
+          max = a[i];
+        }
+    }
+}",2017-04-25 00:07:41.212794,41
+27,2,"int getTaxFromPerson(Person p) {
+  /* given a person, determine their tax liabilities */
+  int salary = p.getSalary();
+  if (salary > 10000) {
+  	return p.getSalary() * 0.05;
+  } else {
+  	return p.getSalary() * 0.02;
+  }
+}",2017-04-25 00:12:08.311645,41
+28,1,"//import java.util.Arrays;
+int largestDifference(int[] a){
+  /* finds the largest difference */
+  Arrays.sort(a);
+  return a[a.length-1] - a[0];
+}",2017-04-25 16:11:00.582782,43
+29,2,"int Tax(Person P){
+//Write a java method that takes a person and returns their tax as below  
+
+}",2017-04-27 00:36:05.473031,46
+30,1,"int DiffOfIntArray(int[] IA){
+// Write a method that takes an integer array and returns the largest difference between its elements.
+// For example, if array contains [7, 4, 1], the method should return 6 as the largest difference (7 - 1)  
+  for(int i=0; i<IA.length; i++){
+   
+  }
+}",2017-04-27 00:41:52.862767,46
+31,2,"/*
+* Takes a person and returns their tax as below:
+* 1. For employees, if salary < $10,000, 2% of salary, else 5%
+* 2. For business owners, 10% of their profit
+* 3. 0 for veterans
+*/
+public double getTax(Object person) {
+  double tax = 0;
+  // How to establish if something is of an extended type
+  if (person instanceof Employee) {
+	double salary = person.getSalary();
+    if (salary == null) throw new Exception();
+    if (salary < 10000) {
+      tax = salary * .02;
+    } else {
+      tax = salary * .05;
+    }
+  } else if (person instanceof BusinessOwner) {
+    double profit = person.getProfit();
+    if (profit == null) throw new Exception();
+    else tax = profit * .1;
+  } else if (person instanceof Veteran) {
+    // How to check if a string is null
+    // See if a returned string is not null
+    String id = person.veteran_id;
+    if (id == null) throw new Exception();
+    else tax = 0;
+  } 
+  // What if person is not of any of these types?
+  // How to throw an error?
+  else {
+    throw new Exception();
+  } 
+  // Return the final result, assuming an exception has not 
+  // been thrown
+  return tax;
+}",2017-04-28 00:21:49.285093,48
+32,1,"/*
+* Write a method that takes an integer array and 
+* returns the largest difference between its elements
+*/
+public int getDifference(int[] array1) {
+  int largest = array1[0];
+  int smallest = array1[0];
+  for (int i = 0; i < array1.length; i++) {
+    if (a[i].compareTo(largest) > 0) {
+      largest = a[i];
+    } else if (a[i].compareTo(smallest) < 0) {
+      smallest = a[i];
+    }
+  } return largest - smallest;
+}",2017-04-28 00:31:25.985099,48
+33,1,"public int returnLargestDifferenceBetweenElements(int[] array){
+  //Get largest value
+    int largestValue = array[0];
+    for (int i = 1; i < array.length; i++) {
+        if (array[i] > largestValue) {
+            largestValue = array[i];
+        }
+    }
+  
+  //Get smallest value
+    int smallestValue = array[0];
+    for (int i = 1; i < array.length; i++) {
+        if (array[i] < smallestValue) {
+            smallestValue = array[i];
+        }
+    }
+  
+  //Return the difference
+  return largestValue - smallestValue;
+}",2017-04-28 02:59:02.865684,49
+34,2,"public double calculateTax(Person person){
+  // Check the type of Person, it's a polymorphic type
+  if (person instanceof Employee){
+    //Salary is 2% under 10k and 5% over
+    double salary = person.getSalary();
+    if (salary < 10000){
+      return salary * 0.02;
+    }
+    return salary * 0.05; 
+  } else if (person instanceof BusinessOwner){
+    //Business owners have 10% tax on profit
+    return person.getProfit() * 0.1;
+  } else if (person instanceof Veteran){ 
+    //Veterans have no tax
+    return 0;
+  } else{
+    //Throw exception
+    throw new Exception(""Unknown person type"");
+  }
+}",2017-04-28 03:12:31.927790,49
+35,1,"int arrayToDiff(int[] array){
+  int big = max(array);
+  int small = findMin(array);
+  return big-small
+}
+
+public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}
+
+public static int findMin(int[] list) {
+    assert list != null && list.length > 0 : ""failed precondition"";
+    int indexOfMin = 0;
+    for (int i = 1; i < list.length; i++) {
+        if (list[i] < list[indexOfMin]) {
+            indexOfMin = i;
+        }
+    }
+    return list[indexOfMin];
+}",2017-04-29 21:57:58.036707,55
+36,2,"int sallaryCalc(Person per){
+  //read their salary
+}",2017-04-29 21:59:53.391324,55

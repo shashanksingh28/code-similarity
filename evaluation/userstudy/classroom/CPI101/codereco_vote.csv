@@ -1,0 +1,3911 @@
+voteid,question,source,rank,rating,time,user_id,code
+1,2,0,4,4,2017-03-24 05:38:26.789293,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+2,2,0,5,2,2017-03-24 05:38:34.916478,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+3,2,0,5,5,2017-03-24 05:38:38.131901,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+4,2,0,5,5,2017-03-24 05:38:43.776009,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+5,2,0,5,5,2017-03-24 05:38:44.049678,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+6,2,0,5,5,2017-03-24 05:38:44.297966,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+7,2,0,5,5,2017-03-24 05:38:44.485770,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+8,2,0,5,5,2017-03-24 05:38:44.810813,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+9,2,0,5,5,2017-03-24 05:38:45.029786,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+10,2,0,5,5,2017-03-24 05:38:45.192553,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+11,2,0,5,5,2017-03-24 05:38:46.141956,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+12,2,1,3,4,2017-03-24 05:40:28.005549,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+13,2,0,1,2,2017-03-24 05:40:28.964408,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+14,2,1,4,4,2017-03-24 05:40:35.437076,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+15,2,0,3,4,2017-03-24 05:40:40.536287,2,"double getTax(Person person) {
+  if(person.class == Employee.class) {
+    Employee employee = (Employee) person;
+    if(employee.getSalary() < 10000) {
+      return 0.02 * employee.getSalary();
+    }
+    
+    return 0.05 * employee.getSalary();
+  } else if(person.class == BusinessOwner.class) {
+    BusinessOwner employee = (BusinessOwner) person;
+    
+    return 0.1 * employee.getProfit();
+  }
+  
+  return 0;
+}"
+16,1,1,1,3,2017-03-24 05:45:59.337065,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+17,1,0,4,5,2017-03-24 05:46:00.123371,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+18,1,0,1,2,2017-03-24 05:46:01.142598,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+19,1,0,5,4,2017-03-24 05:46:03.039554,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+20,1,1,4,3,2017-03-24 05:46:04.683187,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+21,1,0,6,4,2017-03-24 05:46:06.280728,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+22,1,0,3,2,2017-03-24 05:46:08.101319,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+23,1,1,6,4,2017-03-24 05:46:10.129244,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+24,1,1,2,3,2017-03-24 05:46:12.155022,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+25,1,1,3,3,2017-03-24 05:46:13.345229,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+26,1,0,2,4,2017-03-24 05:46:14.443732,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+27,1,1,5,4,2017-03-24 05:46:15.025492,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+28,1,0,4,4,2017-03-24 05:46:19.255440,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+29,1,0,4,4,2017-03-24 05:46:19.392146,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+30,1,1,1,5,2017-03-24 05:46:30.211562,2,"int maxDiff(int[] array) {
+  return large - small;
+}"
+31,1,0,5,4,2017-03-24 06:03:25.606340,3,"public int difference(int input[]) {
+  int diff = 0;
+  int max = Integer.MAX_INT;
+  int min = Integer.MIN_INT;
+
+  return 0;
+}"
+32,1,0,6,4,2017-03-24 06:07:13.630426,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+33,1,1,3,3,2017-03-24 06:07:40.138680,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+34,1,1,4,3,2017-03-24 06:08:13.111288,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+35,1,1,3,4,2017-03-24 06:08:30.060311,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+36,1,0,5,4,2017-03-24 06:08:49.424127,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+37,1,0,6,3,2017-03-24 06:09:40.293846,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+38,1,0,6,3,2017-03-24 06:10:09.920399,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+39,1,0,5,4,2017-03-24 06:10:12.840553,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+40,1,1,4,3,2017-03-24 06:10:33.439560,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+41,1,0,6,3,2017-03-24 06:10:43.260720,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+42,1,0,2,2,2017-03-24 06:10:49.358211,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+43,1,0,5,3,2017-03-24 06:10:53.524198,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  return max-min;
+}"
+44,1,1,5,4,2017-03-24 06:13:14.845457,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  //Return maximum difference in an array
+  return max-min;
+}"
+45,1,1,6,3,2017-03-24 06:13:19.594633,3,"public int difference(int input[]) {
+  int max = Integer.MIN_INT;
+  int min = Integer.MAX_INT;
+  for(int i = 0; i < input.length(); i++) {
+    if(input[i] > max)
+      max = input[i];
+    if(input[i] < min)
+      min = input[i];
+  }
+  //Return maximum difference in an array
+  return max-min;
+}"
+46,2,0,4,5,2017-03-24 06:17:12.610590,3,"double getTax(Person p) {
+  Employee e = new Person();
+  double salary = p.getSalary();
+}"
+47,2,0,4,4,2017-03-24 06:19:08.340819,3,"double getTax(Person p) {
+  Employee e = new Person();
+  double salary = p.getSalary();
+}"
+48,2,1,1,3,2017-03-24 06:21:12.174834,3,"double getTax(Person p) {
+  //type casting objects
+  Employee e = new Person();
+  double salary = p.getSalary();
+}"
+49,2,1,5,3,2017-03-24 06:21:15.562806,3,"double getTax(Person p) {
+  //type casting objects
+  Employee e = new Person();
+  double salary = p.getSalary();
+}"
+50,2,1,2,3,2017-03-24 06:21:22.607455,3,"double getTax(Person p) {
+  //type casting objects
+  Employee e = new Person();
+  double salary = p.getSalary();
+}"
+51,2,1,3,5,2017-03-24 06:25:25.791783,3,"double getTax(Person p) {
+  //type casting objects
+  Employee e = (Employee) p;
+  BusinessOwner b = (BusinessOwner) p;
+  Veteran v = (Veteran) p;
+  double salary = e.getSalary();
+}"
+52,2,1,4,4,2017-03-24 06:34:09.069413,3,"double getTax(Person p) {
+  //type casting objects
+  if(p.instanceOf(Employee)) {
+    
+  }
+  Employee e = (Employee) p;
+  BusinessOwner b = (BusinessOwner) p;
+  Veteran v = (Veteran) p;
+  
+}"
+53,2,1,4,5,2017-03-24 06:36:14.795090,3,"double getTax(Person p) {
+  //type casting objects
+  if(p instanceof Employee) {
+    
+  }
+  Employee e = (Employee) p;
+  BusinessOwner b = (BusinessOwner) p;
+  Veteran v = (Veteran) p;
+  
+}"
+54,2,1,6,5,2017-03-24 06:36:17.035355,3,"double getTax(Person p) {
+  //type casting objects
+  if(p instanceof Employee) {
+    
+  }
+  Employee e = (Employee) p;
+  BusinessOwner b = (BusinessOwner) p;
+  Veteran v = (Veteran) p;
+  
+}"
+55,2,1,6,4,2017-03-24 06:39:19.116485,3,"double getTax(Person p) {
+  //type casting objects
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+  }
+  else if(p instanceof Veteran) {
+    Veteran v = (Veteran) p;
+  }
+  
+  
+  
+  
+}"
+56,2,1,5,5,2017-03-24 06:39:24.834481,3,"double getTax(Person p) {
+  //type casting objects
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+  }
+  else if(p instanceof Veteran) {
+    Veteran v = (Veteran) p;
+  }
+  
+  
+  
+  
+}"
+57,2,1,3,5,2017-03-24 06:39:43.925936,3,"double getTax(Person p) {
+  //type casting objects
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+  }
+  else if(p instanceof Veteran) {
+    Veteran v = (Veteran) p;
+  }
+  
+  
+  
+  
+}"
+58,2,1,3,3,2017-03-24 06:54:08.699598,3,"double getTax(Person p) throws Exception{
+  //type casting objects
+  int tax = 0;
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    if(e.getSalary() < 10000.0)
+      tax = 0.02 * p.getSalary();
+    else
+      tax = 0.05 * p.getSalary();
+    return tax;
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+    tax = 0.1 * b.getProfit();
+    return tax;
+  }
+  else if(p instanceof Veteran) {
+    return tax;
+  }
+  else throw new Exception();
+}"
+59,2,1,3,4,2017-03-24 06:54:11.627609,3,"double getTax(Person p) throws Exception{
+  //type casting objects
+  int tax = 0;
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    if(e.getSalary() < 10000.0)
+      tax = 0.02 * p.getSalary();
+    else
+      tax = 0.05 * p.getSalary();
+    return tax;
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+    tax = 0.1 * b.getProfit();
+    return tax;
+  }
+  else if(p instanceof Veteran) {
+    return tax;
+  }
+  else throw new Exception();
+}"
+60,2,1,2,5,2017-03-24 06:54:19.460985,3,"double getTax(Person p) throws Exception{
+  //type casting objects
+  int tax = 0;
+  if(p instanceof Employee) {
+    Employee e = (Employee) p;
+    if(e.getSalary() < 10000.0)
+      tax = 0.02 * p.getSalary();
+    else
+      tax = 0.05 * p.getSalary();
+    return tax;
+  }
+  else if(p instanceof BusinessOwner) {
+    BusinessOwner b = (BusinessOwner) p;
+    tax = 0.1 * b.getProfit();
+    return tax;
+  }
+  else if(p instanceof Veteran) {
+    return tax;
+  }
+  else throw new Exception();
+}"
+61,2,0,2,1,2017-03-24 06:55:49.398657,4,"double getTax(Person p){
+  
+}"
+62,2,0,2,1,2017-03-24 07:02:02.084326,4,"double getTax(Person p){
+  
+}"
+63,2,1,4,2,2017-03-24 07:02:34.818667,4,"double getTax(Person p){
+  
+}"
+64,2,1,6,1,2017-03-24 07:02:53.522432,4,"double getTax(Person p){
+  
+}"
+65,2,1,4,2,2017-03-24 07:03:15.711327,4,"double getTax(Person p){
+  
+}"
+66,2,0,5,3,2017-03-24 07:03:42.199373,4,"double getTax(Person p){
+  
+}"
+67,2,1,4,2,2017-03-24 07:04:08.881081,4,"double getTax(Person p){
+  // typecasting
+}"
+68,1,1,2,4,2017-03-24 21:38:43.617063,61,"int Dif(int[] array){
+  //find max of array
+  //find min of array
+  //return max-min
+}"
+69,1,1,1,4,2017-03-24 21:38:57.906048,61,"int Dif(int[] array){
+  //find max of array
+  //find min of array
+  //return max-min
+}"
+70,1,1,1,4,2017-03-24 21:39:19.203087,61,"int Dif(int[] array){
+  //find max of array
+  //find min of array
+  //return max-min
+}"
+71,1,1,2,4,2017-03-24 21:39:24.909724,61,"int Dif(int[] array){
+  //find max of array
+  //find min of array
+  //return max-min
+}"
+72,1,1,2,1,2017-03-24 21:40:14.180721,17,"int largeDiff(int[] myArray){
+  
+}"
+73,1,0,1,2,2017-03-24 21:40:23.787373,17,"int largeDiff(int[] myArray){
+  
+}"
+74,1,0,5,1,2017-03-24 21:40:40.821685,17,"int largeDiff(int[] myArray){
+  
+}"
+75,1,1,2,1,2017-03-24 21:40:46.445359,17,"int largeDiff(int[] myArray){
+  
+}"
+76,1,0,4,2,2017-03-24 21:40:54.445261,17,"int largeDiff(int[] myArray){
+  
+}"
+77,1,0,3,1,2017-03-24 21:40:59.418965,17,"int largeDiff(int[] myArray){
+  
+}"
+78,2,0,5,3,2017-03-24 21:41:05.602372,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+79,1,0,2,3,2017-03-24 21:41:05.736760,17,"int largeDiff(int[] myArray){
+  
+}"
+80,2,0,4,3,2017-03-24 21:41:14.390627,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+81,1,0,1,3,2017-03-24 21:41:20.959198,17,"int largeDiff(int[] myArray){
+  
+}"
+82,1,1,3,3,2017-03-24 21:41:28.767315,17,"int largeDiff(int[] myArray){
+  
+}"
+83,1,1,4,1,2017-03-24 21:41:30.557704,17,"int largeDiff(int[] myArray){
+  
+}"
+84,1,1,1,1,2017-03-24 21:41:33.558165,17,"int largeDiff(int[] myArray){
+  
+}"
+85,1,1,2,4,2017-03-24 21:41:33.592934,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+86,2,1,3,2,2017-03-24 21:41:34.365989,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+87,2,1,1,1,2017-03-24 21:41:41.123331,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+88,2,0,2,1,2017-03-24 21:41:42.673332,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+89,1,1,5,4,2017-03-24 21:41:42.880582,17,"int largeDiff(int[] myArray){
+  
+}"
+90,2,1,5,1,2017-03-24 21:41:48.737070,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+91,2,1,2,1,2017-03-24 21:41:50.563781,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+92,2,0,3,1,2017-03-24 21:41:52.788529,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+93,2,0,1,1,2017-03-24 21:41:54.983024,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+94,1,0,5,2,2017-03-24 21:41:57.492934,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+95,2,1,4,1,2017-03-24 21:41:57.647125,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+"
+96,1,1,1,4,2017-03-24 21:42:02.264657,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+97,1,0,2,5,2017-03-24 21:42:02.644367,17,"int largeDiff(int[] myArray){
+  
+}"
+98,1,1,3,1,2017-03-24 21:42:09.692455,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+99,2,0,4,3,2017-03-24 21:42:10.179515,34,"public void Person()
+{
+  //interface
+}"
+100,1,1,4,1,2017-03-24 21:42:12.656710,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+101,1,0,4,1,2017-03-24 21:42:13.229638,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+102,1,0,1,1,2017-03-24 21:42:14.891492,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+103,1,0,1,1,2017-03-24 21:42:16.387564,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+104,1,1,1,1,2017-03-24 21:42:16.699911,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+105,1,0,1,3,2017-03-24 21:42:16.740228,17,"int largeDiff(int[] myArray){
+  
+}"
+106,1,0,2,1,2017-03-24 21:42:19.533100,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+107,1,1,4,2,2017-03-24 21:42:21.603627,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+108,1,1,2,1,2017-03-24 21:42:22.311174,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+109,1,1,5,1,2017-03-24 21:42:23.508452,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+110,2,1,1,1,2017-03-24 21:42:23.630290,34,"public void Person()
+{
+  //interface
+}"
+111,1,1,5,1,2017-03-24 21:42:24.336469,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+112,1,0,4,1,2017-03-24 21:42:24.655973,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+113,2,0,5,1,2017-03-24 21:42:25.354194,36,"class Employee extends Person{
+  double getSalary();
+}"
+114,1,0,2,1,2017-03-24 21:42:25.687255,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+115,1,0,3,1,2017-03-24 21:42:26.986103,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+116,1,0,3,1,2017-03-24 21:42:28.146534,47,"//return differnce from maximum and minimum integerest from array
+int something = new array[1,2,3];
+int first;
+int method(int first)
+{
+  return first;
+}"
+117,2,0,5,1,2017-03-24 21:42:28.489576,34,"public void Person()
+{
+  //interface
+}"
+118,1,1,3,1,2017-03-24 21:42:28.987588,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+119,2,0,2,3,2017-03-24 21:42:30.207214,36,"class Employee extends Person{
+  double getSalary();
+}"
+120,2,0,3,4,2017-03-24 21:42:31.758848,34,"public void Person()
+{
+  //interface
+}"
+121,1,0,4,5,2017-03-24 21:42:33.084391,39,"public int compare(){
+//array try= [7,4,1];
+//for (i=0; i<= try.length; i++){
+ // array temp.copy(try);
+ // try[i].compareTo(temp[i]);
+}
+"
+122,2,0,1,1,2017-03-24 21:42:34.537584,16,"void mymethod() {
+  // comments
+}"
+123,1,0,4,4,2017-03-24 21:42:34.672136,17,"int largeDiff(int[] myArray){
+  
+}"
+124,2,1,3,2,2017-03-24 21:42:36.134397,36,"class Employee extends Person{
+  double getSalary();
+}"
+125,1,0,2,1,2017-03-24 21:42:37.964615,47,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}"
+126,1,1,2,1,2017-03-24 21:42:38.932017,47,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}"
+127,2,1,4,1,2017-03-24 21:42:38.946279,16,"void mymethod() {
+  // comments
+}"
+128,1,1,1,1,2017-03-24 21:42:40.090995,47,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}"
+129,2,0,2,3,2017-03-24 21:42:40.728564,34,"public void Person()
+{
+  //interface
+}"
+130,2,0,4,3,2017-03-24 21:42:41.029532,36,"class Employee extends Person{
+  double getSalary();
+}"
+131,2,1,1,1,2017-03-24 21:42:41.251648,16,"void mymethod() {
+  // comments
+}"
+132,2,1,5,3,2017-03-24 21:42:43.040332,36,"class Employee extends Person{
+  double getSalary();
+}"
+133,1,1,5,2,2017-03-24 21:42:43.447599,47,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}"
+134,2,1,2,1,2017-03-24 21:42:46.233003,34,"public void Person()
+{
+  //interface
+}"
+135,1,0,2,1,2017-03-24 21:42:46.251730,61,"int Dif(int[] array){
+  //find max value of array
+  //find min value of array
+  //return max-min
+}"
+136,1,1,1,1,2017-03-24 21:42:46.275267,47,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}"
+137,2,0,3,3,2017-03-24 21:42:46.899646,36,"class Employee extends Person{
+  double getSalary();
+}"
+138,1,0,5,4,2017-03-24 21:42:47.428821,39,"public int compare(){
+//array try= [7,4,1];
+//for (i=0; i<= try.length; i++){
+ // array temp.copy(try);
+ // try[i].compareTo(temp[i]);
+}
+"
+139,2,1,2,3,2017-03-24 21:42:48.467744,36,"class Employee extends Person{
+  double getSalary();
+}"
+140,2,1,2,1,2017-03-24 21:42:48.855732,16,"void mymethod() {
+  // comments
+}"
+141,1,0,5,1,2017-03-24 21:42:51.356570,47,"//return differnce from maximum and minimum integerest from array
+
+int method(int first)
+{
+  return first;
+}"
+142,2,0,3,1,2017-03-24 21:42:52.153545,16,"void mymethod() {
+  // comments
+}"
+143,2,0,5,1,2017-03-24 21:42:53.514696,16,"void mymethod() {
+  // comments
+}"
+144,2,1,5,1,2017-03-24 21:42:53.921262,34,"public void Person()
+{
+  //interface
+}"
+145,2,1,5,1,2017-03-24 21:42:55.693767,16,"void mymethod() {
+  // comments
+}"
+146,2,0,1,2,2017-03-24 21:42:56.246724,36,"class Employee extends Person{
+  double getSalary();
+}"
+147,2,0,4,1,2017-03-24 21:42:57.846285,16,"void mymethod() {
+  // comments
+}"
+148,2,1,3,1,2017-03-24 21:42:59.303828,16,"void mymethod() {
+  // comments
+}"
+149,2,1,3,2,2017-03-24 21:43:01.204090,34,"public void Person()
+{
+  //interface
+}"
+150,1,0,5,3,2017-03-24 21:43:02.944763,13,"void somethod () {
+  // come
+}"
+151,2,1,4,1,2017-03-24 21:43:02.982275,36,"class Employee extends Person{
+  double getSalary();
+}"
+152,2,1,1,1,2017-03-24 21:43:04.280662,36,"class Employee extends Person{
+  double getSalary();
+}"
+153,1,1,1,2,2017-03-24 21:43:04.476792,13,"void somethod () {
+  // come
+}"
+154,1,0,3,1,2017-03-24 21:43:06.396541,13,"void somethod () {
+  // come
+}"
+155,2,0,2,1,2017-03-24 21:43:08.142812,16,"void mymethod() {
+  // comments
+}"
+156,1,0,1,3,2017-03-24 21:43:08.244019,13,"void somethod () {
+  // come
+}"
+157,2,0,4,4,2017-03-24 21:43:09.680093,12,"void somethod() {
+  //some comments
+}"
+158,1,0,2,2,2017-03-24 21:43:10.525171,13,"void somethod () {
+  // come
+}"
+159,2,1,4,1,2017-03-24 21:43:12.545515,34,"public void Person()
+{
+  //interface
+}"
+160,1,1,2,1,2017-03-24 21:43:12.676153,13,"void somethod () {
+  // come
+}"
+161,1,1,5,2,2017-03-24 21:43:14.816528,13,"void somethod () {
+  // come
+}"
+162,2,0,3,5,2017-03-24 21:43:21.711900,12,"void somethod() {
+  //some comments
+}"
+163,1,0,4,1,2017-03-24 21:43:21.981915,13,"void somethod () {
+  // come
+}"
+164,1,1,3,1,2017-03-24 21:43:25.768920,13,"void somethod () {
+  // come
+}"
+165,2,1,3,4,2017-03-24 21:43:27.057967,12,"void somethod() {
+  //some comments
+}"
+166,1,1,4,1,2017-03-24 21:43:27.105075,13,"void somethod () {
+  // come
+}"
+167,2,0,1,5,2017-03-24 21:43:28.048038,34,"public void Person()
+{
+  //interface
+}"
+168,2,1,2,3,2017-03-24 21:43:28.237690,4,"void somethod(){
+  // some comments
+}"
+169,2,1,2,1,2017-03-24 21:43:30.593686,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   p.getSalary()*.02;
+ }     
+}"
+170,2,1,1,2,2017-03-24 21:43:31.554504,12,"void somethod() {
+  //some comments
+}"
+171,2,0,1,3,2017-03-24 21:43:33.051029,36,"class Employee extends Person{
+  double getSalary();
+}"
+172,2,1,3,3,2017-03-24 21:43:33.726810,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+173,2,1,4,1,2017-03-24 21:43:34.441115,12,"void somethod() {
+  //some comments
+}"
+174,2,1,5,4,2017-03-24 21:43:38.890508,12,"void somethod() {
+  //some comments
+}"
+175,1,0,3,5,2017-03-24 21:43:38.904351,39,"public int compare(){
+  
+}"
+176,2,1,3,2,2017-03-24 21:43:39.569969,36,"class Employee extends Person{
+  double getSalary();
+}"
+177,2,0,5,4,2017-03-24 21:43:41.774346,12,"void somethod() {
+  //some comments
+}"
+178,2,0,5,2,2017-03-24 21:43:42.175054,36,"class Employee extends Person{
+  double getSalary();
+}"
+179,1,0,3,2,2017-03-24 21:43:42.215715,11,"int largeDifference(int[] array)
+{
+  int count=0; 
+  
+  if(array.length==0)
+  {
+    retun -1;
+  }
+  
+  for(int i=0;i<=array.length;i++)
+  {
+    if(i==array.length)
+    {
+      count=Math.abs(array[i]-array[]);
+    }
+  }
+}"
+180,2,1,2,4,2017-03-24 21:43:42.764823,12,"void somethod() {
+  //some comments
+}"
+181,1,0,5,5,2017-03-24 21:43:44.379952,39,"public int compare(){
+  
+}"
+182,2,0,4,2,2017-03-24 21:43:46.324578,16,"void mymethod() {
+  // get salary from percentages
+}"
+183,2,1,2,1,2017-03-24 21:43:48.318458,36,"class Employee extends Person{
+  double getSalary();
+}"
+184,2,0,1,1,2017-03-24 21:43:50.440072,16,"void mymethod() {
+  // get salary from percentages
+}"
+185,1,1,1,3,2017-03-24 21:43:50.591647,13,"void somethod () {
+  // show
+}"
+186,1,1,4,1,2017-03-24 21:43:51.967415,13,"void somethod () {
+  // show
+}"
+187,1,0,5,2,2017-03-24 21:43:53.223213,13,"void somethod () {
+  // show
+}"
+188,2,0,2,4,2017-03-24 21:43:53.286873,36,"class Employee extends Person{
+  double getSalary();
+}"
+189,2,0,4,3,2017-03-24 21:43:56.270877,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+190,1,0,1,2,2017-03-24 21:43:57.875303,13,"void somethod () {
+  // show
+}"
+191,2,0,2,1,2017-03-24 21:43:58.093758,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+192,1,0,2,2,2017-03-24 21:43:59.084368,13,"void somethod () {
+  // show
+}"
+193,2,1,3,1,2017-03-24 21:43:59.095856,16,"void mymethod() {
+  // get salary from percentages
+}"
+194,2,0,5,1,2017-03-24 21:43:59.836105,16,"void mymethod() {
+  // get salary from percentages
+}"
+195,2,1,3,2,2017-03-24 21:44:00.215587,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+196,1,1,1,5,2017-03-24 21:44:00.678889,39,"public int compare(){
+  
+}"
+197,2,1,2,1,2017-03-24 21:44:01.513556,16,"void mymethod() {
+  // get salary from percentages
+}"
+198,2,1,1,1,2017-03-24 21:44:02.760904,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+199,2,1,3,1,2017-03-24 21:44:03.222604,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+200,2,1,5,1,2017-03-24 21:44:03.868685,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+201,2,1,5,1,2017-03-24 21:44:03.922253,16,"void mymethod() {
+  // get salary from percentages
+}"
+202,2,1,5,1,2017-03-24 21:44:05.937531,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+203,2,0,2,2,2017-03-24 21:44:06.457327,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+204,2,1,1,1,2017-03-24 21:44:06.470180,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+205,2,1,4,1,2017-03-24 21:44:06.625908,16,"void mymethod() {
+  // get salary from percentages
+}"
+206,1,1,1,1,2017-03-24 21:44:09.678513,11,"int largeDifference(int[] array)
+{
+  int count=0; 
+  
+  if(array.length==0)
+  {
+    retun -1;
+  }
+  
+  for(int i=0;i<=array.length;i++)
+  {
+    if(i==array.length)
+    {
+      count=Math.abs(array[i]-array[]);
+    }
+  }
+}"
+207,2,0,1,1,2017-03-24 21:44:09.781090,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+208,2,0,3,1,2017-03-24 21:44:09.999705,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+209,1,1,5,1,2017-03-24 21:44:10.259771,11,"int largeDifference(int[] array)
+{
+  int count=0; 
+  
+  if(array.length==0)
+  {
+    retun -1;
+  }
+  
+  for(int i=0;i<=array.length;i++)
+  {
+    if(i==array.length)
+    {
+      count=Math.abs(array[i]-array[]);
+    }
+  }
+}"
+210,2,0,4,3,2017-03-24 21:44:10.508364,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+211,1,1,3,1,2017-03-24 21:44:11.203985,11,"int largeDifference(int[] array)
+{
+  int count=0; 
+  
+  if(array.length==0)
+  {
+    retun -1;
+  }
+  
+  for(int i=0;i<=array.length;i++)
+  {
+    if(i==array.length)
+    {
+      count=Math.abs(array[i]-array[]);
+    }
+  }
+}"
+212,1,1,1,4,2017-03-24 21:44:11.373632,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  
+  double difference  = list[0] - list[2];
+  
+  return difference;
+}"
+213,2,1,2,1,2017-03-24 21:44:11.398154,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+214,2,0,5,2,2017-03-24 21:44:12.026468,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+215,2,1,2,1,2017-03-24 21:44:13.467962,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+216,2,1,4,2,2017-03-24 21:44:14.638711,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+217,2,0,2,3,2017-03-24 21:44:16.697456,16,"void mymethod() {
+  // get salary from percentages
+}"
+218,2,1,5,3,2017-03-24 21:44:18.397863,12,"void somethod(){
+  //some comments
+}"
+219,2,0,3,4,2017-03-24 21:44:24.351869,12,"void somethod(){
+  //some comments
+}"
+220,2,0,5,3,2017-03-24 21:44:30.093248,12,"void somethod(){
+  //some comments
+}"
+221,2,0,1,4,2017-03-24 21:44:31.806857,12,"void somethod(){
+  //some comments
+}"
+222,2,0,2,2,2017-03-24 21:44:33.901071,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+223,2,0,4,2,2017-03-24 21:44:34.902723,12,"void somethod(){
+  //some comments
+}"
+224,2,1,4,5,2017-03-24 21:44:36.528901,12,"void somethod(){
+  //some comments
+}"
+225,1,1,1,2,2017-03-24 21:44:36.630823,15,"void somethod(){
+  //some comments 
+}"
+226,2,1,2,1,2017-03-24 21:44:41.164600,12,"void somethod(){
+  //some comments
+}"
+227,2,0,5,3,2017-03-24 21:44:42.206369,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+228,2,1,1,4,2017-03-24 21:44:43.595417,12,"void somethod(){
+  //some comments
+}"
+229,2,1,2,2,2017-03-24 21:44:45.081373,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+230,1,0,5,1,2017-03-24 21:44:46.435378,13,"void somethod() {
+  // some comments
+}"
+231,2,0,2,3,2017-03-24 21:44:46.937657,12,"void somethod(){
+  //some comments
+}"
+232,2,0,3,3,2017-03-24 21:44:47.333483,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+233,2,1,3,4,2017-03-24 21:44:47.915625,12,"void somethod(){
+  //some comments
+}"
+234,2,0,2,3,2017-03-24 21:44:50.334345,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+235,1,1,5,1,2017-03-24 21:44:50.715721,39,"public int compare(){
+  
+}"
+236,1,1,3,3,2017-03-24 21:44:52.020317,15,"void somethod(){
+  //some comments 
+}"
+237,2,0,4,3,2017-03-24 21:44:52.975891,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+238,2,1,1,2,2017-03-24 21:44:53.377239,52,"void Taxreturn(int s)
+{
+  String per1;
+  System.out.println(""Are you an Employee,Business Owner,or Veterans?"");
+  
+}"
+239,2,0,4,2,2017-03-24 21:44:53.913885,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+240,2,1,2,1,2017-03-24 21:44:54.217157,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+241,2,1,4,2,2017-03-24 21:44:54.823242,52,"void Taxreturn(int s)
+{
+  String per1;
+  System.out.println(""Are you an Employee,Business Owner,or Veterans?"");
+  
+}"
+242,1,1,3,1,2017-03-24 21:44:56.579521,13,"void somethod() {
+  // some comments
+}"
+243,1,0,1,4,2017-03-24 21:44:57.280611,39,"public int compare(){
+  
+}"
+244,2,1,5,2,2017-03-24 21:44:58.763885,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+245,2,1,1,1,2017-03-24 21:45:00.744673,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+246,1,1,5,1,2017-03-24 21:45:01.258656,13,"void somethod() {
+  // some comments
+}"
+247,1,1,2,1,2017-03-24 21:45:02.123773,39,"public int compare(){
+  
+}"
+248,2,0,1,2,2017-03-24 21:45:02.240591,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+249,1,1,4,1,2017-03-24 21:45:05.426113,15,"void somethod(){
+  //some comments 
+}"
+250,1,0,4,3,2017-03-24 21:45:06.322365,39,"public int compare(){
+  
+}"
+251,2,0,1,2,2017-03-24 21:45:07.261728,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+252,2,0,5,4,2017-03-24 21:45:07.329922,44,"void salary(){
+	
+      
+}
+
+
+
+  
+  "
+253,2,0,4,2,2017-03-24 21:45:08.202860,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+254,1,0,2,3,2017-03-24 21:45:08.789191,39,"public int compare(){
+  
+}"
+255,1,0,1,2,2017-03-24 21:45:09.425424,13,"void somethod() {
+  // some comments
+}"
+256,2,1,1,1,2017-03-24 21:45:10.569228,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+ if(p.getSalary() < 10000){
+   return p.getSalary()*.02;
+ }     
+}"
+257,1,0,2,2,2017-03-24 21:45:11.644865,13,"void somethod() {
+  // some comments
+}"
+258,1,1,4,1,2017-03-24 21:45:11.863666,39,"public int compare(){
+  
+}"
+259,1,0,3,1,2017-03-24 21:45:13.615844,13,"void somethod() {
+  // some comments
+}"
+260,1,1,2,2,2017-03-24 21:45:13.716832,15,"void somethod(){
+  //some comments 
+}"
+261,1,1,4,3,2017-03-24 21:45:15.551078,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+262,2,0,1,3,2017-03-24 21:45:16.654609,34,"public void Person()
+{
+  //interface
+}"
+263,1,1,3,1,2017-03-24 21:45:17.126622,39,"public int compare(){
+  
+}"
+264,1,1,2,2,2017-03-24 21:45:18.840006,13,"void somethod() {
+  // some comments
+}"
+265,1,0,1,1,2017-03-24 21:45:19.938816,15,"void somethod(){
+  //some comments 
+}"
+266,2,1,4,1,2017-03-24 21:45:22.138199,54,"
+public static int minFunction(int n1, int n2) {
+   int min;
+   if (n1 > n2)
+      min = n2;
+   else
+      min = n1;
+
+   return min; 
+}"
+267,1,0,3,1,2017-03-24 21:45:23.217903,15,"void somethod(){
+  //some comments 
+}"
+268,2,1,1,1,2017-03-24 21:45:26.986976,34,"public void Person()
+{
+  //interface
+}"
+269,2,0,4,3,2017-03-24 21:45:32.111297,34,"public void Person()
+{
+  //interface
+}"
+270,1,0,5,3,2017-03-24 21:45:36.408935,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+271,1,1,4,1,2017-03-24 21:45:37.745230,13,"void somethod() {
+  // show
+}"
+272,2,1,3,2,2017-03-24 21:45:38.982028,46,"void returnTax(){
+  double tax;
+  if(Employee.getSalary < 100000)
+  {
+     tax = .02*Employee.getSalary;
+  }
+}"
+273,1,1,1,3,2017-03-24 21:45:45.543556,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+274,1,0,4,3,2017-03-24 21:45:45.670050,13,"void somethod() {
+  // show
+}"
+275,1,0,1,4,2017-03-24 21:45:48.563644,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+276,1,1,1,1,2017-03-24 21:45:48.990949,13,"void somethod() {
+  // show
+}"
+277,1,1,5,2,2017-03-24 21:45:52.153840,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+278,1,1,5,3,2017-03-24 21:45:52.621153,21,"int[] Size = new int[7];
+
+public int Array(int[] Num)
+{
+  Num = Size;
+  for(int x = 0; x < Num.size(); x++)
+  {
+    int Count = Num[0]-Num[7];
+  }
+}"
+279,1,0,2,2,2017-03-24 21:45:53.990878,15,"void somethod(){
+  //some comments 
+}"
+280,2,0,3,1,2017-03-24 21:45:57.309702,54,"
+public static int minFunction(int n1, int n2) {
+   int min;
+   if (n1 > n2)
+      min = n2;
+   else
+      min = n1;
+
+   return min; 
+}"
+281,1,1,3,1,2017-03-24 21:46:00.120935,13,"void somethod() {
+  // show
+}"
+282,1,0,4,3,2017-03-24 21:46:00.268286,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+283,1,0,4,3,2017-03-24 21:46:01.860999,39,"public int compare(){
+  
+}"
+284,1,0,1,1,2017-03-24 21:46:01.891760,13,"void somethod() {
+  // show
+}"
+285,1,1,4,3,2017-03-24 21:46:02.395007,23,"int method(){
+  
+}
+  
+"
+286,1,0,1,2,2017-03-24 21:46:02.696548,39,"public int compare(){
+  
+}"
+287,2,1,3,4,2017-03-24 21:46:03.111146,44,"void tax(){
+	
+      
+}
+
+
+
+  
+  "
+288,2,0,2,4,2017-03-24 21:46:03.824032,12,"void somethod(){
+  //some comments
+}"
+289,1,1,4,1,2017-03-24 21:46:05.594469,13,"void somethod() {
+  // show
+}"
+290,2,1,4,4,2017-03-24 21:46:05.643330,12,"void somethod(){
+  //some comments
+}"
+291,1,1,2,1,2017-03-24 21:46:05.740520,39,"public int compare(){
+  
+}"
+292,2,1,5,1,2017-03-24 21:46:06.352688,34,"public void Person()
+{
+  //interface
+}"
+293,2,0,1,4,2017-03-24 21:46:09.877599,12,"void somethod(){
+  //some comments
+}"
+294,1,0,4,3,2017-03-24 21:46:09.994660,13,"void somethod() {
+  // show
+}"
+295,1,0,3,3,2017-03-24 21:46:10.477780,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+296,2,0,3,3,2017-03-24 21:46:10.590854,34,"public void Person()
+{
+  //interface
+}"
+297,1,1,3,3,2017-03-24 21:46:10.656181,21,"int[] Size = new int[7];
+
+public int Array(int[] Num)
+{
+  Num = Size;
+  for(int x = 0; x < Num.size(); x++)
+  {
+    int Count = Num[0]-Num[7];
+  }
+}"
+298,1,0,5,3,2017-03-24 21:46:10.675121,15,"void somethod(){
+  //some comments 
+}"
+299,2,1,4,4,2017-03-24 21:46:10.855220,12,"void somethod(){
+  //some comments
+}"
+300,2,0,2,3,2017-03-24 21:46:13.366380,12,"void somethod(){
+  //some comments
+}"
+301,1,0,3,1,2017-03-24 21:46:15.232526,13,"void somethod() {
+  // show
+}"
+302,1,0,5,3,2017-03-24 21:46:16.308191,39,"public int compare(){
+  
+}"
+303,1,1,2,2,2017-03-24 21:46:16.823393,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+304,1,0,2,3,2017-03-24 21:46:18.824265,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+305,1,1,3,4,2017-03-24 21:46:22.749579,37,"public int Compare(int[] test){
+  int diff = 0;
+  int min = 0;
+  int max = 0;
+  for(int i = 0; i < test.length; i++)
+  	if(test[i] < min){
+      min = test[i];
+    }
+  	else if(test[i] > max){
+      max = test[i];
+    }
+   diff = max - min;
+   return diff;
+}"
+306,1,0,3,4,2017-03-24 21:46:27.665434,39,"public int compare(){
+  
+}"
+307,1,1,5,1,2017-03-24 21:46:27.688746,13,"void somethod() {
+  // show
+}"
+308,1,1,5,4,2017-03-24 21:46:28.748510,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+309,2,0,1,2,2017-03-24 21:46:31.177822,44,"void tax(){
+	
+      
+}
+
+
+
+  
+  "
+310,1,1,3,4,2017-03-24 21:46:34.479206,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+311,1,0,5,5,2017-03-24 21:46:36.915952,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+312,2,1,4,1,2017-03-24 21:46:38.036030,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+  
+ if(p.getSalary() < 10000){
+   return p.getProfit()*.10;
+ }     
+}"
+313,1,0,3,1,2017-03-24 21:46:40.238484,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+314,2,1,2,2,2017-03-24 21:46:40.497595,54,"
+public static int minFunction(int n1, int n2) {
+   int min;
+   if (n1 > n2)
+      min = n2;
+   else
+      min = n1;
+
+   return min; 
+}"
+315,1,1,2,3,2017-03-24 21:46:44.772554,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+316,1,0,3,1,2017-03-24 21:46:45.121477,23,"int method(){
+  
+}
+  
+"
+317,2,0,5,3,2017-03-24 21:46:45.317981,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+318,1,1,5,3,2017-03-24 21:46:47.852268,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+319,1,1,4,1,2017-03-24 21:46:49.195588,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+320,2,0,4,2,2017-03-24 21:46:49.341523,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+321,2,1,2,1,2017-03-24 21:46:49.780404,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+  
+ if(p.getSalary() < 10000){
+   return p.getProfit()*.10;
+ }     
+}"
+322,1,0,2,1,2017-03-24 21:46:50.318904,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+323,1,0,1,2,2017-03-24 21:46:54.919502,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+324,1,1,1,2,2017-03-24 21:46:57.739101,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+}"
+325,1,0,1,1,2017-03-24 21:47:05.020794,23,"int method(){
+  
+}
+  
+"
+326,1,0,4,1,2017-03-24 21:47:23.110601,16,"void biggestmethod(){
+  // find difference between values
+}"
+327,1,1,3,1,2017-03-24 21:47:26.055678,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+  return difference;
+}"
+328,1,0,4,1,2017-03-24 21:47:28.050333,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+  return difference;
+}"
+329,1,1,3,1,2017-03-24 21:47:31.857836,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+  return difference;
+}"
+330,1,1,5,1,2017-03-24 21:47:40.676285,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+  return difference;
+}"
+331,1,0,4,1,2017-03-24 21:47:41.870063,29,"public double array(double a, double b, double c)
+{
+  double[] list = {a, b, c};
+  double difference = list[0] - list[2];
+  return difference;
+}"
+332,1,0,3,2,2017-03-24 21:47:42.729218,46,"void largest(int array[])
+{
+  	
+}"
+333,2,1,1,2,2017-03-24 21:47:43.760750,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+  
+ if(p.getSalary() < 10000){
+   return p.getProfit()*.10;
+ }     
+}"
+334,1,0,2,1,2017-03-24 21:47:48.090422,16,"void biggestmethod(){
+  // find difference between values
+}"
+335,2,0,4,2,2017-03-24 21:47:50.458830,44,"void tax(){
+	//
+      
+}
+
+
+
+  
+  "
+336,1,1,1,1,2017-03-24 21:47:52.042607,46,"void largest(int array[])
+{
+  	
+}"
+337,2,0,5,1,2017-03-24 21:47:55.172503,44,"void tax(){
+	//
+      
+}
+
+
+
+  
+  "
+338,1,1,3,3,2017-03-24 21:47:59.651384,23,"int method(){
+  
+}
+  
+"
+339,2,0,2,3,2017-03-24 21:48:03.747039,44,"void tax(){
+	//
+      
+}
+
+
+
+  
+  "
+340,2,0,1,3,2017-03-24 21:48:03.831081,8,"//takes a person and returns their tax as below
+Double tax(Person p)
+{
+  if(p.getSalary() < 10000)
+  return p.getSalary()*.02;
+    else
+      return p.getSalary()*.02;
+  
+ if(p.getSalary() < 10000){
+   return p.getProfit()*.10;
+ }     
+}"
+341,2,0,3,1,2017-03-24 21:48:04.696822,44,"void tax(){
+	//
+      
+}
+
+
+
+  
+  "
+342,1,0,1,1,2017-03-24 21:48:07.441487,16,"void biggestmethod(){
+  // find difference between values
+}"
+343,1,1,4,1,2017-03-24 21:48:09.604026,13,"void somethod() {
+  // show
+}"
+344,1,0,2,1,2017-03-24 21:48:10.101713,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+345,1,0,4,1,2017-03-24 21:48:11.482100,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+346,1,1,4,1,2017-03-24 21:48:13.066318,13,"void somethod() {
+  // show
+}"
+347,1,1,4,1,2017-03-24 21:48:18.579530,13,"void somethod() {
+  // show
+}"
+348,2,0,4,2,2017-03-24 21:48:20.359567,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+349,1,0,3,1,2017-03-24 21:48:21.875898,23,"int method(){
+  
+}
+  
+"
+350,1,1,4,2,2017-03-24 21:48:22.963602,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+351,1,1,5,1,2017-03-24 21:48:24.784213,13,"void somethod() {
+  // show
+}"
+352,1,1,4,1,2017-03-24 21:48:27.245523,13,"void somethod() {
+  // show
+}"
+353,2,1,3,1,2017-03-24 21:48:29.646878,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+354,1,1,1,2,2017-03-24 21:48:30.330616,21,"int[] Size = new int[7];
+
+public int Array(int[] Num)
+{
+  Num = Size;
+  for(int x = 0; x < Num.size(); x++)
+  {
+    int Count = Num[0]-Num[7];
+    
+    return Count;
+  }
+}"
+355,2,0,5,3,2017-03-24 21:48:30.696194,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+356,1,1,1,1,2017-03-24 21:48:31.062378,13,"void somethod() {
+  // show
+}"
+357,2,1,1,1,2017-03-24 21:48:32.039478,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+358,1,1,2,1,2017-03-24 21:48:32.676817,13,"void somethod() {
+  // show
+}"
+359,2,0,3,3,2017-03-24 21:48:34.220228,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+360,1,1,1,2,2017-03-24 21:48:34.469316,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+361,2,0,5,3,2017-03-24 21:48:34.789224,39,"public int salaryTax(){
+  
+}"
+362,1,0,1,1,2017-03-24 21:48:35.078411,13,"void somethod() {
+  // show
+}"
+363,1,1,3,1,2017-03-24 21:48:36.439303,13,"void somethod() {
+  // show
+}"
+364,2,0,5,3,2017-03-24 21:48:37.639214,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+365,1,0,2,1,2017-03-24 21:48:38.107870,13,"void somethod() {
+  // show
+}"
+366,2,1,4,2,2017-03-24 21:48:39.007362,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+367,1,0,3,1,2017-03-24 21:48:39.735505,13,"void somethod() {
+  // show
+}"
+368,1,0,4,3,2017-03-24 21:48:40.524037,46,"void largest(int array[])
+{
+  	int largest;
+  	
+  	return largest;
+}"
+369,1,0,5,1,2017-03-24 21:48:41.471496,13,"void somethod() {
+  // show
+}"
+370,1,0,4,1,2017-03-24 21:48:43.161359,13,"void somethod() {
+  // show
+}"
+371,1,1,5,1,2017-03-24 21:48:46.390753,23,"int method(){
+  
+}
+  
+"
+372,2,0,2,3,2017-03-24 21:48:46.895229,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+373,2,0,1,3,2017-03-24 21:48:51.706475,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+374,2,1,3,1,2017-03-24 21:48:51.769374,54,"
+public static int tax()
+  {
+  //calculate tax}"
+375,1,0,2,1,2017-03-24 21:48:51.914409,16,"void biggestmethod(){
+  // find difference between values and return largest difference
+}"
+376,1,0,2,5,2017-03-24 21:48:52.344039,46,"void largest(int array[])
+{
+  	int largest;
+  	
+  	return largest;
+}"
+377,2,0,1,2,2017-03-24 21:48:53.447297,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+378,2,1,3,0,2017-03-24 21:48:54.672599,54,"
+public static int tax()
+  {
+  //calculate tax}"
+379,1,0,5,2,2017-03-24 21:48:57.104018,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+380,2,0,5,2,2017-03-24 21:48:59.098750,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+381,1,0,1,1,2017-03-24 21:49:02.290071,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+382,2,0,2,2,2017-03-24 21:49:03.169305,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+383,2,1,5,2,2017-03-24 21:49:03.274513,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+384,2,0,5,3,2017-03-24 21:49:03.510184,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+385,1,1,2,1,2017-03-24 21:49:03.712320,23,"int method(){
+  
+}
+  
+"
+386,2,0,3,5,2017-03-24 21:49:04.717024,39,"public int salaryTax(){
+  
+}"
+387,2,1,2,2,2017-03-24 21:49:05.318763,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+388,2,1,3,3,2017-03-24 21:49:07.504982,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+389,1,1,3,1,2017-03-24 21:49:08.196492,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+390,2,0,4,1,2017-03-24 21:49:08.230545,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+391,2,0,2,1,2017-03-24 21:49:10.110365,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+392,1,1,5,2,2017-03-24 21:49:11.932366,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+393,1,1,2,2,2017-03-24 21:49:17.182606,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+394,2,1,1,2,2017-03-24 21:49:17.860574,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+395,1,0,3,1,2017-03-24 21:49:19.130096,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+396,1,0,1,3,2017-03-24 21:49:20.371542,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+397,2,1,5,1,2017-03-24 21:49:22.350365,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+398,1,0,2,3,2017-03-24 21:49:22.765059,13,"void somethod() {
+  // show luck
+}"
+399,1,1,3,2,2017-03-24 21:49:22.802737,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+400,2,1,3,1,2017-03-24 21:49:23.291958,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+401,1,0,2,1,2017-03-24 21:49:23.884457,16,"void biggestmethod(){
+  // find difference between values and return largest difference
+}"
+402,1,1,4,3,2017-03-24 21:49:24.109395,13,"void somethod() {
+  // show luck
+}"
+403,2,0,4,1,2017-03-24 21:49:24.434318,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+404,1,1,2,1,2017-03-24 21:49:24.822772,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+405,2,0,3,1,2017-03-24 21:49:25.455740,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+406,2,0,1,1,2017-03-24 21:49:26.507024,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+407,1,0,2,2,2017-03-24 21:49:26.528235,23,"int method(){
+  
+}
+  
+"
+408,1,1,4,1,2017-03-24 21:49:27.164506,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+409,2,0,5,3,2017-03-24 21:49:29.515357,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+410,2,1,5,1,2017-03-24 21:49:29.609663,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+411,2,0,2,1,2017-03-24 21:49:31.115993,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+412,2,0,5,1,2017-03-24 21:49:31.127206,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+413,2,0,1,3,2017-03-24 21:49:31.442929,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+414,2,1,2,1,2017-03-24 21:49:31.477147,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+415,2,1,3,1,2017-03-24 21:49:31.994909,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+416,1,0,5,4,2017-03-24 21:49:32.330858,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+417,2,1,2,1,2017-03-24 21:49:32.978983,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+418,2,0,3,1,2017-03-24 21:49:35.222740,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+419,2,0,4,2,2017-03-24 21:49:35.234860,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+420,1,0,5,2,2017-03-24 21:49:35.500471,16,"void biggestmethod(){
+  // find difference between values and return largest difference
+}"
+421,2,1,4,1,2017-03-24 21:49:36.119202,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+422,2,0,4,2,2017-03-24 21:49:36.262015,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+423,2,0,4,3,2017-03-24 21:49:36.938701,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+424,2,0,4,2,2017-03-24 21:49:38.275138,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+425,2,0,5,1,2017-03-24 21:49:39.963086,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+426,2,0,4,1,2017-03-24 21:49:40.844518,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+427,2,1,1,1,2017-03-24 21:49:41.985543,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+428,2,0,2,2,2017-03-24 21:49:44.339207,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+429,2,0,1,1,2017-03-24 21:49:44.764976,47,"
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+430,2,1,2,3,2017-03-24 21:49:46.418085,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+431,1,0,1,2,2017-03-24 21:49:47.150190,59,"void somethod(){
+  // Array elements
+}"
+432,2,0,1,4,2017-03-24 21:49:47.850420,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+433,2,0,5,2,2017-03-24 21:49:48.886543,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+434,2,1,2,1,2017-03-24 21:49:51.852670,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+435,2,0,3,1,2017-03-24 21:49:52.335172,50,"double getSalary(){
+  return salary;
+}
+
+
+double getTax(){
+  tax = (salary*2)/100;
+    return tax;
+}
+
+"
+436,1,0,5,2,2017-03-24 21:49:52.857403,59,"void somethod(){
+  // Array elements
+}"
+437,1,0,3,1,2017-03-24 21:49:52.974273,11,"int myarray = new array[]{8,3,1}; 
+"
+438,1,1,3,4,2017-03-24 21:49:53.402978,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+439,1,1,3,0,2017-03-24 21:49:53.820216,11,"int myarray = new array[]{8,3,1}; 
+"
+440,1,1,2,4,2017-03-24 21:49:54.348550,23,"int method(){
+  
+}
+  
+"
+441,2,1,5,1,2017-03-24 21:49:54.516392,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+442,1,1,1,0,2017-03-24 21:49:55.955604,11,"int myarray = new array[]{8,3,1}; 
+"
+443,1,0,2,1,2017-03-24 21:49:55.995019,59,"void somethod(){
+  // Array elements
+}"
+444,2,0,5,2,2017-03-24 21:49:56.092411,44,"void salary(){
+	//
+      
+}
+
+
+
+  
+  "
+445,2,0,3,4,2017-03-24 21:49:57.257541,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+446,2,0,5,1,2017-03-24 21:49:57.278522,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+447,1,1,5,0,2017-03-24 21:49:57.522410,11,"int myarray = new array[]{8,3,1}; 
+"
+448,2,1,3,3,2017-03-24 21:49:57.899892,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+449,1,1,1,1,2017-03-24 21:49:58.240527,16,"public biggestmethod(){
+  // find difference between values and return largest difference
+}"
+450,1,1,1,1,2017-03-24 21:49:58.577369,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+451,2,1,4,1,2017-03-24 21:50:00.130243,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+452,1,0,4,1,2017-03-24 21:50:00.238346,11,"int myarray = new array[]{8,3,1}; 
+"
+453,2,1,1,2,2017-03-24 21:50:00.566965,13,"void somethod() {
+  // show
+}"
+454,2,1,5,1,2017-03-24 21:50:01.878118,13,"void somethod() {
+  // show
+}"
+455,1,0,2,1,2017-03-24 21:50:02.789367,11,"int myarray = new array[]{8,3,1}; 
+"
+456,2,1,4,2,2017-03-24 21:50:03.319875,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+457,2,0,2,1,2017-03-24 21:50:03.836149,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+458,2,0,4,5,2017-03-24 21:50:04.304481,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+459,2,0,5,1,2017-03-24 21:50:04.820610,13,"void somethod() {
+  // show
+}"
+460,1,0,1,1,2017-03-24 21:50:04.949113,11,"int myarray = new array[]{8,3,1}; 
+"
+461,2,0,3,1,2017-03-24 21:50:05.871827,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+462,2,0,5,3,2017-03-24 21:50:06.963718,18,"class Person{
+  String name;
+  int age;
+}
+class Employee extends Person{
+  double getSalary();
+}
+class BuisnessOwner extends Person {
+  double getProfit();
+}
+class Veteran extends Person{
+  String veteran_id;
+}"
+463,1,1,2,5,2017-03-24 21:50:07.641765,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+464,2,1,4,1,2017-03-24 21:50:07.923919,13,"void somethod() {
+  // show
+}"
+465,2,0,2,1,2017-03-24 21:50:08.378122,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+466,1,1,2,1,2017-03-24 21:50:08.541326,11,"int myarray = new array[]{8,3,1}; 
+"
+467,2,0,1,1,2017-03-24 21:50:09.482207,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+468,2,0,5,1,2017-03-24 21:50:10.392873,13,"void somethod() {
+  // show
+}"
+469,2,1,1,1,2017-03-24 21:50:11.759061,13,"void somethod() {
+  // show
+}"
+470,2,1,3,1,2017-03-24 21:50:12.008626,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+471,2,1,1,1,2017-03-24 21:50:13.186495,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+}"
+472,1,0,4,1,2017-03-24 21:50:14.509179,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+473,2,0,3,1,2017-03-24 21:50:15.332568,13,"void somethod() {
+  // show
+}"
+474,2,0,4,2,2017-03-24 21:50:15.661414,60,"//FIND TAX BASED ON A PERSONS STATUS IN A BUSINESS
+void personalTax(){
+  
+}"
+475,1,1,3,2,2017-03-24 21:50:15.732661,21,"int[] Size = new int[7];
+
+public int Array(int[] Num)
+{
+  Num = Size;
+  for(int x = 0; x < Num.length(); x++)
+  {
+    int Count = Num[0]-Num[7];
+    
+    return Count;
+  }
+}"
+476,2,0,3,1,2017-03-24 21:50:15.754511,47,"//help me
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+477,2,0,2,1,2017-03-24 21:50:16.408105,13,"void somethod() {
+  // show
+}"
+478,2,0,4,2,2017-03-24 21:50:16.969904,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+479,1,0,2,3,2017-03-24 21:50:17.001103,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+480,2,1,3,1,2017-03-24 21:50:17.573053,13,"void somethod() {
+  // show
+}"
+481,2,0,2,1,2017-03-24 21:50:17.869277,47,"//help me
+String iforgothowtocodejava (String myFeedback)
+{
+  return myFeedback;
+}
+"
+482,2,0,2,2,2017-03-24 21:50:18.549140,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+483,1,1,3,1,2017-03-24 21:50:18.801858,11,"int myarray = new array[]{8,3,1}; 
+"
+484,1,0,2,2,2017-03-24 21:50:19.374766,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+485,2,0,4,1,2017-03-24 21:50:19.600079,13,"void somethod() {
+  // show
+}"
+486,1,1,5,3,2017-03-24 21:50:20.391750,46,"public static int max(int[] values) {
+    int largest = values[0];
+    for (int i = 1; i < values.length; i++) {
+        if (values[i] > largest) {
+            largest = values[i];
+        }
+    }
+    return largest;
+}"
+487,1,0,3,0,2017-03-24 21:50:20.532821,11,"int myarray = new array[]{8,3,1}; 
+"
+488,2,1,5,1,2017-03-24 21:50:20.825417,13,"void somethod() {
+  // show
+}"
+489,2,0,1,5,2017-03-24 21:50:20.854260,50,"double getSalary(){
+  return salary;
+}
+
+
+double getTax(){
+  tax = (salary*2)/100;
+    return tax;
+}
+
+"
+490,2,1,3,1,2017-03-24 21:50:21.179968,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+491,1,1,1,1,2017-03-24 21:50:22.373604,11,"int myarray = new array[]{8,3,1}; 
+"
+492,1,0,1,3,2017-03-24 21:50:22.564621,59,"void somethod(){
+  // Array elements
+}"
+493,2,1,5,3,2017-03-24 21:50:22.677367,22,"void getSalary()
+{
+  // get money
+}"
+494,2,0,1,2,2017-03-24 21:50:22.696630,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+495,2,1,3,1,2017-03-24 21:50:23.587635,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+496,2,1,4,1,2017-03-24 21:50:24.571763,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+497,2,1,1,1,2017-03-24 21:50:25.207841,61,"int random(Person p){
+  if(getSalary() < 10000.0){
+    return getSalary()*.02;
+  } else {
+    return getSalary()*.05;
+  }
+  
+  //getProfit*.1 returns 10% of profit
+  //0 tax for veterans
+  
+  /* if(none of above){
+  print message
+  }*/
+}"
+498,1,0,5,2,2017-03-24 21:50:26.480142,59,"void somethod(){
+  // Array elements
+}"
+499,2,0,4,1,2017-03-24 21:50:27.339766,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+500,2,0,2,4,2017-03-24 21:50:27.856081,22,"void getSalary()
+{
+  // get money
+}"
+501,1,0,2,2,2017-03-24 21:50:28.597520,59,"void somethod(){
+  // Array elements
+}"
+502,2,1,2,1,2017-03-24 21:50:29.864648,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+503,1,1,2,1,2017-03-24 21:50:30.990112,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+504,2,0,5,4,2017-03-24 21:50:31.005887,22,"void getSalary()
+{
+  // get money
+}"
+505,2,0,4,3,2017-03-24 21:50:32.219249,22,"void getSalary()
+{
+  // get money
+}"
+506,2,1,4,3,2017-03-24 21:50:33.241960,22,"void getSalary()
+{
+  // get money
+}"
+507,2,0,5,2,2017-03-24 21:50:33.666641,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}"
+508,2,0,3,4,2017-03-24 21:50:34.300531,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+509,2,0,3,4,2017-03-24 21:50:36.402731,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+510,2,0,2,1,2017-03-24 21:50:37.316340,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+511,2,1,2,1,2017-03-24 21:50:37.500401,50,"double getSalary(){
+  return salary;
+}
+
+
+double getTax(){
+  tax = (salary*2)/100;
+    return tax;
+}
+
+"
+512,1,0,3,1,2017-03-24 21:50:37.620153,34,"public void Diff()
+{int[] array;
+ //compute difference
+}"
+513,2,0,4,1,2017-03-24 21:50:37.884528,13,"void somethod() {
+  // show comm
+}"
+514,1,0,3,2,2017-03-24 21:50:38.191254,44,"void array(){
+  
+}
+  "
+515,1,0,1,1,2017-03-24 21:50:38.974723,23,"int method(){
+  
+}
+  
+"
+516,1,1,1,3,2017-03-24 21:50:39.539031,21,"int[] Size = new int[7];
+
+public int Array(int[] Num)
+{
+  Num = Size;
+  for(int x = 0; x < Num.length(); x++)
+  {
+    int Count = Num[0]-Num[7];
+    
+    return Count;
+  }
+}"
+517,1,0,4,3,2017-03-24 21:50:40.450412,44,"void array(){
+  
+}
+  "
+518,2,1,1,2,2017-03-24 21:50:41.410618,22,"void getSalary()
+{
+  // get money
+}"
+519,2,1,1,1,2017-03-24 21:50:42.145941,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+520,2,1,1,1,2017-03-24 21:50:42.332744,13,"void somethod() {
+  // show comm
+}"
+521,2,1,4,1,2017-03-24 21:50:42.792785,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}"
+522,2,1,5,1,2017-03-24 21:50:43.065829,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+523,2,1,3,1,2017-03-24 21:50:43.758526,13,"void somethod() {
+  // show comm
+}"
+524,2,0,5,1,2017-03-24 21:50:44.262336,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}"
+525,2,1,2,1,2017-03-24 21:50:45.005938,22,"void getSalary()
+{
+  // get money
+}"
+526,2,0,2,1,2017-03-24 21:50:45.294948,13,"void somethod() {
+  // show comm
+}"
+527,2,1,5,2,2017-03-24 21:50:46.651076,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+528,1,0,2,2,2017-03-24 21:50:46.756660,59,"void somethod(){
+  // Array elements difference
+}"
+529,2,0,4,4,2017-03-24 21:50:47.415450,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}"
+530,2,0,2,4,2017-03-24 21:50:49.624355,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+531,2,0,3,5,2017-03-24 21:50:50.224976,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}"
+532,2,0,1,2,2017-03-24 21:50:51.392156,22,"void getSalary()
+{
+  // get money
+}"
+533,1,0,5,2,2017-03-24 21:50:51.517099,59,"void somethod(){
+  // Array elements difference
+}"
+534,2,0,1,1,2017-03-24 21:50:52.399522,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+535,2,1,1,1,2017-03-24 21:50:53.177677,54,"
+void int tax()
+  {
+  //calculate tax}
+  }"
+536,1,0,1,3,2017-03-24 21:50:55.006152,59,"void somethod(){
+  // Array elements difference
+}"
+537,2,0,1,5,2017-03-24 21:50:55.333495,29,"public double taxReturn()
+{
+  if(salary < 10000)
+  {
+    
+  }
+  else
+  {
+    
+  }
+}"
+538,2,1,3,1,2017-03-24 21:50:56.413475,22,"void getSalary()
+{
+  // get money
+}"
+539,2,0,1,1,2017-03-24 21:50:58.931209,13,"void somethod() {
+  // show comm
+}"
+540,2,1,2,4,2017-03-24 21:50:59.174773,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+541,2,0,4,2,2017-03-24 21:51:06.830040,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+542,1,1,4,3,2017-03-24 21:51:07.019025,21,"int[] Size = new int[7];
+
+public int Array(int[] Num)
+{
+  Num = Size;
+  for(int x = 0; x < Num.length(); x++)
+  {
+    int Count = Num[0]-Num[7];
+    
+    return Count;
+  }
+}"
+543,2,1,4,2,2017-03-24 21:51:09.694411,17,"double taxReturn(double tax1){
+  double salary = 0;
+  if(salary > 2.0){
+    
+  }
+  
+}"
+544,2,0,1,3,2017-03-24 21:51:33.960976,22,"void getSalary()
+{
+  
+}"
+545,2,1,5,1,2017-03-24 21:51:36.486546,22,"void getSalary()
+{
+  
+}"
+546,2,0,4,4,2017-03-24 21:51:40.675446,22,"void getSalary()
+{
+  
+}"
+547,2,0,3,2,2017-03-24 21:51:43.045102,22,"void getSalary()
+{
+  
+}"
+548,2,0,5,2,2017-03-24 21:51:51.638490,22,"void getSalary()
+{
+  
+}"
+549,2,1,2,1,2017-03-24 21:51:53.543458,22,"void getSalary()
+{
+  
+}"
+550,1,1,3,1,2017-03-24 21:51:57.674535,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+551,2,0,2,1,2017-03-24 21:51:59.144108,22,"void getSalary()
+{
+  
+}"
+552,1,0,4,2,2017-03-24 21:51:59.681793,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+553,1,0,3,1,2017-03-24 21:52:03.924176,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+554,1,0,1,4,2017-03-24 21:52:11.372996,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+555,1,1,5,3,2017-03-24 21:52:18.948051,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+556,1,0,2,4,2017-03-24 21:52:38.250638,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+557,1,1,1,1,2017-03-24 21:52:52.613726,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+558,1,1,2,1,2017-03-24 21:53:02.178245,8,"int largDiff(int[] array)
+{
+  int largest = array[0];
+  int smallest = arra[0];
+  for(int i = 0; i < array.size(); i++)
+  {
+    //if()
+  }
+}"
+559,1,0,5,1,2017-03-24 21:53:21.902852,22,"void numbers()
+{
+  int array[];
+}
+"
+560,1,1,5,1,2017-03-24 21:53:24.650480,22,"void numbers()
+{
+  int array[];
+}
+"
+561,1,0,4,1,2017-03-24 21:53:27.448106,22,"void numbers()
+{
+  int array[];
+}
+"
+562,1,0,1,3,2017-03-24 21:53:36.371704,22,"void numbers()
+{
+  int array[];
+}
+"
+563,1,1,2,1,2017-03-24 21:53:45.363949,22,"void numbers()
+{
+  int array[];
+}
+"
+564,1,0,2,1,2017-03-24 21:53:50.596355,22,"void numbers()
+{
+  int array[];
+}
+"
+565,1,1,1,2,2017-03-24 21:53:54.134306,22,"void numbers()
+{
+  int array[];
+}
+"
+566,1,0,3,1,2017-03-24 21:54:02.374481,22,"void numbers()
+{
+  int array[];
+}
+"
+567,1,1,3,3,2017-03-24 21:54:04.630523,22,"void numbers()
+{
+  int array[];
+}
+"
+568,1,1,4,1,2017-03-24 21:54:09.321790,22,"void numbers()
+{
+  int array[];
+}
+"
+569,1,0,2,1,2017-03-24 21:54:29.513445,22,"void numbers()
+{
+  int array[]; // get numbers
+  
+}
+"
+570,1,0,3,3,2017-03-24 21:54:32.249858,22,"void numbers()
+{
+  int array[]; // get numbers
+  
+}
+"
+571,1,1,5,1,2017-03-24 21:54:34.485355,22,"void numbers()
+{
+  int array[]; // get numbers
+  
+}
+"
+572,1,1,2,1,2017-03-24 21:54:36.630708,22,"void numbers()
+{
+  int array[]; // get numbers
+  
+}
+"
+573,1,0,1,5,2017-03-24 21:54:41.632667,22,"void numbers()
+{
+  int array[]; // get numbers
+  
+}
+"
+574,2,0,2,4,2017-03-24 21:56:49.793832,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+575,2,1,4,3,2017-03-24 21:56:59.054865,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+576,2,1,2,4,2017-03-24 21:57:00.758185,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+577,2,0,1,4,2017-03-24 21:57:02.745146,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+578,2,0,4,3,2017-03-24 21:57:05.421567,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+579,2,1,3,2,2017-03-24 21:57:07.425961,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+580,2,1,1,2,2017-03-24 21:57:09.452586,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+581,2,1,5,2,2017-03-24 21:57:11.017831,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+582,2,0,3,1,2017-03-24 21:57:12.395837,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+583,2,0,5,1,2017-03-24 21:57:14.043275,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+584,2,1,2,2,2017-03-24 21:57:25.642143,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+585,2,1,3,2,2017-03-24 21:57:27.660621,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+586,2,0,2,4,2017-03-24 21:57:30.726300,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+587,2,1,5,3,2017-03-24 21:57:33.708271,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+588,2,1,4,2,2017-03-24 21:57:34.830542,4,"class Person{
+        String name;
+        int age;
+    }
+    class Employee extends Person{
+        double getSalary();
+    }"
+589,1,0,5,2,2017-03-24 22:45:48.071290,25,"void somethod () {
+  //some code
+ 
+}"
+590,1,0,2,2,2017-03-24 22:45:56.628499,25,"void somethod () {
+  //some code
+ 
+}"
+591,1,0,3,3,2017-03-24 22:46:16.795285,25,"void somethod () {
+  //some code
+ 
+}"
+592,1,1,3,3,2017-03-24 22:52:08.847947,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+593,1,0,1,2,2017-03-24 22:52:21.188551,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+594,1,0,4,2,2017-03-24 22:52:22.364022,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+595,1,1,2,2,2017-03-24 22:52:23.562271,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+596,1,1,2,2,2017-03-24 22:52:23.776250,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+597,1,1,4,3,2017-03-24 22:53:31.903121,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+598,1,1,1,2,2017-03-24 22:53:38.206130,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
+599,1,1,5,2,2017-03-24 22:53:56.776307,25,"function arr_diff (a1, a2) {
+
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+
+    return diff;
+};"
