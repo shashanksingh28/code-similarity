@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE, STDOUT
 from .method import MethodFeatureVector
 
 ### Cofig section ###
-java_method_extractor = "/var/www/code-similarity/service/JavaMethodFeatureExtractor.jar"
+java_method_extractor = "JavaMethodFeatureExtractor.jar"
 java_file_extractor = "JavaFileFeatureExtractor.jar"
 java_concept_tagger = "javaparser_batch_mode/javaparser_batch.jar"
 db_user='root'

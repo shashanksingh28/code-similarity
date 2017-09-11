@@ -20,7 +20,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
-base_path = "/var/www/code-similarity/service"
+base_path = "."
 #### Config section ####
 solutions_input_file = base_path + "/solutionSet.txt"
 solutions_data_file = base_path + "/models/solutionVectors.pck"
@@ -133,6 +133,7 @@ def extract_info(info_dict):
 
 @app.route('/simcode', methods=['POST'])
 def proposed_similarity():
+    # import pdb; pdb.set_trace()
     try:
         request_weights = feature_weights.copy()
         body_string = request.data.decode("utf-8")
@@ -162,6 +163,7 @@ def proposed_similarity():
 
 @app.route('/cosine', methods=['POST'])
 def cosine_kNearest():
+    # import pdb; pdb.set_trace()
     try:
         body_string = request.data.decode("utf-8")
         if len(body_string) == 0:
